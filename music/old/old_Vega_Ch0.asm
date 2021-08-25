@@ -1,0 +1,133 @@
+	.byte con_80
+	.byte $F4   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83
+	.byte $25   ; 
+	.byte $0C   ; 
+	.byte $26   ; 
+	.byte $0C   ; 
+	.byte $28   ; 
+	.byte $0C   ; 
+	.byte $29   ; 
+	.byte $60   ; 
+	.byte $2B   ; 
+	.byte $24   ; 
+	.byte $29   ; 
+	.byte $24   ; 
+	.byte $28   ; 
+	.byte $18   ; 
+	.byte $2D   ; 
+	.byte $30   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83 
+	.byte $2B   ; 
+	.byte $0C   ; 
+	.byte $29   ; 
+	.byte $0C   ; 
+	.byte $28   ; 
+	.byte $0C   ; 
+	.byte $26   ; 
+	.byte $60   ; 
+	.byte $2B   ; 
+	.byte $24   ; 
+	.byte $29   ; 
+	.byte $24   ; 
+	.byte $28   ; 
+	.byte $18   ; 
+	.byte $31   ; 
+	.byte $48   ; 
+	.byte $32   ; 
+	.byte $0C   ; 
+	.byte $2E   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $48   ; 
+	.byte $2E   ; 
+	.byte $18   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83 
+	.byte $2E   ; 
+	.byte $18   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2E   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2E   ; 
+	.byte $0C   ; 
+	.byte $25   ; 
+	.byte $24   ; 
+	.byte $26   ; 
+	.byte $24   ; 
+	.byte $28   ; 
+	.byte $18   ; 
+	.byte $26   ; 
+	.byte $24   ; 
+	.byte $28   ; 
+	.byte $24   ; 
+	.byte $29   ; 
+	.byte $18   ; 
+	.byte $28   ; 
+	.byte $24   ; 
+	.byte $29   ; 
+	.byte $24   ; 
+	.byte $2B   ; 
+	.byte $18   ; 
+	.byte $2D   ; 
+	.byte $30   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $30   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $30   ; 
+	.byte con_81
+	.byte $0C   ; 
+;	.byte con_83 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2D   ; 
+	.byte $0C   ; 
+	.byte $2B   ; 
+	.byte $0C   ; 
+	.byte $29   ; 
+	.byte $0C   ; 
+	.byte $28   ; 
+	.byte $0C   ; 
+	.byte $26   ; 
+	.byte $30   ; 
+	.byte con_86
