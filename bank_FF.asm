@@ -65,8 +65,10 @@ bra_C0A4:
 	JSR sub_FD25	; Read controller
 	LDX #$10
 	LDA ram_050D,X
-	BNE bra_C0F5
+	beq @Check
+	jmp bra_C0F5
 
+@Check:
 	LDA ram_btn_press
 	CMP #con_btn___Start
 	BNE bra_C0C0
@@ -85,27 +87,54 @@ bra_C0C0:
 	LDA #$1A
 	STA ram_timer_before_demo
 
-; +FOX Check if Select+Up is pressed
+; +FOX Check if Select+Up or Select+Down is pressed
 	lda ram_btn_hold
 	cmp #$28
-	bne @CheckDpadLeft
+	bne @CheckSelectDown
 
 ; Disable demo
 	sta ram_disable_demo
+
 ; Load next song
-	lda ram_07A1
+	; Increase the index (up to $11 - 2) so that the next time a new song will play
+	ldy ram_07A1
+	iny
+	cpy #$10
+	bne @PlayNext
+
+	ldy #$00
+
+@PlayNext:
+	sty ram_07A1
+	lda tbl_playlist,Y
 	jsr sub_sndload_loop
 
 	; Also display the song index
 	; (Write to PPU $2042)
 	jsr DisplayCurrentSong
 
-	; Increase the index (up to $0F - 2) so that the next time a new song will play
-	lda #$0F
-	isc ram_07A1
+	jmp bra_C0E1
 
+@CheckSelectDown:
+	cmp #$24
 	bne @CheckDpadLeft
-	sta ram_07A1
+
+	sta ram_disable_demo
+
+	; Load previous song
+	ldy ram_07A1
+	dey
+	bpl @PrevSong
+
+	ldy #$0F	; Restart from the last entry, going backwards
+
+@PrevSong:
+	sty ram_07A1
+	lda tbl_playlist,Y
+	jsr sub_sndload_loop
+	jsr DisplayCurrentSong
+
+	jmp bra_C0E1
 
 @CheckDpadLeft:
 	LDA ram_btn_hold	; Check if D-Pad Left is pressed
@@ -9680,79 +9709,79 @@ tbl_note_period_lo:
 
 .export tbl_note_period_hi
 tbl_note_period_hi:
-	.byte $06		; 
+	.byte $86		; 
 
-	.byte $4E, $06	; 01	C#1
-	.byte $F3, $05	; 02	D1
-	.byte $9E, $05	; 03	D#1
-	.byte $4D, $05	; 04	E1
-	.byte $01, $05	; 		F1
-	.byte $B9, $04	; 		F#1
-	.byte $75, $04	; 		G
-	.byte $35, $04	; 08	G#1
-	.byte $F8, $03	; 		A
-	.byte $BF, $03	; 		A#1
-	.byte $89, $03	; 		B1
-	.byte $57, $03	; 		C2
-	.byte $27, $03	; 		C#2
-	.byte $F9, $02	; 		D2
-	.byte $CF, $02	; 0F	D#2
-	.byte $A6, $02	; 10	E2
-	.byte $80, $02	; 		F2
-	.byte $5C, $02	; 		F#2
-	.byte $3A, $02	; 		G2
-	.byte $1A, $02	; 		G#2
-	.byte $FC, $01	; 		A2
-	.byte $DF, $01	; 		A#2
-	.byte $C4, $01	; 		B2
-	.byte $AB, $01	; 18	C3
-	.byte $93, $01	; 
-	.byte $7C, $01	; 
-	.byte $67, $01	; 
-	.byte $52, $01	; 
-	.byte $3F, $01	; 
-	.byte $2D, $01	; 
-	.byte $1C, $01	; 1F
-	.byte $0C, $01	; 20
-	.byte $FD, $00	; 
-	.byte $EE, $00	; 
-	.byte $E1, $00	; 
-	.byte $D4, $00	; 
-	.byte $C8, $00	; 
-	.byte $BD, $00	; 
-	.byte $B2, $00	; 
-	.byte $A8, $00	; 28
-	.byte $9F, $00	; 
-	.byte $96, $00	; 
-	.byte $8D, $00	; 
-	.byte $85, $00	; 
-	.byte $7E, $00	; 
-	.byte $76, $00	; 
-	.byte $70, $00	; 2F
-	.byte $69, $00	; 30
-	.byte $63, $00	; 
-	.byte $5E, $00	; 
-	.byte $58, $00	; 
-	.byte $53, $00	; 
-	.byte $4F, $00	; 
-	.byte $4A, $00	; 
-	.byte $46, $00	; 
-	.byte $42, $00	; 38
-	.byte $3E, $00	; 
-	.byte $3A, $00	; 
-	.byte $37, $00	; 
-	.byte $34, $00	; 
-	.byte $31, $00	; 
-	.byte $2E, $00	; 
-	.byte $2B, $00	; 3F
-	.byte $29, $00	; 40
-	.byte $27, $00	; 
-	.byte $24, $00	; 
-	.byte $22, $00	; 
-	.byte $20, $00	; 
-	.byte $1E, $00	; 
-	.byte $1C, $00  ; 46
-	.byte $1B, $00  ; 47: B7 / Noise B
+	.byte $4E, $86	; 01	C#1
+	.byte $F3, $85	; 02	D1
+	.byte $9E, $85	; 03	D#1
+	.byte $4D, $85	; 04	E1
+	.byte $01, $85	; 		F1
+	.byte $B9, $84	; 		F#1
+	.byte $75, $84	; 		G1
+	.byte $35, $84	; 08	G#1
+	.byte $F8, $83	; 		A1
+	.byte $BF, $83	; 		A#1
+	.byte $89, $83	; 		B1
+	.byte $57, $83	; 		C2
+	.byte $27, $83	; 		C#2
+	.byte $F9, $82	; 		D2
+	.byte $CF, $82	; 0F	D#2
+	.byte $A6, $82	; 10	E2
+	.byte $80, $82	; 		F2
+	.byte $5C, $82	; 		F#2
+	.byte $3A, $82	; 		G2
+	.byte $1A, $82	; 		G#2
+	.byte $FC, $81	; 		A2
+	.byte $DF, $81	; 		A#2
+	.byte $C4, $81	; 		B2
+	.byte $AB, $81	; 18	C3
+	.byte $93, $81	; 
+	.byte $7C, $81	; 
+	.byte $67, $81	; 
+	.byte $52, $81	; 
+	.byte $3F, $81	; 
+	.byte $2D, $81	; 
+	.byte $1C, $81	; 1F
+	.byte $0C, $81	; 20
+	.byte $FD, $80	; 
+	.byte $EE, $80	; 
+	.byte $E1, $80	; 
+	.byte $D4, $80	; 
+	.byte $C8, $80	; 
+	.byte $BD, $80	; 
+	.byte $B2, $80	; 
+	.byte $A8, $80	; 28
+	.byte $9F, $80	; 
+	.byte $96, $80	; 
+	.byte $8D, $80	; 
+	.byte $85, $80	; 
+	.byte $7E, $80	; 
+	.byte $76, $80	; 
+	.byte $70, $80	; 2F
+	.byte $69, $80	; 30
+	.byte $63, $80	; 
+	.byte $5E, $80	; 
+	.byte $58, $80	; 
+	.byte $53, $80	; 
+	.byte $4F, $80	; 
+	.byte $4A, $80	; 
+	.byte $46, $80	; 
+	.byte $42, $80	; 38
+	.byte $3E, $80	; 
+	.byte $3A, $80	; 
+	.byte $37, $80	; 
+	.byte $34, $80	; 
+	.byte $31, $80	; 
+	.byte $2E, $80	; 
+	.byte $2B, $80	; 3F
+	.byte $29, $80	; 40
+	.byte $27, $80	; 
+	.byte $24, $80	; 
+	.byte $22, $80	; 
+	.byte $20, $80	; 
+	.byte $1E, $80	; 
+	.byte $1C, $80  ; 46
+	.byte $1B, $80  ; 47: B7 / Noise B
 	.byte $00, $F8	; 48 Noise 0
 	.byte $01, $F8	; 49 Noise 1
 	.byte $02, $F8	; 4A Noise 2
@@ -9777,18 +9806,25 @@ tbl_vibrato:
 	.byte $00, $00, $00, $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01
 	.byte $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $02, $02, $02, $02, $02, $02
 	.byte $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03
-	.byte $00, $00, $00, $01, $01, $02, $02, $03, $03, $03, $04, $04, $04, $04, $04, $04
-	.byte $00, $00, $01, $02, $02, $03, $03, $04, $04, $05, $05, $06, $06, $06, $06, $06
-	.byte $00, $00, $01, $02, $03, $04, $05, $06, $07, $07, $08, $08, $09, $09, $09, $09
-	.byte $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $09, $0A, $0B, $0B, $0B, $0B
-	.byte $00, $01, $02, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0C, $0D, $0D, $0D
-	.byte $00, $01, $03, $04, $06, $08, $09, $0A, $0C, $0D, $0E, $0E, $0F, $10, $10, $10
-	.byte $00, $02, $04, $06, $08, $0A, $0C, $0D, $0F, $11, $12, $13, $14, $15, $15, $15
-	.byte $00, $02, $05, $08, $0B, $0E, $10, $13, $15, $17, $18, $1A, $1B, $1C, $1D, $1D
-	.byte $00, $04, $08, $0C, $10, $14, $18, $1B, $1F, $22, $24, $26, $28, $2A, $2B, $2B
-	.byte $00, $06, $0C, $12, $18, $1E, $23, $28, $2D, $31, $35, $38, $3B, $3D, $3E, $3F
-	.byte $00, $09, $12, $1B, $24, $2D, $35, $3C, $43, $4A, $4F, $54, $58, $5B, $5E, $5F
-	.byte $00, $0C, $18, $25, $30, $3C, $47, $51, $5A, $62, $6A, $70, $76, $7A, $7D, $7F
+	.byte $00, $00, $00, $01, $01, $01, $02, $02, $03, $03, $03, $04, $04, $04, $04, $04
+	.byte $00, $00, $01, $01, $02, $02, $03, $03, $04, $04, $05, $05, $06, $06, $06, $06
+	.byte $00, $00, $01, $01, $02, $03, $04, $05, $06, $07, $07, $08, $08, $09, $09, $09
+	.byte $00, $01, $01, $02, $03, $04, $05, $06, $07, $08, $09, $09, $0A, $0A, $0B, $0B
+;	.byte $00, $01, $02, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0C, $0D, $0D, $0D
+;	.byte $00, $01, $03, $04, $06, $08, $09, $0A, $0C, $0D, $0E, $0E, $0F, $10, $10, $10
+;	.byte $00, $02, $04, $06, $08, $0A, $0C, $0D, $0F, $11, $12, $13, $14, $15, $15, $15
+;	.byte $00, $02, $05, $08, $0B, $0E, $10, $13, $15, $17, $18, $1A, $1B, $1C, $1D, $1D
+;	.byte $00, $04, $08, $0C, $10, $14, $18, $1B, $1F, $22, $24, $26, $28, $2A, $2B, $2B
+;	.byte $00, $06, $0C, $12, $18, $1E, $23, $28, $2D, $31, $35, $38, $3B, $3D, $3E, $3F
+;	.byte $00, $09, $12, $1B, $24, $2D, $35, $3C, $43, $4A, $4F, $54, $58, $5B, $5E, $5F
+;	.byte $00, $0C, $18, $25, $30, $3C, $47, $51, $5A, $62, $6A, $70, $76, $7A, $7D, $7F
+
+
+
+; -----------------------------------------------------------------------------
+tbl_playlist:
+	.byte $09, $00, $01, $02, $03, $04, $05, $06, $07, $08, $0A, $0D, $1B, $1C, $0B, $0C
+
 
 
 .segment "MMC5_INIT"

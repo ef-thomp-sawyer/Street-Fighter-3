@@ -34,6 +34,7 @@
 
 ; -------- FRAME 01 --------
 	.byte $0C, $0D	; C-2, 13 ticks
+	.byte $80, $35	; VOLUME, $35
 	.byte $0E, $0D	; D-2, 13 ticks
 	.byte $80, $B7	; VOLUME, $B7
 	.byte $21, $0D	; A-3, 13 ticks

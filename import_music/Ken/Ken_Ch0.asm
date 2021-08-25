@@ -1,5 +1,5 @@
-; LOOP OFFSET: $00DF (ORDER 02)
-	.byte $89, $DF, $00	;
+; LOOP OFFSET: $00E1 (ORDER 02)
+	.byte $89, $E1, $00	;
 
 ; Channel 0
 
@@ -71,6 +71,7 @@
 
 ; -------- FRAME 01 --------
 	.byte $1D, $0A	; F-3, 10 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $87, $01	; *VOLSLIDE, $01
 	.byte $84, $09	; *HOLD, 9 ticks
 	.byte $82, $0A	; *REST, 10 ticks
@@ -118,7 +119,7 @@
 	.byte $1F, $09	; G-3, 9 ticks
 	.byte $82, $01	; *REST, 1 ticks
 
-; ---- FRAME 01 END ($005E bytes) ----
+; ---- FRAME 01 END ($0060 bytes) ----
 
 ; -------- FRAME 02 --------
 	.byte $22, $0A	; A#3, 10 ticks
@@ -195,6 +196,7 @@
 
 ; -------- FRAME 03 --------
 	.byte $1D, $0A	; F-3, 10 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $82, $04	; *REST, 4 ticks
 	.byte $80, $73	; VOLUME, $73
 	.byte $1D, $0A	; F-3, 10 ticks
@@ -245,7 +247,7 @@
 	.byte $80, $76	; VOLUME, $76
 	.byte $8D, $00	; *VIBRATO, $00
 
-; ---- FRAME 03 END ($0064 bytes) ----
+; ---- FRAME 03 END ($0066 bytes) ----
 
 ; -------- FRAME 04 --------
 	.byte $1D, $0A	; F-3, 10 ticks
@@ -322,6 +324,7 @@
 
 ; -------- FRAME 05 --------
 	.byte $1D, $0A	; F-3, 10 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $82, $04	; *REST, 4 ticks
 	.byte $80, $73	; VOLUME, $73
 	.byte $1D, $0A	; F-3, 10 ticks
@@ -366,7 +369,7 @@
 	.byte $84, $13	; *HOLD, 19 ticks
 	.byte $8D, $48	; *VIBRATO, $48
 
-; ---- FRAME 05 END ($0058 bytes) ----
+; ---- FRAME 05 END ($005A bytes) ----
 
 ; -------- FRAME 06 --------
 	.byte $84, $14	; *HOLD, 20 ticks
@@ -433,6 +436,7 @@
 
 ; -------- FRAME 08 --------
 	.byte $82, $14	; *REST, 20 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $8D, $00	; *VIBRATO, $00
 	.byte $1D, $09	; F-3, 9 ticks
 	.byte $8D, $18	; *VIBRATO, $18
@@ -476,7 +480,7 @@
 	.byte $8A, $12	; *NOTESLIDEUP, $12
 	.byte $8D, $00	; *VIBRATO, $00
 
-; ---- FRAME 08 END ($0056 bytes) ----
+; ---- FRAME 08 END ($0058 bytes) ----
 
 ; -------- FRAME 09 --------
 	.byte $22, $0A	; A#3, 10 ticks

@@ -19,6 +19,7 @@ sub_apu_init:
 	STA ram_snd_ptr_lo
 	STA ram_snd_ptr_hi
 	STA ram_current_sfx
+	lda #$08
 	STA $4001	; Sq0 Sweep
 	STA $4005	; Sq1 Sweep
 	LDA #$8F
@@ -776,9 +777,34 @@ sub_set_note_slide:
 	lda (ram_snd_ptr_lo),Y
 	tay	; Store it in Y before we split the nibbles
 
-; TODO Check if this is a SFX channel
+; Check if this is a SFX channel
+	cpx #$07
+	bcs @MusicNoteSlide
 
-; Music channels only
+; SFX channels
+	
+	; Slide Up
+	lda #$01
+	sta ram_noteslide_dir_sfx0,X
+
+	; Target note difference
+	tya
+	and #$0F
+	sta ram_noteslide_lo_sfx0,X
+
+	; Speed
+	lsr
+	lsr
+	lsr
+	eor #$FF
+	sta ram_noteslide_speed_sfx0,X
+
+	pla
+	; tax not needed: X is unchanged for sfx
+	rts
+
+; Music channels
+@MusicNoteSlide:
 	txa
 	asl
 	and #$0F
@@ -863,7 +889,8 @@ sub_set_volume_slide:
 
 @ResetSlideCounter:
 	lda #$00
-	sta ram_volslide_ctr_mus0,X	; Counter
+	sta ram_volslide_ctr_mus0,X	; Slide counter
+	sta ram_volmute_ctr_mus0,X	; Mute counter
 
 	pla
 	tax
@@ -924,6 +951,20 @@ sub_calculate_volume:
 	bmi @VolSlideUp
 
 ; Volume slide Down
+	; If the mute counter is active, decrease it and then zero the
+	; effective volume when the counter is zero
+	lda ram_volmute_ctr_mus0,X
+	beq @DoSlide
+
+	lda #$00
+	dcp ram_volmute_ctr_mus0,X
+	beq @ApplyVolume
+
+	lda #$01
+	bne @ApplyVolume
+
+	; Otherwise, decrease volume according to slide table
+@DoSlide:
 	lda ram_volslide_val_mus0,X	; Base index
 	clc
 	adc ram_volslide_ctr_mus0,X	; Add counter
@@ -940,13 +981,22 @@ sub_calculate_volume:
 	lda ram_effreg0_mus0,X	; Effective channel volume
 	and #$0F
 
+	; Nothing to do if volume is already zero
+	beq @ApplyVolume
+
 	sec
 	sbc tbl_volume_slide,Y	; Value to subtract from effective volume
 
-	bcs @ApplyVolume
-	lda #$00			; Make sure it doesn't underflow
+	beq @StartMuteCounter	; Don't instantly mute, start a counter instead
+	bcs @ApplyVolume	; Make sure it doesn't underflow
 
-	beq @ApplyVolume	; Same as JMP, just quicker
+@StartMuteCounter:
+	lda #$04
+	sta ram_volmute_ctr_mus0,X
+
+	lda #$01			; Set effective volume to 1
+
+	bne @ApplyVolume	; Same as JMP, just quicker
 
 @VolSlideUp:
 	lda ram_volslide_val_mus0,X	; Base index
@@ -1308,7 +1358,9 @@ sub_start_volslide:
 	bmi @Start_SlideUp
 
 ; Start slide down
-
+	lda #$00
+	sta ram_volmute_ctr_mus0,X	; Mute counter
+	
 	lda ram_volslide_val_mus0,X
 	tay
 

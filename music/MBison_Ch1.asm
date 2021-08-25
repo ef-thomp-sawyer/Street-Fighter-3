@@ -873,9 +873,7 @@
 	.byte $80, $B1	; VOLUME, $B1
 	.byte $8D, $16	; *VIBRATO, $16
 	.byte $87, $00	; *VOLSLIDE, $00
-	.byte $1E, $06	; F#3, 6 ticks
-	.byte $8C, $FE	; *FINEPITCH, $FE
-	.byte $84, $14	; *HOLD, 20 ticks
+	.byte $1E, $1A	; F#3, 26 ticks
 	.byte $80, $B2	; VOLUME, $B2
 	.byte $8D, $00	; *VIBRATO, $00
 	.byte $1A, $1A	; D-3, 26 ticks

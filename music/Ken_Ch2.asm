@@ -98,7 +98,7 @@
 
 ; -------- FRAME 02 --------
 	.byte $1D, $0A	; F-3, 10 ticks
-	.byte $80, $FF	;
+	;.byte $87, $01	; *VOLSLIDE, $01 (LOOP FIX)
 	.byte $84, $06	; *HOLD, 6 ticks
 	.byte $82, $03	; *REST, 3 ticks
 	.byte $1D, $07	; F-3, 7 ticks

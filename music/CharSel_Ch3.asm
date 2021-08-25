@@ -1,5 +1,5 @@
-; LOOP OFFSET: $002F (ORDER 01)
-	.byte $89, $2F, $00	;
+; LOOP OFFSET: $0033 (ORDER 01)
+	.byte $89, $33, $00	;
 
 ; Channel 3
 
@@ -19,6 +19,8 @@
 	.byte $84, $2D	; *HOLD, 45 ticks
 	.byte $87, $06	; *VOLSLIDE, $06
 	.byte $54, $07	; 2-#, 7 ticks
+	.byte $80, $35	; VOLUME, $35
+	.byte $87, $03	; *VOLSLIDE, $03
 	.byte $55, $06	; 1-#, 6 ticks
 	.byte $82, $07	; *REST, 7 ticks
 	.byte $80, $3A	; VOLUME, $3A
@@ -26,7 +28,7 @@
 	.byte $54, $0D	; 2-#, 13 ticks
 	.byte $54, $06	; 2-#, 6 ticks
 
-; ---- FRAME 00 END ($002A bytes) ----
+; ---- FRAME 00 END ($002E bytes) ----
 
 ; -------- FRAME 01 --------
 	.byte $54, $07	; 2-#, 7 ticks

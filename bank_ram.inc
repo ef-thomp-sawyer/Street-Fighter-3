@@ -1509,59 +1509,69 @@ ram_05AC                        = $05AC ; N/A
 ram_05AD                        = $05AD ; N/A
 ram_05AE                        = $05AE ; N/A
 ram_05AF                        = $05AF ; N/A
-ram_05B0                        = $05B0 ; N/A
-ram_05B1                        = $05B1 ; N/A
-ram_05B2                        = $05B2 ; N/A
-ram_05B3                        = $05B3 ; N/A
-ram_05B4                        = $05B4 ; N/A
-ram_05B5                        = $05B5 ; N/A
-ram_05B6                        = $05B6 ; N/A
-ram_05B7                        = $05B7 ; N/A
-ram_05B8                        = $05B8 ; N/A
-ram_05B9                        = $05B9 ; N/A
-ram_05BA                        = $05BA ; N/A
-ram_05BB                        = $05BB ; N/A
-ram_05BC                        = $05BC ; N/A
-ram_05BD                        = $05BD ; N/A
-ram_05BE                        = $05BE ; N/A
-ram_05BF                        = $05BF ; N/A
+
+; -----------------------------------------------------------------------------
+ram_noteslide_dir_sfx0          = $05B0 ; Note slide direction SFX ch 0
+ram_noteslide_speed_sfx0        = $05B1 ; Note slide speed SFX ch 0
+ram_noteslide_lo_sfx0           = $05B2 ; Target period LO SFX ch 0
+ram_noteslide_hi_sfx0           = $05B3 ; Target period HI SFX ch 0
+
+ram_05B4                        = $05B4 ; Note slide direction SFX ch 1
+ram_05B5                        = $05B5 ; Note slide speed SFX ch 1
+ram_05B6                        = $05B6 ; Target period LO SFX ch 1
+ram_05B7                        = $05B7 ; Target period HI SFX ch 1
+
+ram_05B8                        = $05B8 ; Note slide direction SFX ch 2
+ram_05B9                        = $05B9 ; Note slide speed SFX ch 2
+ram_05BA                        = $05BA ; Target period LO SFX ch 2
+ram_05BB                        = $05BB ; Target period HI SFX ch 2
+
+ram_05BC                        = $05BC ; (Unused) Note slide direction SFX ch 3
+ram_05BD                        = $05BD ; (Unused) Note slide speed SFX ch 3
+ram_05BE                        = $05BE ; (Unused) Target period LO SFX ch 3
+ram_05BF                        = $05BF ; (Unused) Target period HI SFX ch 3
+
+; -----------------------------------------------------------------------------
 ram_05C0                        = $05C0 ; N/A
 ram_05C1                        = $05C1 ; N/A
 ram_05C2                        = $05C2 ; N/A
 ram_05C3                        = $05C3 ; N/A
+
 ram_05C4                        = $05C4 ; N/A
 ram_05C5                        = $05C5 ; N/A
 ram_05C6                        = $05C6 ; N/A
 ram_05C7                        = $05C7 ; N/A
+
 ram_05C8                        = $05C8 ; N/A
 ram_05C9                        = $05C9 ; N/A
 ram_05CA                        = $05CA ; N/A
 ram_05CB                        = $05CB ; N/A
+
 ram_05CC                        = $05CC ; N/A
-ram_05CD                        = $05CD ; N/A
-ram_05CE                        = $05CE ; N/A
-ram_05CF                        = $05CF ; N/A
+ram_05CD                        = $05CD ; (Unused)
+ram_05CE                        = $05CE ; (Unused)
+ram_05CF                        = $05CF ; (Unused)
 
 ; -----------------------------------------------------------------------------
-ram_vib_dir_mus0                = $05D0 ; (Unused) Vibrato direction Mus Ch 0
+ram_volmute_ctr_mus0            = $05D0 ; Volume slide mute counter for Mus Ch 0 (used to stay on vol 1 for a few frames before muting)
 ram_vib_ctr_mus0                = $05D1 ; Vibrato counter Mus Ch 0
-ram_vib_speed_mus0             = $05D2 ; Vibrato counter reload Mus Ch 0
+ram_vib_speed_mus0              = $05D2 ; Vibrato counter reload Mus Ch 0
 ram_vib_value_mus0              = $05D3 ; Vibrato intensity Mus Ch 0
 
-ram_vib_dir_mus1                = $05D4 ; (Unused) Vibrato direction Mus Ch 1
+ram_volmute_ctr_mus1            = $05D4 ; Volume slide mute counter for Mus Ch 1
 ram_vib_ctr_mus1                = $05D5 ; Vibrato counter Mus Ch 1
-ram_vib_speed_mus1             = $05D6 ; Vibrato counter reload Mus Ch 1
+ram_vib_speed_mus1              = $05D6 ; Vibrato counter reload Mus Ch 1
 ram_vib_value_mus1              = $05D7 ; Vibrato intensity Mus Ch 1
 
-ram_vib_dir_mus2                = $05D8 ; (Unused) Vibrato direction Mus Ch 2
+ram_volmute_ctr_mus2            = $05D8 ; Volume slide mute counter for Mus Ch 2
 ram_vib_ctr_mus2                = $05D9 ; Vibrato counter Mus Ch 2
-ram_vib_speed_mus2             = $05DA ; Vibrato counter reload Mus Ch 2
+ram_vib_speed_mus2              = $05DA ; Vibrato counter reload Mus Ch 2
 ram_vib_value_mus2              = $05DB ; Vibrato intensity Mus Ch 2
 
-ram_vib_dir_mus3                = $05DC ; (Unused) Vibrato direction Mus Ch 3
-ram_vib_ctr_mus3                = $05DD ; Vibrato counter Mus Ch 3
-ram_vib_speed_mus3             = $05DE ; Vibrato counter reload Mus Ch 3
-ram_vib_value_mus3              = $05DF ; Vibrato intensity Mus Ch 3
+ram_volmute_ctr_mus3            = $05DC ; Volume slide mute counter for Mus Ch 3
+ram_vib_ctr_mus3                = $05DD ; (Unused) Vibrato counter Mus Ch 3
+ram_vib_speed_mus3              = $05DE ; (Unused) Vibrato counter reload Mus Ch 3
+ram_vib_value_mus3              = $05DF ; (Unused) Vibrato intensity Mus Ch 3
 
 ; -----------------------------------------------------------------------------
 ram_05E0                        = $05E0 ; (Unused) can be used for note slide direction if needed
@@ -1580,9 +1590,9 @@ ram_noteslide_lo_mus2           = $05EA ; Target period LO music ch 2
 ram_noteslide_hi_mus2           = $05EB ; Target period HI music ch 2
 
 ram_05EC                        = $05EC ; N/A
-ram_noteslide_speed_mus3        = $05ED ; Note slide speed music ch 3
-ram_noteslide_lo_mus3           = $05EE ; Target period LO music ch 3
-ram_noteslide_hi_mus3           = $05EF ; Target period HI music ch 3
+ram_noteslide_speed_mus3        = $05ED ; (Unused) Note slide speed music ch 3
+ram_noteslide_lo_mus3           = $05EE ; (Unused) Target period LO music ch 3
+ram_noteslide_hi_mus3           = $05EF ; (Unused) Target period HI music ch 3
 
 ; -----------------------------------------------------------------------------
 ram_basereg0_mus0               = $05F0 ; 4   Duty/Volume for music channel 0

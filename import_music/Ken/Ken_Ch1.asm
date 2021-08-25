@@ -1,5 +1,5 @@
-; LOOP OFFSET: $00D9 (ORDER 02)
-	.byte $89, $D9, $00	;
+; LOOP OFFSET: $00DB (ORDER 02)
+	.byte $89, $DB, $00	;
 
 ; Channel 1
 
@@ -70,6 +70,7 @@
 
 ; -------- FRAME 01 --------
 	.byte $19, $0A	; C#3, 10 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $87, $01	; *VOLSLIDE, $01
 	.byte $84, $09	; *HOLD, 9 ticks
 	.byte $82, $0A	; *REST, 10 ticks
@@ -115,7 +116,7 @@
 	.byte $1C, $09	; E-3, 9 ticks
 	.byte $82, $01	; *REST, 1 ticks
 
-; ---- FRAME 01 END ($005A bytes) ----
+; ---- FRAME 01 END ($005C bytes) ----
 
 ; -------- FRAME 02 --------
 	.byte $1D, $0A	; F-3, 10 ticks
@@ -724,8 +725,7 @@
 	.byte $20, $0A	; G#3, 10 ticks
 	.byte $82, $04	; *REST, 4 ticks
 	.byte $80, $73	; VOLUME, $73
-	.byte $8A, $22	; *NOTESLIDEUP, $22
-	.byte $1B, $05	; D#3, 5 ticks
+	.byte $1D, $05	; F-3, 5 ticks
 	.byte $80, $77	; VOLUME, $77
 	.byte $14, $0A	; G#2, 10 ticks
 	.byte $82, $05	; *REST, 5 ticks
@@ -741,7 +741,7 @@
 	.byte $20, $05	; G#3, 5 ticks
 	.byte $80, $76	; VOLUME, $76
 
-; ---- FRAME 0A END ($00A0 bytes) ----
+; ---- FRAME 0A END ($009E bytes) ----
 
 ; -------- FRAME 0B --------
 	.byte $24, $0A	; C-4, 10 ticks

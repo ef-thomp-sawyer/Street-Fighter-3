@@ -282,13 +282,16 @@
 	.byte $17, $06	; B-2, 6 ticks
 	.byte $19, $03	; C#3, 3 ticks
 	.byte $17, $03	; B-2, 3 ticks
-	.byte $15, $0C	; A-2, 12 ticks
+	.byte $15, $05	; A-2, 5 ticks
+	.byte $82, $07	; *REST, 7 ticks
 	.byte $15, $03	; A-2, 3 ticks
 	.byte $17, $09	; B-2, 9 ticks
-	.byte $15, $0C	; A-2, 12 ticks
+	.byte $15, $05	; A-2, 5 ticks
+	.byte $82, $07	; *REST, 7 ticks
 	.byte $15, $03	; A-2, 3 ticks
 	.byte $17, $09	; B-2, 9 ticks
-	.byte $15, $0C	; A-2, 12 ticks
+	.byte $15, $05	; A-2, 5 ticks
+	.byte $82, $07	; *REST, 7 ticks
 	.byte $15, $0C	; A-2, 12 ticks
 	.byte $87, $01	; *VOLSLIDE, $01
 	.byte $84, $0C	; *HOLD, 12 ticks

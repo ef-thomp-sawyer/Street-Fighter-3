@@ -271,6 +271,7 @@
 
 ; -------- FRAME 02 --------
 	.byte $84, $06	; *HOLD, 6 ticks
+	.byte $88, $30	; *TIMBRE, $30
 	.byte $8D, $00	; *VIBRATO, $00
 	.byte $0D, $05	; C#2, 5 ticks
 	.byte $80, $37	; VOLUME, $37
@@ -361,7 +362,7 @@
 	.byte $84, $06	; *HOLD, 6 ticks
 	.byte $80, $35	; VOLUME, $35
 
-; ---- FRAME 02 END ($00B4 bytes) ----
+; ---- FRAME 02 END ($00B6 bytes) ----
 
 ; -------- FRAME 03 --------
 	.byte $84, $06	; *HOLD, 6 ticks

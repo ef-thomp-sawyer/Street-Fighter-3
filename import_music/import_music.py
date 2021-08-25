@@ -457,6 +457,8 @@ def main():
 
                     elif fx[0] == '4':  # VIBRATO
                         # Invert speed and intensity to avoid having to shift bytes in the game
+                        if int(fx[2], 16) > 7:
+                            print(f"!!! WARNING: Vibrato width too high in '{fx}' - \tPattern ${p}, row ${r}.")
                         v = fx[0] + fx[2] + fx[1]
                         fx_list.append(v)
 
@@ -549,9 +551,9 @@ def main():
 
                         elif fx[0] == 'V' and c < 2:  # Timbre (pulse channels only)
                             value = int(fx[1:], 16)
-                            if value != channels[c].last_timbre:
-                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
-                                channels[c].last_timbre = value
+                            #if value != channels[c].last_timbre:
+                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)
@@ -656,9 +658,9 @@ def main():
 
                         elif fx[0] == 'V':  # Timbre (pulse channels only)
                             value = int(fx[1:], 16)
-                            if value != channels[c].last_timbre:
-                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
-                                channels[c].last_timbre = value
+                            #if value != channels[c].last_timbre:
+                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)
@@ -738,9 +740,9 @@ def main():
 
                         elif fx[0] == 'V':  # Timbre (pulse channels only)
                             value = int(fx[1:], 16)
-                            if value != channels[c].last_timbre:
-                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
-                                channels[c].last_timbre = value
+                            #if value != channels[c].last_timbre:
+                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)

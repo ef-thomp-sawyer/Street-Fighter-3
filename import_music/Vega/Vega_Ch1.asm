@@ -1154,6 +1154,7 @@
 
 ; -------- FRAME 07 --------
 	.byte $82, $01	; *REST, 1 ticks
+	.byte $88, $70	; *TIMBRE, $70
 	.byte $19, $0A	; C#3, 10 ticks
 	.byte $82, $07	; *REST, 7 ticks
 	.byte $80, $72	; VOLUME, $72
@@ -1313,7 +1314,7 @@
 	.byte $80, $76	; VOLUME, $76
 	.byte $1E, $0B	; F#3, 11 ticks
 
-; ---- FRAME 07 END ($013E bytes) ----
+; ---- FRAME 07 END ($0140 bytes) ----
 
 ; -------- FRAME 08 --------
 	.byte $82, $01	; *REST, 1 ticks
