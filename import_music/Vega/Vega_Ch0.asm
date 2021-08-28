@@ -866,9 +866,9 @@
 	.byte $23, $06	; B-3, 6 ticks
 	.byte $25, $05	; C#4, 5 ticks
 	.byte $80, $76	; VOLUME, $76
-	.byte $8D, $17	; *VIBRATO, $17
 	.byte $84, $06	; *HOLD, 6 ticks
 	.byte $80, $75	; VOLUME, $75
+	.byte $8D, $17	; *VIBRATO, $17
 	.byte $84, $06	; *HOLD, 6 ticks
 	.byte $80, $74	; VOLUME, $74
 	.byte $84, $06	; *HOLD, 6 ticks

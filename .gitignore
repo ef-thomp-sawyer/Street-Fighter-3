@@ -4,3 +4,5 @@
 *.ffs_db
 *.nes
 *.ram.nl
+_debug.txt
+_listing.txt

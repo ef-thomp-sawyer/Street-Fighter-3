@@ -2416,7 +2416,7 @@ off_A91C_3C:
 - D 1 - I - 0x01A94C 06:A93C: 00        .byte $00   ; 
 - D 1 - I - 0x01A94D 06:A93D: 83        .byte $83   ; 
 - D 1 - I - 0x01A94E 06:A93E: FC        .byte $FC   ; 
-- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; 
+- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; SFX index for Spinning Kick
 - D 1 - I - 0x01A950 06:A940: 57        .byte $57   ; 
 - D 1 - I - 0x01A951 06:A941: 0E        .byte $0E   ; 
 - D 1 - I - 0x01A952 06:A942: 00        .byte $00   ; 
@@ -2494,7 +2494,7 @@ off_A97E_3D:
 - D 1 - I - 0x01A998 06:A988: 00        .byte $00   ; 
 - D 1 - I - 0x01A999 06:A989: 83        .byte $83   ; 
 - D 1 - I - 0x01A99A 06:A98A: FC        .byte $FC   ; 
-- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ; 
+- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID for Flash Kick
 - D 1 - I - 0x01A99C 06:A98C: 28        .byte $28   ; 
 - D 1 - I - 0x01A99D 06:A98D: 00        .byte $00   ; 
 - D 1 - I - 0x01A99E 06:A98E: 00        .byte $00   ; 

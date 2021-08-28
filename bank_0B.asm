@@ -1692,6 +1692,9 @@ sub_enable_channel:
 
 
 ; -----------------------------------------------------------------------------
+; For Music:
+; Pointer to data, bank number, unused byte ($FF)
+; For SFX:
 ; Values used to index the pointers table, one per channel per song/sfx
 ; $FF = disable channel
 tbl_sound_pointers:
@@ -1739,13 +1742,13 @@ tbl_sound_pointers:
 	.word _music_charsel
 	.byte $94, $FF
 
-	;.byte $2B, $2C, $2D, $2E   ; 0B	Unused music 0
-	.word _music_unused0
-	.byte $90, $FF
+	;.byte $2B, $2C, $2D, $2E   ; 0B	MUSIC (bonus): E. Honda
+	.word _music_honda
+	.byte $97, $FF
 
-	;.byte $2F, $30, $31, $32   ; 0C	Unused music 1
-	.word _music_unused1
-	.byte $90, $FF
+	;.byte $2F, $30, $31, $32   ; 0C	MUSIC (bonus): Zangief
+	.word _music_zangief
+	.byte $98, $FF
 
 	;.byte $33, $34, $35, $36   ; 0D	MUSIC: Ending
 	.word _music_ending
@@ -1805,8 +1808,8 @@ tbl_sound_pointers:
 	.word _sfx_pause			; 1F	SFX: Pause
 	.byte $8C, $FF
 
-	.word _music_unused2		; 20	Unused music 2
-	.byte $8C, $FF
+	.word _music_balrog			; 20	MUSIC (bonus): Balrog
+	.byte $99, $FF
 
 	.word _sfx_unused3			; 21	Unused SFX? (Hard hit?)
 	.byte $8C, $FF
@@ -1929,12 +1932,6 @@ _sfx_pause:
 	.word _sfx_pause_ch0		;	SFX: Pause
 	.word _sfx_pause_ch1		;
 	.word $FFFF					; No Triangle
-	.word $FFFF					; No Noise
-
-_music_unused2:
-	.word _music_unused2_ch0	;	Unused music 2
-	.word _music_unused2_ch1	;
-	.word _music_unused2_ch2	;
 	.word $FFFF					; No Noise
 
 _sfx_unused3:
@@ -2660,32 +2657,5 @@ _music_unused3_ch2:
 	.byte con_86
 
 _music_unused3_ch3:
-	.byte con_81, $FF
-	.byte con_86
-
-
-; -----------------------------------------------------------------------------
-;_music_unused2:
-	.word _music_unused2_ch0
-	.word _music_unused2_ch1
-	.word _music_unused2_ch2
-	.word _music_unused2_ch3
-
-_music_unused2_ch0:
-;	.include "music/old/old_Unused2_Ch0.asm"
-	.byte con_81, $FF
-	.byte con_86
-
-_music_unused2_ch1:
-;	.include "music/old/old_Unused2_Ch1.asm"
-	.byte con_81, $FF
-	.byte con_86
-
-_music_unused2_ch2:
-;	.include "music/old/old_Unused2_Ch2.asm"
-	.byte con_81, $FF
-	.byte con_86
-
-_music_unused2_ch3:
 	.byte con_81, $FF
 	.byte con_86

@@ -2603,7 +2603,7 @@ off_A95E_3F:
 - D 1 - I - 0x00E978 03:A968: 00        .byte $00   ; 
 - D 1 - I - 0x00E979 03:A969: 8A        .byte $8A   ; 
 - D 1 - I - 0x00E97A 03:A96A: FC        .byte $FC   ; 
-- D 1 - I - 0x00E97B 03:A96B: 14        .byte $14   ; 
+- D 1 - I - 0x00E97B 03:A96B: 14        .byte $14   ; SFX for Dhalsim's Fireball
 - D 1 - I - 0x00E97C 03:A96C: FD        .byte $FD   ; 
 - D 1 - I - 0x00E97D 03:A96D: 40        .byte $40   ; 
 - D 1 - I - 0x00E97E 03:A96E: 41        .byte $41   ; 

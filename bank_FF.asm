@@ -76,7 +76,7 @@ bra_C0A4:
 ; Start button
 	LDA #$01
 	STA ram_050D,X
-	LDA #$1A
+	LDA #$1A	; Start button / selection SFX
 	JSR sub_sndload_noloop
 
 bra_C0C0:
@@ -99,7 +99,7 @@ bra_C0C0:
 	; Increase the index (up to $11 - 2) so that the next time a new song will play
 	ldy ram_07A1
 	iny
-	cpy #$10
+	cpy #$11
 	bne @PlayNext
 
 	ldy #$00
@@ -111,7 +111,7 @@ bra_C0C0:
 
 	; Also display the song index
 	; (Write to PPU $2042)
-	jsr DisplayCurrentSong
+	jsr sub_display_current_song
 
 	jmp bra_C0E1
 
@@ -126,13 +126,13 @@ bra_C0C0:
 	dey
 	bpl @PrevSong
 
-	ldy #$0F	; Restart from the last entry, going backwards
+	ldy #$10	; Restart from the last entry, going backwards
 
 @PrevSong:
 	sty ram_07A1
 	lda tbl_playlist,Y
 	jsr sub_sndload_loop
-	jsr DisplayCurrentSong
+	jsr sub_display_current_song
 
 	jmp bra_C0E1
 
@@ -179,7 +179,7 @@ bra_C0F5:
 	RTS
 
 
-DisplayCurrentSong:
+sub_display_current_song:
 	; Disable rendering
 	lda #$00
 	sta $2000
@@ -234,7 +234,7 @@ loc_C11C:
 	LDY ram_level
 	ADC tbl_C9B3,Y
 	JSR sub_ECE0
-	LDA #$1E
+	LDA #$1E	; Aeroplane sound
 	JSR sub_sndload_noloop
 	LDA #$8A    ; 0x014010
 	STA $5114
@@ -278,7 +278,7 @@ bra_C185:
 	JSR sub_E839
 	LDA #$01
 	STA ram_050D,X
-	LDA #$1A
+	LDA #$1A	; Selection sound
 	JSR sub_sndload_noloop
 bra_C197:
 	LDA ram_btn_press,Y
@@ -1713,7 +1713,7 @@ sub_CE40:
 	JSR sub_ECE0
 	LDA ram_0500,X
 	BMI bra_CE5B_RTS
-	LDA #$13
+	LDA #$13	; Hit SFX
 	JSR sub_sndload_noloop
 bra_CE5B_RTS:
 	RTS
@@ -2164,7 +2164,7 @@ bra_D17B:
 	LDA #$00
 	RTS
 bra_D17E:
-	LDA #$23
+	LDA #$23	; Throw SFX
 	JSR sub_sndload_noloop
 	STX ram_00BA
 	STY ram_00BB
@@ -3086,7 +3086,7 @@ bra_D7C6:
 	STA ram_pause_flag
 	JSR sub_F83B
 	JSR sub_F80B
-	LDA #$1F
+	LDA #$1F	; Pause button
 	JSR sub_sndload_noloop
 	JMP loc_D835
 bra_D7E2:
@@ -5691,12 +5691,12 @@ bra_E8BC:
 	BCC bra_E8D1
 	CPY #$32
 	BCS bra_E8C8
-	LDA #$27
+	LDA #$27	; Kick SFX
 	BNE bra_E8CE
 bra_E8C8:
 	CPY #$3C
 	BCS bra_E8D1
-	LDA #$26
+	LDA #$26	; Punch SFX
 bra_E8CE:
 	JSR sub_sndload_noloop
 bra_E8D1:
@@ -7529,7 +7529,7 @@ bra_F347:
 	LDA #$00
 	STA ram_00AF
 	JSR sub_FF9D_write_to_ppu
-	LDA #$28
+	LDA #$28	; Score counter tick SFX
 	JSR sub_sndload_noloop
 	RTS
 bra_F36F:
@@ -8290,8 +8290,8 @@ SndIndicesTbl:
 	.byte $02   ; 08	MUSIC: Chun Li
 	.byte $09   ; 09	MUSIC: Title screen
 	.byte $0A   ; 0A	MUSIC: Character select
-	.byte $0B   ; 0B	Unused music?
-	.byte $0C   ; 0C	Unused music?
+	.byte $0B   ; 0B	MUSIC (bonus): E. Honda
+	.byte $0C   ; 0C	MUSIC (bonus): Zangief
 	.byte $0D   ; 0D	MUSIC: Ending
 	.byte $0E   ; 0E	Unused SFX?
 	.byte $0F   ; 0F	SFX: Electricity (e.g. Blanka)
@@ -8311,7 +8311,7 @@ SndIndicesTbl:
 	.byte $1D   ; 1D	SFX: Countdown in continue screen
 	.byte $1E   ; 1E	SFX: Aeroplane before match
 	.byte $1F   ; 1F	SFX: Pause
-	.byte $20   ; 20	Unused music?
+	.byte $20   ; 20	MUSIC (bonus): Balrog
 	.byte $1D   ; 21	Unused duplicate?
 	.byte $21   ; 22	Unused SFX? (Hard hit?)
 	.byte $22   ; 23	SFX: Throw
@@ -8843,7 +8843,7 @@ sub_FB00:
 	SBC ram_damage,X
 	STA ram_0500,X
 	BPL bra_FB13
-	LDA #$24
+	LDA #$24	; Final Hit SFX
 	JSR sub_sndload_noloop
 bra_FB13:
 	CPX #$10
@@ -9823,7 +9823,8 @@ tbl_vibrato:
 
 ; -----------------------------------------------------------------------------
 tbl_playlist:
-	.byte $09, $00, $01, $02, $03, $04, $05, $06, $07, $08, $0A, $0D, $1B, $1C, $0B, $0C
+	.byte $09, $00, $01, $02, $03, $04, $05, $06
+	.byte $07, $08, $0A, $0D, $1B, $1C, $0B, $0C, $20
 
 
 
