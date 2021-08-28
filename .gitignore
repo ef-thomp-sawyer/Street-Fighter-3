@@ -4,5 +4,7 @@
 *.ffs_db
 *.nes
 *.ram.nl
+*.zip
+*.7z
 _debug.txt
 _listing.txt
