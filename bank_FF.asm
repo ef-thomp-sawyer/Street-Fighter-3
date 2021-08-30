@@ -190,7 +190,8 @@ sub_display_current_song:
 	sta $2006
 
 	lda ram_07A1
-	ora #$30
+	clc
+	adc #$30
 
 	cmp #$3A
 	bcc @WritePPU
@@ -9797,6 +9798,23 @@ tbl_note_period_hi:
 	.byte $0D, $F8	; 54 Noise D
 	.byte $0E, $F8	; 55 Noise E
 	.byte $0F, $F8	; 56 Noise F
+	
+	.byte $9B, $F8	; 57 Periodic noise B
+	.byte $80, $F8	; 58 Periodic Noise 0
+	.byte $81, $F8	; 59 Periodic Noise 1
+	.byte $82, $F8	; 5A Periodic Noise 2
+	.byte $83, $F8	; 5B Periodic Noise 3
+	.byte $8A, $F8	; 5C Periodic Noise A
+	.byte $84, $F8	; 5D Periodic Noise 4
+	.byte $85, $F8	; 5E Periodic Noise 5
+	.byte $86, $F8	; 5F Periodic Noise 6
+	.byte $87, $F8	; 60 Periodic Noise 7
+	.byte $88, $F8	; 61 Periodic Noise 8
+	.byte $89, $F8	; 62 Periodic Noise 9
+	.byte $8C, $F8	; 63 Periodic Noise C
+	.byte $8D, $F8	; 64 Periodic Noise D
+	.byte $8E, $F8	; 65 Periodic Noise E
+	.byte $8F, $F8	; 66 Periodic Noise F
 
 
 .export tbl_vibrato

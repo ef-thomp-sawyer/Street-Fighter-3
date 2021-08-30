@@ -144,13 +144,13 @@ class Channel:
 
             if event == Channel.EVENT_SETVOL:
                 self.last_volume = parameter & 0x0F
-                self.last_timbre = parameter >> 6 if self.id < 2 else 0
+                self.last_timbre = parameter >> 6 if self.id < 2 else self.last_timbre
                 # Disable length counter and volume envelope for pulse and noise channels
                 if self.id != 2:
                     parameter = parameter | 0x30
 
             elif event == Channel.EVENT_TIMBRE:
-                if self.id != 2:
+                if self.id < 2:
                     parameter = parameter | 0x30
 
             elif event == Channel.EVENT_DELTA:
@@ -193,13 +193,18 @@ class Channel:
             self.data.append(self.current_duration)
             self.byte_count += 2
 
-            self.asm += f"\t.byte ${self.current_event:02X}, ${self.current_duration:02X}"
+            if self.id == 3 and self.current_event < 0x80 and self.last_timbre == 1:
+                # Periodic noise mode
+                self.asm += f"\t.byte ${(self.current_event + 0x10):02X}, ${self.current_duration:02X}"
+            else:
+                self.asm += f"\t.byte ${self.current_event:02X}, ${self.current_duration:02X}"
+
             # Add note/event name as comment
             if self.current_event >= 0x80:
                 name = EVENTS[self.current_event & 0x7F]
             else:
                 if self.id == Channel.ID_NOISE:
-                    name = f"{NOISE.index(self.current_event)}-#"
+                    name = f"{NOISE.index(self.current_event):02X}-#"
                 else:
                     name = NOTES[self.current_event]
 
@@ -549,10 +554,11 @@ def main():
                             if value != channels[c].last_volslide:
                                 channels[c].instant_event(Channel.EVENT_VOLSLIDE, value)
 
-                        elif fx[0] == 'V' and c < 2:  # Timbre (pulse channels only)
+                        elif fx[0] == 'V' and c < 3:  # Timbre
                             value = int(fx[1:], 16)
-                            #if value != channels[c].last_timbre:
-                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            # if value != channels[c].last_timbre:
+                            if c < 2:
+                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
                             channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':
@@ -656,10 +662,11 @@ def main():
                                 channels[c].instant_event(Channel.EVENT_VOLSLIDE, value)
                                 channels[c].last_volume = -1
 
-                        elif fx[0] == 'V':  # Timbre (pulse channels only)
+                        elif fx[0] == 'V':  # Timbre
                             value = int(fx[1:], 16)
-                            #if value != channels[c].last_timbre:
-                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            # if value != channels[c].last_timbre:
+                            if c < 2:
+                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
                             channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':
@@ -705,7 +712,7 @@ def main():
                     volume = row.volume
                     if volume != -1 and volume != channels[c].last_volume:
 
-                        if c < 2:
+                        if c < 3:
                             # If there is a timbre effect ("Vxx") on the same line, include that in the volume change
                             v = [i for i, e in enumerate(fx_list) if e[0] == 'V']
                             if len(v) > 0:
@@ -738,10 +745,11 @@ def main():
                             if value != channels[c].last_volslide:
                                 channels[c].instant_event(Channel.EVENT_VOLSLIDE, value)
 
-                        elif fx[0] == 'V':  # Timbre (pulse channels only)
+                        elif fx[0] == 'V':  # Timbre
                             value = int(fx[1:], 16)
-                            #if value != channels[c].last_timbre:
-                            channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
+                            # if value != channels[c].last_timbre:
+                            if c < 2:
+                                channels[c].instant_event(Channel.EVENT_TIMBRE, value << 6)
                             channels[c].last_timbre = value
 
                         elif fx[0] == 'Q':

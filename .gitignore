@@ -3,6 +3,7 @@
 .idea
 *.ffs_db
 *.nes
+*.mlb
 *.ram.nl
 *.zip
 *.7z

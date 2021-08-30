@@ -14,6 +14,7 @@ if "%1"=="" (
 	call :Import MBison, "M. Bison"
 	call :Import End, "Stage End"
 	call :Import Credits, Credits, -4
+	call :Import Honda, "E Honda", -2
 ) else (
 	if not exist %1\ mkdir %1
 	python import_music.py SF3.txt %1\%1 %2 %3

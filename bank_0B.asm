@@ -912,20 +912,31 @@ sub_calculate_volume:
 	txa
 	pha
 
-	cpx #$04
+	asl
+	tax
+
+	cpx #$08
 	bcs @MusicVol
 
+	lda ram_noteid_sfx0,X
+	bpl @SFXNote
+
+	; Rest or mute event: nothing to do
+	pla
+	tax
+	rts
+
+@SFXNote:
+	
+
 	; TODO SFX mid-note effects
+
 
 	pla
 	tax
 	rts
 
 @MusicVol:
-
-	asl
-	tax
-
 	lda ram_noteid_sfx0,X
 	bpl @ActualNote
 
@@ -1219,10 +1230,21 @@ sub_write_apu_period:
 	asl
 	tax
 	lda tbl_note_period_lo,Y
+	; TODO SFX fine pitch
+	sta ram_reg2_sfx0,X
 	sta $4002,X		; Timer low
+
 	lda tbl_note_period_hi,Y
+	sta ram_reg3_sf0,X
 	sta $4003,X		; Timer high
-	jmp @End
+	
+	; TODO SFX Note slide
+	; TODO SFX Pitch slide
+	; TODO SFX Volume slide
+
+	pla
+	tax
+	rts
 	
 @MusicNote:
 	asl
@@ -1253,8 +1275,8 @@ sub_write_apu_period:
 	
 @MusicNote_Enabled:
 	; Copy base volume to effective volume too
-	;lda ram_basereg0_mus0,X
-	;sta ram_effreg0_mus0,X
+	; lda ram_basereg0_mus0,X
+	; sta ram_effreg0_mus0,X
 	; sta $4000,X not here: will be done in calculate_volume every frame
 
 	; Play and also copy to RAM
@@ -1273,7 +1295,7 @@ sub_write_apu_period:
 	; Calculate target period for note slide if needed
 	; Y is still the starting note index
 	lda ram_noteslide_speed_mus0,X
-	beq @StartVolSlide
+	beq @StartVolSlide	; Skip note slide if zero
 
 	; At this point, this is the target note offset, we will need to turn it
 	; into a 11-bit period value
@@ -1303,7 +1325,6 @@ sub_write_apu_period:
 	pla
 	tax
 	rts
-
 
 
 ; -----------------------------------------------------------------------------

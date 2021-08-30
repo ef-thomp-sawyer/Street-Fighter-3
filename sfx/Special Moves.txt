@@ -1,0 +1,36 @@
+Bank $07
+
+Dhalsim
+- Yoga Fire:		off_A95E_3F, $0D
+
+Sagat
+- Tiger Uppercut:	off_BB37_3D, $15
+- Low Tiger Shot:	off_BB64_3E, $0F
+- High Tiger Shot:	off_BB84_3F, $0F
+
+Vega
+ (No special SFX)
+
+M. Bison
+- Psycho Crusher:	off_AF57_3F, $0F
+
+---
+
+Bank $0D
+
+Chun-Li
+- Spinning BIrd Kick:	off_A91C_3C, $23
+- Lightning Kicks:	off_A97E_3D, $0D
+
+Guile
+- Flash Kick:		off_AF45_3C, $13
+- Sonic Boom:		off_AF78_3F, $0A
+
+Ryu/Ken
+- Hurricane Kick: 	off_B57C_3C, $19
+- Shoryuken:		off_B5BE_3D, $05
+- Hadouken:		off_B5E8_3F, $0F
+
+Blanka
+- Electricity:		off_BC36_3D, $07
+- Rolling Ball:		off_BC60_3F, $0B

@@ -1177,9 +1177,9 @@ off_8224_04:
 - - - - - - 0x00E416 03:A406: 16 A4     .word _player_A416_03           ; placeholder
 - D 1 - - - 0x00E418 03:A408: 16 A4     .word _player_A416_04_Dhalsim
 - - - - - - 0x00E41A 03:A40A: 16 A4     .word _player_A416_05           ; placeholder, fighter doesn't exist
-- D 1 - - - 0x00E41C 03:A40C: 8B B0     .word _player_B08B_06_Balrog
+- D 1 - - - 0x00E41C 03:A40C: 8B B0     .word _player_B08B_06_Balrog    ; (Vega)
 - D 1 - - - 0x00E41E 03:A40E: 75 B6     .word _player_B675_07_Sagat
-- D 1 - - - 0x00E420 03:A410: 74 AA     .word _player_AA74_08_Vega
+- D 1 - - - 0x00E420 03:A410: 74 AA     .word _player_AA74_08_Vega      ; (M. Bison)
 - D 1 - - - 0x00E422 03:A412: 00 8B     .word tbl_0x014B10_09
 - D 1 - - - 0x00E424 03:A414: 2A 8C     .word tbl_0x014C3A_0A
 
@@ -4219,7 +4219,7 @@ off_AF57_3F:
 - D 1 - I - 0x00EF73 03:AF63: FC        .byte $FC   ; 
 - D 1 - I - 0x00EF74 03:AF64: 81        .byte $81   ; 
 - D 1 - I - 0x00EF75 03:AF65: FC        .byte $FC   ; 
-- D 1 - I - 0x00EF76 03:AF66: 12        .byte $12   ; 
+- D 1 - I - 0x00EF76 03:AF66: 12        .byte $12   ; SFX ID: Bison's Psycho Crusher
 - D 1 - I - 0x00EF77 03:AF67: 2C        .byte $2C   ; 
 - D 1 - I - 0x00EF78 03:AF68: 00        .byte $00   ; 
 - D 1 - I - 0x00EF79 03:AF69: 04        .byte $04   ; 
@@ -7506,7 +7506,7 @@ off_BB84_3F:
 - D 1 - I - 0x00FBA0 03:BB90: FD        .byte $FD   ; 
 - D 1 - I - 0x00FBA1 03:BB91: 40        .byte $40   ; 
 - D 1 - I - 0x00FBA2 03:BB92: FC        .byte $FC   ; 
-- D 1 - I - 0x00FBA3 03:BB93: 14        .byte $14   ; 
+- D 1 - I - 0x00FBA3 03:BB93: 14        .byte $14   ; SFX ID: Sagat's Tiger Shot
 - D 1 - I - 0x00FBA4 03:BB94: 20        .byte $20   ; 
 - D 1 - I - 0x00FBA5 03:BB95: 00        .byte $00   ; 
 - D 1 - I - 0x00FBA6 03:BB96: 00        .byte $00   ; 

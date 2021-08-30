@@ -2416,7 +2416,7 @@ off_A91C_3C:
 - D 1 - I - 0x01A94C 06:A93C: 00        .byte $00   ; 
 - D 1 - I - 0x01A94D 06:A93D: 83        .byte $83   ; 
 - D 1 - I - 0x01A94E 06:A93E: FC        .byte $FC   ; 
-- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; SFX index for Spinning Kick
+- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; SFX ID: Chun-Li's 
 - D 1 - I - 0x01A950 06:A940: 57        .byte $57   ; 
 - D 1 - I - 0x01A951 06:A941: 0E        .byte $0E   ; 
 - D 1 - I - 0x01A952 06:A942: 00        .byte $00   ; 
@@ -2494,7 +2494,7 @@ off_A97E_3D:
 - D 1 - I - 0x01A998 06:A988: 00        .byte $00   ; 
 - D 1 - I - 0x01A999 06:A989: 83        .byte $83   ; 
 - D 1 - I - 0x01A99A 06:A98A: FC        .byte $FC   ; 
-- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID for Flash Kick
+- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID: Chun-Li's Lightning Kick
 - D 1 - I - 0x01A99C 06:A98C: 28        .byte $28   ; 
 - D 1 - I - 0x01A99D 06:A98D: 00        .byte $00   ; 
 - D 1 - I - 0x01A99E 06:A98E: 00        .byte $00   ; 
@@ -4062,7 +4062,7 @@ off_AF45_3C:
 - D 1 - I - 0x01AF65 06:AF55: 00        .byte $00   ; 
 - D 1 - I - 0x01AF66 06:AF56: 84        .byte $84   ; 
 - D 1 - I - 0x01AF67 06:AF57: FC        .byte $FC   ; 
-- D 1 - I - 0x01AF68 06:AF58: 16        .byte $16   ; 
+- D 1 - I - 0x01AF68 06:AF58: 16        .byte $16   ; SFX ID: Guile's Flash Kick
 - D 1 - I - 0x01AF69 06:AF59: 42        .byte $42   ; 
 - D 1 - I - 0x01AF6A 06:AF5A: 00        .byte $00   ; 
 - D 1 - I - 0x01AF6B 06:AF5B: 00        .byte $00   ; 
@@ -4110,7 +4110,7 @@ off_AF78_3F:
 - D 1 - I - 0x01AF8F 06:AF7F: 00        .byte $00   ; 
 - D 1 - I - 0x01AF90 06:AF80: 00        .byte $00   ; 
 - D 1 - I - 0x01AF91 06:AF81: FC        .byte $FC   ; 
-- D 1 - I - 0x01AF92 06:AF82: 15        .byte $15   ; 
+- D 1 - I - 0x01AF92 06:AF82: 15        .byte $15   ; SFX ID: Guile's Sonic Boom
 - D 1 - I - 0x01AF93 06:AF83: 56        .byte $56   ; 
 - D 1 - I - 0x01AF94 06:AF84: 0E        .byte $0E   ; 
 - D 1 - I - 0x01AF95 06:AF85: 08        .byte $08   ; 
@@ -4760,7 +4760,7 @@ off_B215_0D:
 - D 1 - I - 0x01B228 06:B218: 89        .byte $89   ; 
 - D 1 - I - 0x01B229 06:B219: F2        .byte $F2   ; 
 - D 1 - I - 0x01B22A 06:B21A: FC        .byte $FC   ; 
-- D 1 - I - 0x01B22B 06:B21B: 17        .byte $17   ; 
+- D 1 - I - 0x01B22B 06:B21B: 17        .byte $17   ; SFX ID?
 - D 1 - I - 0x01B22C 06:B21C: 00        .byte $00   ; 
 - D 1 - I - 0x01B22D 06:B21D: 02        .byte $02   ; 
 - D 1 - I - 0x01B22E 06:B21E: 82        .byte $82   ; 
@@ -4816,7 +4816,7 @@ off_B249_0F:
 - D 1 - I - 0x01B25C 06:B24C: 89        .byte $89   ; 
 - D 1 - I - 0x01B25D 06:B24D: F2        .byte $F2   ; 
 - D 1 - I - 0x01B25E 06:B24E: FC        .byte $FC   ; 
-- D 1 - I - 0x01B25F 06:B24F: 17        .byte $17   ; 
+- D 1 - I - 0x01B25F 06:B24F: 17        .byte $17   ; SFX ID?
 - D 1 - I - 0x01B260 06:B250: 00        .byte $00   ; 
 - D 1 - I - 0x01B261 06:B251: 02        .byte $02   ; 
 - D 1 - I - 0x01B262 06:B252: 83        .byte $83   ; 
@@ -5744,7 +5744,7 @@ off_B57C_3C:
 - D 1 - I - 0x01B5A2 06:B592: 00        .byte $00   ; 
 - D 1 - I - 0x01B5A3 06:B593: 84        .byte $84   ; 
 - D 1 - I - 0x01B5A4 06:B594: FC        .byte $FC   ; 
-- D 1 - I - 0x01B5A5 06:B595: 12        .byte $12   ; 
+- D 1 - I - 0x01B5A5 06:B595: 12        .byte $12   ; SFX ID for Ryu's Tatsu
 - D 1 - I - 0x01B5A6 06:B596: 4F        .byte $4F   ; 
 - D 1 - I - 0x01B5A7 06:B597: 00        .byte $00   ; 
 - D 1 - I - 0x01B5A8 06:B598: 00        .byte $00   ; 

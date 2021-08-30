@@ -1532,25 +1532,25 @@ ram_05BE                        = $05BE ; (Unused) Target period LO SFX ch 3
 ram_05BF                        = $05BF ; (Unused) Target period HI SFX ch 3
 
 ; -----------------------------------------------------------------------------
-ram_05C0                        = $05C0 ; N/A
-ram_05C1                        = $05C1 ; N/A
-ram_05C2                        = $05C2 ; N/A
-ram_05C3                        = $05C3 ; N/A
+ram_basereg0_sfx0               = $05C0 ; Duty/Volume for SFX ch 0
+ram_effreg0_sfx0                = $05C1 ; Effective volume for SFX ch 0
+ram_reg2_sfx0                   = $05C2 ; Current period (LO) for SFX ch 0
+ram_reg3_sf0                    = $05C3 ; Current period (HI) for SFX ch 0
 
-ram_05C4                        = $05C4 ; N/A
-ram_05C5                        = $05C5 ; N/A
-ram_05C6                        = $05C6 ; N/A
-ram_05C7                        = $05C7 ; N/A
+ram_basereg0_sfx1               = $05C4 ; Duty/Volume for SFX ch 1
+ram_effreg0_sfx1                = $05C5 ; Effective volume for SFX ch 1
+ram_reg2_sfx1                   = $05C6 ; Current period (LO) for SFX ch 1
+ram_reg3_sf1                    = $05C7 ; Current period (HI) for SFX ch 1
 
-ram_05C8                        = $05C8 ; N/A
-ram_05C9                        = $05C9 ; N/A
-ram_05CA                        = $05CA ; N/A
-ram_05CB                        = $05CB ; N/A
+ram_basereg0_sfx2               = $05C8 ; Volume for SFX ch 2
+ram_effreg0_sfx2                = $05C9 ; Effective volume for SFX ch 2
+ram_reg2_sfx2                   = $05CA ; Current period (LO) for SFX ch 2
+ram_reg3_sf2                    = $05CB ; Current period (HI) for SFX ch 2
 
-ram_05CC                        = $05CC ; N/A
-ram_05CD                        = $05CD ; (Unused)
-ram_05CE                        = $05CE ; (Unused)
-ram_05CF                        = $05CF ; (Unused)
+ram_basereg0_sfx3               = $05CC ; Volume for SFX ch 3
+ram_effreg0_sfx3                = $05CD ; Effective volume for SFX ch 3
+ram_reg2_sfx3                   = $05CE ; Current period (LO) for SFX ch 3
+ram_reg3_sf3                    = $05CF ; Current period (HI) for SFX ch 3
 
 ; -----------------------------------------------------------------------------
 ram_volmute_ctr_mus0            = $05D0 ; Volume slide mute counter for Mus Ch 0 (used to stay on vol 1 for a few frames before muting)
@@ -1595,25 +1595,25 @@ ram_noteslide_lo_mus3           = $05EE ; (Unused) Target period LO music ch 3
 ram_noteslide_hi_mus3           = $05EF ; (Unused) Target period HI music ch 3
 
 ; -----------------------------------------------------------------------------
-ram_basereg0_mus0               = $05F0 ; 4   Duty/Volume for music channel 0
-ram_effreg0_mus0                = $05F1 ; 3   Effective volume for music ch 0
-ram_reg2_mus0                   = $05F2 ; 2   Note Period (LO) for music ch 0
-ram_reg3_mus0                   = $05F3 ; 2   Note Period (HI) for music ch 0
+ram_basereg0_mus0               = $05F0 ; Duty/Volume for music channel 0
+ram_effreg0_mus0                = $05F1 ; Effective volume for music ch 0
+ram_reg2_mus0                   = $05F2 ; Note Period (LO) for music ch 0
+ram_reg3_mus0                   = $05F3 ; Note Period (HI) for music ch 0
 
-ram_basereg0_mus1               = $05F4 ; 1   Duty/Volume for music channel 1
-ram_effreg0_mus1                = $05F5 ; 1   Effective volume for music ch 1
-ram_reg2_mus1                   = $05F6 ; N/A   Note Period (LO) for music ch 1
-ram_reg3_mus1                   = $05F7 ; N/A   Note Period (HI) for music ch 1
+ram_basereg0_mus1               = $05F4 ; Duty/Volume for music channel 1
+ram_effreg0_mus1                = $05F5 ; Effective volume for music ch 1
+ram_reg2_mus1                   = $05F6 ; Note Period (LO) for music ch 1
+ram_reg3_mus1                   = $05F7 ; Note Period (HI) for music ch 1
 
-ram_basereg0_mus2               = $05F8 ; 1   Volume for music channel 2
-ram_effreg0_mus2                = $05F9 ; 1   Effective volume for music ch 2
-ram_reg2_mus2                   = $05FA ; N/A   Note Period (LO) for music ch 2
-ram_reg3_mus2                   = $05FB ; N/A   Note Period (HI) for music ch 2
+ram_basereg0_mus2               = $05F8 ; Volume for music channel 2
+ram_effreg0_mus2                = $05F9 ; Effective volume for music ch 2
+ram_reg2_mus2                   = $05FA ; Note Period (LO) for music ch 2
+ram_reg3_mus2                   = $05FB ; Note Period (HI) for music ch 2
 
-ram_basereg0_mus3               = $05FC ; 1   Volume for music channel 3
-ram_effreg0_mus3                = $05FD ; 1   Effective volume for music ch 3
-ram_reg2_mus3                   = $05FE ; N/A   Noise Period for music ch 3
-ram_reg3_mus3                   = $05FF ; N/A   Noise Counter Load for music ch 3
+ram_basereg0_mus3               = $05FC ; Volume for music channel 3
+ram_effreg0_mus3                = $05FD ; Effective volume for music ch 3
+ram_reg2_mus3                   = $05FE ; Noise Period for music ch 3
+ram_reg3_mus3                   = $05FF ; Noise Counter Load for music ch 3
 
 ; -----------------------------------------------------------------------------
 ram_0600                        = $0600 ; 13   
