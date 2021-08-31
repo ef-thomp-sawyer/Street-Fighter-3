@@ -1602,7 +1602,7 @@ tbl_apureg_masks:
 	.byte $00	; Pulse0 Timer low (nothing to preserve)
 	.byte $F8	; Pulse0 Length counter load
 
-	.byte $F0, $00, $FF, $F7	; Pulse1 (same as Pulse0)
+	.byte $F0, $00, $00, $F8	; Pulse1 (same as Pulse0)
 
 	.byte $80		; Triangle Lengh/linear counter flag
 	.byte $00		; No register here
