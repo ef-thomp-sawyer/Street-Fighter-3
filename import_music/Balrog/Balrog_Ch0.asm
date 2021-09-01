@@ -23,6 +23,7 @@
 
 ; -------- FRAME 01 --------
 	.byte $26, $06	; D-4, 6 ticks
+	.byte $87, $00	; **VOLSLIDE FIX
 	.byte $88, $B0	; *TIMBRE, $B0
 	.byte $26, $0D	; D-4, 13 ticks
 	.byte $80, $B3	; VOLUME, $B3

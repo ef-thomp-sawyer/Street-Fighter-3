@@ -13,7 +13,12 @@
 ; -------- FRAME 01 --------
 	.byte $26, $06	; D-4, 6 ticks
 	.byte $82, $07	; *REST, 7 ticks
-	.byte $88, $30	; *TIMBRE, $30
+
+	; Loop fix
+	; .byte $88, $30	; *TIMBRE, $30
+	.byte $80, $37	; VOLUME, $37
+	.byte $87, $04	; *VOLSLIDE, $04
+
 	.byte $26, $06	; D-4, 6 ticks
 	.byte $24, $06	; C-4, 6 ticks
 	.byte $21, $06	; A-3, 6 ticks
