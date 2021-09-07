@@ -680,13 +680,35 @@ sub_set_fine_pitch:
 	lda ram_noteid_sfx0,X	; Current note
 	pha		; TODO Use zp temp variables instead
 
+	; Index a 4 bytes per entry table
 	txa
 	asl
-	and #$0F
+
+	cmp #$10
+	bcs @SetFinePitch_Music
+	
 	tax
 
-	; TODO Add support for SFX channels?
+	ldy #$01
+	lda (ram_snd_ptr_lo),Y
+	sta ram_finepitch_sfx0,X
 
+; Immediately apply fine pitch to current note
+	pla
+	bmi @NotANote
+
+	asl
+	tay
+	jsr sub_apply_fine_pitch_music
+	sta ram_reg2_sfx0,X
+
+	pla
+	tax
+	rts
+
+@SetFinePitch_Music:
+	txa
+	and #$0F
 
 	ldy #$01
 	lda (ram_snd_ptr_lo),Y
@@ -698,7 +720,7 @@ sub_set_fine_pitch:
 
 	asl
 	tay
-	jsr sub_apply_fine_pitch
+	jsr sub_apply_fine_pitch_music
 	sta ram_reg2_mus0,X
 
 @NotANote:
@@ -1230,7 +1252,8 @@ sub_write_apu_period:
 	asl
 	tax
 	lda tbl_note_period_lo,Y
-	; TODO SFX fine pitch
+	; Apply SFX fine pitch
+	jsr sub_apply_fine_pitch_sfx
 	sta ram_reg2_sfx0,X
 	sta $4002,X		; Timer low
 
@@ -1261,7 +1284,7 @@ sub_write_apu_period:
 	
 	; Copy to RAM only: music is disabled on this channel to make room for SFX
 	lda tbl_note_period_lo,Y
-	jsr sub_apply_fine_pitch
+	jsr sub_apply_fine_pitch_music
 	sta ram_reg2_mus0,X
 
 	lda tbl_note_period_hi,Y
@@ -1281,7 +1304,7 @@ sub_write_apu_period:
 
 	; Play and also copy to RAM
 	lda tbl_note_period_lo,Y
-	jsr sub_apply_fine_pitch
+	jsr sub_apply_fine_pitch_music
 	sta $4002,X
 	sta ram_reg2_mus0,X
 
@@ -1333,32 +1356,38 @@ sub_write_apu_period:
 ; Returns: adjusted period value (low byte) in A
 ; High byte not affected
 ; Preserves X and Y
-sub_apply_fine_pitch:
+sub_apply_fine_pitch_sfx:
+	lda ram_finepitch_sfx0,X
+	beq NoFinePitch
+	bmi SubtractPitch
+	bpl AddPitch
+	
+sub_apply_fine_pitch_music:
 	lda ram_finepitch_mus0,X
-	beq @NoFinePitch
-	bmi @SubtractPitch
+	beq NoFinePitch
+	bmi SubtractPitch
 
-; Add pitch
+AddPitch:
 	clc
 	adc tbl_note_period_lo,Y
-	bcc @Done
+	bcc FinePitchDone
 
 	; Avoid overflow
 	lda #$FF
 	rts
 
-@SubtractPitch:
+SubtractPitch:
 	clc
 	adc tbl_note_period_lo,Y
-	bcs @Done
+	bcs FinePitchDone
 
 	; Avoid underflow
 	lda #$00
 
-@Done:
+FinePitchDone:
 	rts
 	
-@NoFinePitch:
+NoFinePitch:
 	; No fine pitch, return base value
 	lda tbl_note_period_lo,Y
 	rts
@@ -1775,7 +1804,7 @@ tbl_sound_pointers:
 	.word _music_ending
 	.byte $96, $FF
 
-	.word _sfx_unused0			; 0E	Unused SFX 0
+	.word _sfx_yoga_fire		; 0E	*SFX: Yoga Fire
 	.byte $8C, $FF
 
 	.word _sfx_electr			; 0F	SFX: Electricity (e.g. Blanka)
@@ -1854,11 +1883,11 @@ tbl_sound_pointers:
 	.byte $8C, $FF
 
 
-_sfx_unused0:
-	.word _sfx_unused0_ch0		;	Unused SFX 0
-	.word $FFFF					; No Pulse1
-	.word _sfx_unused0_ch2		;
-	.word _sfx_unused0_ch3		;
+_sfx_yoga_fire:
+	.word $FFFF					; *SFX: Yoga Fire
+	.word _sfx_yoga_fire_ch1	;
+	.word $FFFF					;
+	.word $FFFF					;
 
 _sfx_electr:
 	.word $FFFF					; No Pulse0
@@ -1927,10 +1956,10 @@ _sfx_unused2:
 	.word _sfx_unused2_ch3		;	Unused SFX 2
 
 _sfx_selection:
-	.word _sfx_selection_ch0	;	SFX: Start button / Character selected
+	.word $FFFF					;	SFX: Start button / Character selected
 	.word _sfx_selection_ch1	;
-	.word _sfx_selection_ch2	;
-	.word $FFFF					; No Noise
+	.word $FFFF					;
+	.word $FFFF					;
 
 _sfx_countdown:
 	.word $FFFF					; No Pulse0
@@ -1950,7 +1979,7 @@ _sfx_plane:
 	.word _sfx_plane_ch3		;
 
 _sfx_pause:
-	.word _sfx_pause_ch0		;	SFX: Pause
+	.word $FFFF					;	SFX: Pause
 	.word _sfx_pause_ch1		;
 	.word $FFFF					; No Triangle
 	.word $FFFF					; No Noise
@@ -2013,48 +2042,35 @@ con_86 = $86    ; end token
 ;								SFX DATA
 ;
 
-_sfx_unused0_ch0:
-	.byte con_80 
-	.byte $FF   ; 
-	.byte $21   ; 
-	.byte $03   ; 
-	.byte $23   ; 
-	.byte $03   ; 
-	.byte $26   ; 
-	.byte $04   ; 
-	.byte $24   ; 
-	.byte $06   ; 
-	.byte con_86
-
-
-
-_sfx_unused0_ch2:
-	.byte con_80 
-	.byte $01   ; 
-	.byte $2D   ; 
-	.byte $03   ; 
-	.byte $2D   ; 
-	.byte $03   ; 
-	.byte $2D   ; 
-	.byte $04   ; 
-	.byte $2D   ; 
-	.byte $06   ; 
-	.byte con_86
-
-
-
-_sfx_unused0_ch3:
-	.byte con_80 
-	.byte $31   ; 
-	.byte $19   ; 
-	.byte $03   ; 
-	.byte $19   ; 
-	.byte $03   ; 
-	.byte $19   ; 
-	.byte $04   ; 
-	.byte $19   ; 
-	.byte $06   ; 
-	.byte con_86
+_sfx_yoga_fire_ch1:
+	.byte $80, $74	; VOLUME, $74
+	.byte $06, $05	; F#1, 5 ticks
+	.byte $80, $35	; VOLUME, $35
+	.byte $84, $05	; *HOLD, 5 ticks
+	.byte $88, $30	; *TIMBRE, $30
+	.byte $0C, $07	; C-2, 7 ticks
+	.byte $80, $34	; VOLUME, $34
+	.byte $84, $03	; *HOLD, 3 ticks
+	.byte $80, $72	; VOLUME, $72
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $82, $08	; *REST, 8 ticks
+	.byte $80, $76	; VOLUME, $76
+	.byte $0B, $03	; B-1, 3 ticks
+	.byte $80, $75	; VOLUME, $75
+	.byte $84, $03	; *HOLD, 3 ticks
+	.byte $80, $76	; VOLUME, $76
+	.byte $0E, $03	; D-2, 3 ticks
+	.byte $0C, $03	; C-2, 3 ticks
+	.byte $80, $75	; VOLUME, $75
+	.byte $0B, $04	; B-1, 4 ticks
+	.byte $80, $74	; VOLUME, $74
+	.byte $09, $02	; A-1, 2 ticks
+	.byte $80, $72	; VOLUME, $72
+	.byte $07, $02	; G-1, 2 ticks
+	.byte $80, $71	; VOLUME, $71
+	.byte $05, $02	; F-1, 2 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $8F	; *STOP
 
 
 
@@ -2321,54 +2337,26 @@ _sfx_unused2_ch3:
 
 
 
-_sfx_selection_ch0:
-	.byte con_80 
-	.byte $FF   ; 
-	.byte $1A   ; 
-	.byte $05   ; 
-	.byte $1C   ; 
-	.byte $05   ; 
-	.byte $1D   ; 
-	.byte $05   ; 
-	.byte $1F   ; 
-	.byte $05   ; 
-	.byte $21   ; 
-	.byte $0B   ; 
-	.byte con_86
-
-
-
 _sfx_selection_ch1:
-	.byte con_80 
-	.byte $FF   ; 
-	.byte $2D   ; 
-	.byte $05   ; 
-	.byte $2B   ; 
-	.byte $05   ; 
-	.byte $28   ; 
-	.byte $05   ; 
-	.byte $2B   ; 
-	.byte $05   ; 
-	.byte $2D   ; 
-	.byte $0B   ; 
-	.byte con_86
-
-
-
-_sfx_selection_ch2:
-	.byte con_80 
-	.byte $FF   ; 
-	.byte $2B   ; 
-	.byte $05   ; 
-	.byte $28   ; 
-	.byte $05   ; 
-	.byte $2D   ; 
-	.byte $05   ; 
-	.byte $2B   ; 
-	.byte $05   ; 
-	.byte $2D   ; 
-	.byte $0B   ; 
-	.byte con_86
+	.byte $80, $B7	; VOLUME, $B7
+	.byte $1E, $02	; F#3, 2 ticks
+	.byte $80, $B9	; VOLUME, $B9
+	.byte $2A, $04	; F#4, 4 ticks
+	.byte $80, $B7	; VOLUME, $B7
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $B6	; VOLUME, $B6
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $B4	; VOLUME, $B4
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $B1	; VOLUME, $B1
+	.byte $1E, $02	; F#3, 2 ticks
+	.byte $80, $B2	; VOLUME, $B2
+	.byte $2A, $06	; F#4, 6 ticks
+	.byte $80, $B1	; VOLUME, $B1
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $B0	; VOLUME, $B0
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $8F	; *STOP
 
 
 _sfx_countdown_ch1:
@@ -2452,39 +2440,15 @@ _sfx_plane_ch3:
 
 
 
-_sfx_pause_ch0:
-	.byte con_80 
-	.byte $1F   ; 
-	.byte $26   ; 
-	.byte $04   ; 
-	.byte $28   ; 
-	.byte $04   ; 
-	.byte $2B   ; 
-	.byte $04   ; 
-	.byte $2D   ; 
-	.byte $04   ; 
-	.byte con_81
-	.byte $06   ; 
-	.byte con_83 
-	.byte con_86
-
-
-
 _sfx_pause_ch1:
-	.byte con_80 
-	.byte $1F   ; 
-	.byte $1D   ; 
-	.byte $04   ; 
-	.byte $21   ; 
-	.byte $04   ; 
-	.byte $1F   ; 
-	.byte $04   ; 
-	.byte $21   ; 
-	.byte $04   ; 
-	.byte con_81
-	.byte $06   ; 
-	.byte con_83 
-	.byte con_86
+	.byte $80, $B7	; VOLUME, $B7
+	.byte $26, $05	; D-4, 5 ticks
+	.byte $23, $0A	; B-3, 10 ticks
+	.byte $80, $B1	; VOLUME, $B1
+	.byte $26, $05	; D-4, 5 ticks
+	.byte $23, $0A	; B-3, 10 ticks
+	.byte $82, $05	; *REST, 5 ticks
+	.byte $8F		; *STOP
 
 
 _sfx_unused3_ch3:

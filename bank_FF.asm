@@ -8294,7 +8294,7 @@ SndIndicesTbl:
 	.byte $0B   ; 0B	MUSIC (bonus): E. Honda
 	.byte $0C   ; 0C	MUSIC (bonus): Zangief
 	.byte $0D   ; 0D	MUSIC: Ending
-	.byte $0E   ; 0E	Unused SFX?
+	.byte $0E   ; 0E	*SFX: Dhalsim's Yoga Fire
 	.byte $0F   ; 0F	SFX: Electricity (e.g. Blanka)
 	.byte $10   ; 10	SFX: Roll (e.g. Blanka)
 	.byte $11   ; 11	SFX: Repeated close hit (e.g. Blanka's Wild Fang)

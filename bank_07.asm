@@ -2590,34 +2590,11 @@ off_A945_3E:
 - - - - - - 0x00E96D 03:A95D: FF        .byte $FF   ; 
 
 off_A95E_3F:
-- D 1 - I - 0x00E96E 03:A95E: 18        .byte $18   ; 
-- D 1 - I - 0x00E96F 03:A95F: F4        .byte $F4   ; 
-- D 1 - I - 0x00E970 03:A960: 08        .byte $08   ; 
-- D 1 - I - 0x00E971 03:A961: 8A        .byte $8A   ; 
-- D 1 - I - 0x00E972 03:A962: 3C        .byte $3C   ; 
-- D 1 - I - 0x00E973 03:A963: 0E        .byte $0E   ; 
-- D 1 - I - 0x00E974 03:A964: F8        .byte $F8   ; 
-- D 1 - I - 0x00E975 03:A965: 8A        .byte $8A   ; 
-- D 1 - I - 0x00E976 03:A966: 42        .byte $42   ; 
-- D 1 - I - 0x00E977 03:A967: 06        .byte $06   ; 
-- D 1 - I - 0x00E978 03:A968: 00        .byte $00   ; 
-- D 1 - I - 0x00E979 03:A969: 8A        .byte $8A   ; 
-- D 1 - I - 0x00E97A 03:A96A: FC        .byte $FC   ; 
-- D 1 - I - 0x00E97B 03:A96B: 14        .byte $14   ; SFX for Dhalsim's Fireball
-- D 1 - I - 0x00E97C 03:A96C: FD        .byte $FD   ; 
-- D 1 - I - 0x00E97D 03:A96D: 40        .byte $40   ; 
-- D 1 - I - 0x00E97E 03:A96E: 41        .byte $41   ; 
-- D 1 - I - 0x00E97F 03:A96F: 00        .byte $00   ; 
-- D 1 - I - 0x00E980 03:A970: 08        .byte $08   ; 
-- D 1 - I - 0x00E981 03:A971: B1        .byte $B1   ; 
-- D 1 - I - 0x00E982 03:A972: 42        .byte $42   ; 
-- D 1 - I - 0x00E983 03:A973: 00        .byte $00   ; 
-- D 1 - I - 0x00E984 03:A974: F8        .byte $F8   ; 
-- D 1 - I - 0x00E985 03:A975: 8A        .byte $8A   ; 
-- D 1 - I - 0x00E986 03:A976: 01        .byte $01   ; 
-- D 1 - I - 0x00E987 03:A977: F8        .byte $F8   ; 
-- D 1 - I - 0x00E988 03:A978: 00        .byte $00   ; 
-- D 1 - I - 0x00E989 03:A979: FF        .byte $FF   ; 
+    .byte $FC, $0E    ; SFX for Dhalsim's Yoga Fire
+    .byte $18, $F4, $08, $8A, $3C, $0E, $F8, $8A
+    .byte $42, $06, $00, $8A, $FD, $40, $41, $00
+    .byte $08, $B1, $42, $00, $F8, $8A, $01, $F8
+    .byte $00, $FF
 
 off_A97A_40:
 - D 1 - I - 0x00E98A 03:A97A: 43        .byte $43   ; 
