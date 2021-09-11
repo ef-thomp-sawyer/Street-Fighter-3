@@ -9022,12 +9022,14 @@ bra_FCF7_infinite_loop:
 
 
 
+; -----------------------------------------------------------------------------
+; A = Player# index (0 or 1)
 sub_FD02_read_joysticks_regs:
 	LDX #$01
 	STX $4016
 	DEX
 	STX $4016
-	TAX
+	TAX				; X = Player# index
 	LDY #$08
 bra_FD0E:
 	LDA $4016,X
@@ -9037,10 +9039,10 @@ bra_FD0E:
 	DEY
 	BNE bra_FD0E
 	LDA ram_btn_rol
-	CMP #$18
-	BNE bra_FD24_RTS
-	NOP
-	STY ram_p2_hp   ; !!! wtf
+	CMP #$18			; Was Up+Start pressed?
+	BNE bra_FD24_RTS	; Skip cheat if not
+	NOP					; (for future patching?)
+	STY ram_p2_hp   	; Apply cheat - Clear P2 hp
 bra_FD24_RTS:
 	RTS
 
