@@ -3087,7 +3087,7 @@ bra_D7C6:
 	STA ram_pause_flag
 	JSR sub_F83B
 	JSR sub_F80B
-	LDA #$1F	; Pause button
+	LDA #$1F	; Pause button sfx
 	JSR sub_sndload_noloop
 	JMP loc_D835
 bra_D7E2:
@@ -3176,6 +3176,10 @@ sub_D839:
 	JSR sub_D8E8_set_scroll_to_0
 	LDA ram_0016
 	STA $2001
+
+	lda #$00				; Fix for noise channel not resuming after pause
+	sta ram_ch_mute_mask	; -FOX
+
 	LDA ram_screen
 	JSR sub_sndload_loop
 	LDA #$00
