@@ -1916,7 +1916,7 @@ _sfx_rephit1:
 _sfx_hit:
 	.word $FFFF					; No Pulse0
 	.word $FFFF					; No Pulse1
-	.word $FFFF					; No Triangle
+	.word _sfx_hit_ch2			;
 	.word _sfx_hit_ch3			;	SFX: Hit, even if blocked
 
 _sfx_fireball:
@@ -2012,13 +2012,13 @@ _music_unused3:
 _sfx_punch:
 	.word $FFFF					; No Pulse0
 	.word $FFFF					; No Pulse1
-	.word $FFFF					; No Triangle
+	.word _sfx_punch_ch2		;
 	.word _sfx_punch_ch3		;	SFX: Punch
 
 _sfx_kick:
 	.word $FFFF					; No Pulse0
 	.word $FFFF					; No Pulse1
-	.word $FFFF					; No Triangle
+	.word _sfx_kick_ch2			;
 	.word _sfx_kick_ch3			;	SFX: Kick
 
 _sfx_scoretick:
@@ -2179,18 +2179,32 @@ _sfx_rephit1_ch3:
 
 
 
+_sfx_hit_ch2:
+	.byte $80, $FF	; VOLUME, $FF
+	.byte $18, $01	; C-3, 1 ticks
+	.byte $17, $01	; B-2, 1 ticks
+	.byte $15, $01	; A-2, 1 ticks
+	.byte $13, $01	; G-2, 1 ticks
+	.byte $12, $01	; F#2, 1 ticks
+	.byte $82, $03	; *REST, 3 ticks
+	.byte $86	; *STOP
+
 _sfx_hit_ch3:
-	.byte con_80 
-	.byte $3F   ; 
-	.byte $30   ; 
-	.byte $06   ; 
-	.byte $32   ; 
-	.byte $06   ; 
-	.byte $1E   ; 
-	.byte $09   ; 
-	.byte $3D   ; 
-	.byte $09   ; 
-	.byte con_86
+	.byte $80, $3E	; VOLUME, $3E
+	.byte $53, $02	; 03-#, 2 ticks
+	.byte $80, $3A	; VOLUME, $3A
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $38	; VOLUME, $38
+	.byte $52, $01	; 06-#, 1 ticks
+	.byte $80, $36	; VOLUME, $36
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $34	; VOLUME, $34
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $32	; VOLUME, $32
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $30	; VOLUME, $30
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $86	; *STOP
 
 
 
@@ -2503,27 +2517,63 @@ _sfx_finalhit_ch3:
 	.byte con_86
 
 
+_sfx_punch_ch2:
+	.byte $80, $FF	; VOLUME, $FF
+	.byte $1D, $01	; F-3, 1 ticks
+	.byte $1C, $01	; E-3, 1 ticks
+	.byte $1A, $01	; D-3, 1 ticks
+	.byte $18, $01	; C-3, 1 ticks
+	.byte $17, $01	; B-2, 1 ticks
+	.byte $15, $01	; A-2, 1 ticks
+	.byte $82, $03	; *REST, 3 ticks
+	.byte $86	; *STOP
 
 
 _sfx_punch_ch3:
-	.byte con_80 
-	.byte $3F   ; 
-	.byte $32   ; 
-	.byte $06   ; 
-	.byte $34   ; 
-	.byte $06   ; 
-	.byte con_86
+	.byte $80, $3E	; VOLUME, $3E
+	.byte $4C, $03	; 05-#, 3 ticks
+	.byte $80, $3A	; VOLUME, $3A
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $38	; VOLUME, $38
+	.byte $50, $01	; 08-#, 1 ticks
+	.byte $80, $36	; VOLUME, $36
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $34	; VOLUME, $34
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $32	; VOLUME, $32
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $30	; VOLUME, $30
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $86	; *STOP
 
+
+
+_sfx_kick_ch2:
+	.byte $80, $FF	; VOLUME, $FF
+	.byte $1A, $01	; D-3, 1 ticks
+	.byte $19, $01	; C#3, 1 ticks
+	.byte $17, $01	; B-2, 1 ticks
+	.byte $15, $01	; A-2, 1 ticks
+	.byte $14, $01	; G#2, 1 ticks
+	.byte $12, $01	; F#2, 1 ticks
+	.byte $82, $05	; *REST, 5 ticks
+	.byte $86	; *STOP
 
 
 _sfx_kick_ch3:
-	.byte con_80 
-	.byte $3F   ; 
-	.byte $1E   ; 
-	.byte $09   ; 
-	.byte $2F   ; 
-	.byte $06   ; 
-	.byte con_86
+	.byte $80, $3E	; VOLUME, $3E
+	.byte $47, $03	; 04-#, 3 ticks
+	.byte $80, $3A	; VOLUME, $3A
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $38	; VOLUME, $38
+	.byte $51, $02	; 07-#, 2 ticks
+	.byte $80, $36	; VOLUME, $36
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $34	; VOLUME, $34
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $30	; VOLUME, $30
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $86	; *STOP
 
 
 
