@@ -1493,22 +1493,28 @@ ram_059C                        = $059C ; N/A
 ram_059D                        = $059D ; N/A
 ram_059E                        = $059E ; N/A
 ram_059F                        = $059F ; N/A
-ram_05A0                        = $05A0 ; N/A
-ram_05A1                        = $05A1 ; N/A
-ram_05A2                        = $05A2 ; N/A
-ram_05A3                        = $05A3 ; N/A
-ram_05A4                        = $05A4 ; N/A
-ram_05A5                        = $05A5 ; N/A
-ram_05A6                        = $05A6 ; N/A
-ram_05A7                        = $05A7 ; N/A
-ram_05A8                        = $05A8 ; N/A
-ram_05A9                        = $05A9 ; N/A
-ram_05AA                        = $05AA ; N/A
-ram_05AB                        = $05AB ; N/A
-ram_05AC                        = $05AC ; N/A
-ram_05AD                        = $05AD ; N/A
-ram_05AE                        = $05AE ; N/A
-ram_05AF                        = $05AF ; N/A
+
+
+; -----------------------------------------------------------------------------
+ram_volmute_ctr_sfx0            = $05A0 ; Volume slide mute counter for SFX Ch 0 (used to stay on vol 1 for a few frames before muting)
+ram_vib_ctr_sfx0                = $05A1 ; Vibrato counter SFX Ch 0
+ram_vib_speed_sfx0              = $05A2 ; Vibrato counter reload SFX Ch 0
+ram_vib_value_sfx0              = $05A3 ; Vibrato depth SFX Ch 0
+
+ram_volmute_ctr_sfx1            = $05A4 ; Volume slide mute counter for SFX Ch 1
+ram_vib_ctr_sfx1                = $05A5 ; Vibrato counter SFX Ch 1
+ram_vib_speed_sfx1              = $05A6 ; Vibrato counter reload SFX Ch 1
+ram_vib_value_sfx1              = $05A7 ; Vibrato depth SFX Ch 1
+
+ram_05A8                        = $05A8 ; (Unused)
+ram_vib_ctr_sfx2                = $05A9 ; Vibrato counter SFX Ch 2
+ram_vib_speed_sfx2              = $05AA ; Vibrato counter reload SFX Ch 2
+ram_vib_value_sfx2              = $05AB ; Vibrato depth SFX Ch 2
+
+ram_volmute_ctr_sfx3            = $05AC ; Volume slide mute counter for SFX Ch 3
+ram_05AD                        = $05AD ; (Unused)
+ram_05AE                        = $05AE ; (Unused)
+ram_05AF                        = $05AF ; (Unused)
 
 ; -----------------------------------------------------------------------------
 ram_noteslide_dir_sfx0          = $05B0 ; Note slide direction SFX ch 0
@@ -1535,43 +1541,43 @@ ram_05BF                        = $05BF ; (Unused) Target period HI SFX ch 3
 ram_basereg0_sfx0               = $05C0 ; Duty/Volume for SFX ch 0
 ram_effreg0_sfx0                = $05C1 ; Effective volume for SFX ch 0
 ram_reg2_sfx0                   = $05C2 ; Current period (LO) for SFX ch 0
-ram_reg3_sf0                    = $05C3 ; Current period (HI) for SFX ch 0
+ram_reg3_sfx0                    = $05C3 ; Current period (HI) for SFX ch 0
 
 ram_basereg0_sfx1               = $05C4 ; Duty/Volume for SFX ch 1
 ram_effreg0_sfx1                = $05C5 ; Effective volume for SFX ch 1
 ram_reg2_sfx1                   = $05C6 ; Current period (LO) for SFX ch 1
-ram_reg3_sf1                    = $05C7 ; Current period (HI) for SFX ch 1
+ram_reg3_sfx1                    = $05C7 ; Current period (HI) for SFX ch 1
 
 ram_basereg0_sfx2               = $05C8 ; Volume for SFX ch 2
 ram_effreg0_sfx2                = $05C9 ; Effective volume for SFX ch 2
 ram_reg2_sfx2                   = $05CA ; Current period (LO) for SFX ch 2
-ram_reg3_sf2                    = $05CB ; Current period (HI) for SFX ch 2
+ram_reg3_sfx2                    = $05CB ; Current period (HI) for SFX ch 2
 
 ram_basereg0_sfx3               = $05CC ; Volume for SFX ch 3
 ram_effreg0_sfx3                = $05CD ; Effective volume for SFX ch 3
 ram_reg2_sfx3                   = $05CE ; Current period (LO) for SFX ch 3
-ram_reg3_sf3                    = $05CF ; Current period (HI) for SFX ch 3
+ram_reg3_sfx3                    = $05CF ; Current period (HI) for SFX ch 3
 
 ; -----------------------------------------------------------------------------
 ram_volmute_ctr_mus0            = $05D0 ; Volume slide mute counter for Mus Ch 0 (used to stay on vol 1 for a few frames before muting)
 ram_vib_ctr_mus0                = $05D1 ; Vibrato counter Mus Ch 0
 ram_vib_speed_mus0              = $05D2 ; Vibrato counter reload Mus Ch 0
-ram_vib_value_mus0              = $05D3 ; Vibrato intensity Mus Ch 0
+ram_vib_value_mus0              = $05D3 ; Vibrato depth Mus Ch 0
 
 ram_volmute_ctr_mus1            = $05D4 ; Volume slide mute counter for Mus Ch 1
 ram_vib_ctr_mus1                = $05D5 ; Vibrato counter Mus Ch 1
 ram_vib_speed_mus1              = $05D6 ; Vibrato counter reload Mus Ch 1
-ram_vib_value_mus1              = $05D7 ; Vibrato intensity Mus Ch 1
+ram_vib_value_mus1              = $05D7 ; Vibrato depth Mus Ch 1
 
-ram_volmute_ctr_mus2            = $05D8 ; Volume slide mute counter for Mus Ch 2
+ram_volmute_ctr_mus2            = $05D8 ; (Unused) Volume slide mute counter for Mus Ch 2
 ram_vib_ctr_mus2                = $05D9 ; Vibrato counter Mus Ch 2
 ram_vib_speed_mus2              = $05DA ; Vibrato counter reload Mus Ch 2
-ram_vib_value_mus2              = $05DB ; Vibrato intensity Mus Ch 2
+ram_vib_value_mus2              = $05DB ; Vibrato depth Mus Ch 2
 
 ram_volmute_ctr_mus3            = $05DC ; Volume slide mute counter for Mus Ch 3
 ram_vib_ctr_mus3                = $05DD ; (Unused) Vibrato counter Mus Ch 3
 ram_vib_speed_mus3              = $05DE ; (Unused) Vibrato counter reload Mus Ch 3
-ram_vib_value_mus3              = $05DF ; (Unused) Vibrato intensity Mus Ch 3
+ram_vib_value_mus3              = $05DF ; (Unused) Vibrato depth Mus Ch 3
 
 ; -----------------------------------------------------------------------------
 ram_05E0                        = $05E0 ; (Unused) can be used for note slide direction if needed
@@ -1889,36 +1895,43 @@ ram_070D                        = $070D ; N/A
 ram_070E                        = $070E ; N/A
 ram_070F                        = $070F ; N/A
 
+
+; -----------------------------------------------------------------------------
 ram_0710                        = $0710 ; N/A
 ram_0711                        = $0711 ; N/A
 ram_0712                        = $0712 ; N/A
 ram_0713                        = $0713 ; N/A
+
 ram_0714                        = $0714 ; N/A
 ram_0715                        = $0715 ; N/A
 ram_0716                        = $0716 ; N/A
 ram_0717                        = $0717 ; N/A
+
 ram_0718                        = $0718 ; N/A
 ram_0719                        = $0719 ; N/A
 ram_071A                        = $071A ; N/A
 ram_071B                        = $071B ; N/A
+
 ram_071C                        = $071C ; N/A
 ram_071D                        = $071D ; N/A
 ram_071E                        = $071E ; N/A
 ram_071F                        = $071F ; N/A
 
+
+; -----------------------------------------------------------------------------
 ram_volslide_dir_mus0           = $0720 ; Volume slide direction for Music ch 0
 ram_volslide_val_mus0           = $0721 ; Volume slide value for Music ch 0
 ram_volslide_ctr_mus0           = $0722 ; Volume slide counter for Music ch 0
-ram_reg0flags_mus0              = $0723 ; Duty cycle / reg 0 flags for Music ch 0
+ram_reg0flags_mus0              = $0723 ; Duty cycle / Reg 0 flags for Music ch 0
 
 ram_volslide_dir_mus1           = $0724 ; Volume slide direction for Music ch 1
 ram_volslide_val_mus1           = $0725 ; Volume slide value for Music ch 1
 ram_volslide_ctr_mus1           = $0726 ; Volume slide counter for Music ch 1
-ram_reg0flags_mus1              = $0727 ; Duty cycle / reg 0 flags for Music ch 0
+ram_reg0flags_mus1              = $0727 ; Duty cycle / Reg 0 flags for Music ch 0
 
-ram_volslide_dir_mus2           = $0728 ; Volume slide direction for Music ch 2
-ram_volslide_val_mus2           = $0729 ; Volume slide value for Music ch 2
-ram_volslide_ctr_mus2           = $072A ; Volume slide counter for Music ch 2
+ram_volslide_dir_mus2           = $0728 ; (Unused) Volume slide direction for Music ch 2
+ram_volslide_val_mus2           = $0729 ; (Unused) Volume slide value for Music ch 2
+ram_volslide_ctr_mus2           = $072A ; (Unused) Volume slide counter for Music ch 2
 ram_reg0flags_mus2              = $072B ; Reg 0 flag for Music ch 2
 
 ram_volslide_dir_mus3           = $072C ; Volume slide direction for Music ch 3
@@ -1926,22 +1939,30 @@ ram_volslide_val_mus3           = $072D ; Volume slide value for Music ch 3
 ram_volslide_ctr_mus3           = $072E ; Volume slide counter for Music ch 3
 ram_reg0flags_mus3              = $072F ; Reg 0 flags for Music ch 3
 
-ram_0730                        = $0730 ; N/A
-ram_0731                        = $0731 ; N/A
-ram_0732                        = $0732 ; N/A
-ram_0733                        = $0733 ; N/A
-ram_0734                        = $0734 ; N/A
-ram_0735                        = $0735 ; N/A
-ram_0736                        = $0736 ; N/A
-ram_0737                        = $0737 ; N/A
-ram_0738                        = $0738 ; N/A
-ram_0739                        = $0739 ; N/A
-ram_073A                        = $073A ; N/A
-ram_073B                        = $073B ; N/A
-ram_073C                        = $073C ; N/A
-ram_073D                        = $073D ; N/A
-ram_073E                        = $073E ; N/A
-ram_073F                        = $073F ; N/A
+
+; -----------------------------------------------------------------------------
+ram_volslide_dir_sfx0           = $0730 ; Volume slide direction for SFX Ch 0
+ram_volslide_val_sfx0           = $0731 ; Volume slide value for SFX Ch 0
+ram_volslide_ctr_sfx0           = $0732 ; Volume slide counter for SFX Ch 0
+ram_reg0flags_sfx0              = $0733 ; Duty cycle / Reg 0 flags for SFX Ch 0
+
+ram_volslide_dir_sfx1           = $0734 ; Volume slide direction for SFX Ch 1
+ram_volslide_val_sfx1           = $0735 ; Volume slide value for SFX Ch 1
+ram_volslide_ctr_sfx1           = $0736 ; Volume slide counter for SFX Ch 1
+ram_reg0flags_sfx1              = $0737 ; Duty cycle / Reg 0 flags for SFX Ch 1
+
+ram_0738                        = $0738 ; (Unused)
+ram_0739                        = $0739 ; (Unused)
+ram_073A                        = $073A ; (Unused)
+ram_reg0flags_sfx2              = $073B ; Reg 0 flag for SFX Ch 2
+
+ram_volslide_dir_sfx3           = $073C ; Volume slide direction for SFX Ch 3
+ram_volslide_val_sfx3           = $073D ; Volume slide value for SFX Ch 3
+ram_volslide_ctr_sfx3           = $073E ; Volume slide counter for SFX Ch 3
+ram_reg0flags_sfx3              = $073F ; Reg 0 flags for SFX Ch 3
+
+
+; -----------------------------------------------------------------------------
 ram_finepitch_mus0              = $0740 ; Signed value to add to next triggered note's period, music ch 0
 ram_finepitch_sfx0              = $0741 ; Signed value to add to next triggered note's period, sfx ch 0
 ram_0742                        = $0742 ; N/A
@@ -1956,49 +1977,63 @@ ram_074A                        = $074A ; N/A
 ram_074B                        = $074B ; N/A
 ram_finepitch_mus3              = $074C ; (Unused)
 ram_finepitch_sfx3              = $074D ; (Unused)
+
+
+; -----------------------------------------------------------------------------
 ram_074E                        = $074E ; N/A
 ram_074F                        = $074F ; N/A
+
+
+; -----------------------------------------------------------------------------
+
 ram_0750                        = $0750 ; N/A
 ram_0751                        = $0751 ; N/A
 ram_0752                        = $0752 ; N/A
 ram_0753                        = $0753 ; N/A
+
 ram_0754                        = $0754 ; N/A
 ram_0755                        = $0755 ; N/A
 ram_0756                        = $0756 ; N/A
 ram_0757                        = $0757 ; N/A
+
 ram_0758                        = $0758 ; N/A
 ram_0759                        = $0759 ; N/A
 ram_075A                        = $075A ; N/A
 ram_075B                        = $075B ; N/A
+
 ram_075C                        = $075C ; N/A
 ram_075D                        = $075D ; N/A
 ram_075E                        = $075E ; N/A
 ram_075F                        = $075F ; N/A
 
-ram_noteid_sfx0                 = $0760 ; 2     ID of active SFX event ch 0
+
+; -----------------------------------------------------------------------------
+ram_noteid_sfx0                 = $0760 ; ID of active SFX event ch 0
 ram_0761                        = $0761 ; N/A
 
-ram_noteid_sfx1                 = $0762 ; N/A   ID of active SFX event ch 1
+ram_noteid_sfx1                 = $0762 ; ID of active SFX event ch 1
 ram_0763                        = $0763 ; N/A
 
-ram_noteid_sfx2                 = $0764 ; 1     ID of active SFX event ch 2
+ram_noteid_sfx2                 = $0764 ; ID of active SFX event ch 2
 ram_0765                        = $0765 ; N/A
 
-ram_noteid_sfx3                 = $0766 ; N/A   ID of active SFX event ch 3
+ram_noteid_sfx3                 = $0766 ; ID of active SFX event ch 3
 ram_0767                        = $0767 ; N/A
 
-ram_noteid_mus0                 = $0768 ; N/A   ID of active Music event ch 0
+ram_noteid_mus0                 = $0768 ; ID of active Music event ch 0
 ram_0769                        = $0769 ; N/A
 
-ram_noteid_mus1                 = $076A ; N/A   ID of active Music event ch 1
+ram_noteid_mus1                 = $076A ; ID of active Music event ch 1
 ram_076B                        = $076B ; N/A
 
-ram_noteid_mus2                 = $076C ; N/A   ID of active Music event ch 2
+ram_noteid_mus2                 = $076C ; ID of active Music event ch 2
 ram_076D                        = $076D ; N/A
 
-ram_noteid_mus3                 = $076E ; N/A   ID of active Music event ch 3
+ram_noteid_mus3                 = $076E ; ID of active Music event ch 3
 ram_076F                        = $076F ; N/A
 
+
+; -----------------------------------------------------------------------------
 ram_0770                        = $0770 ; N/A
 ram_0771                        = $0771 ; N/A
 ram_0772                        = $0772 ; N/A
@@ -2047,6 +2082,9 @@ ram_079C                        = $079C ; N/A
 ram_079D                        = $079D ; N/A
 ram_079E                        = $079E ; N/A
 ram_079F                        = $079F ; N/A
+
+
+; -----------------------------------------------------------------------------
 ram_current_sfx                 = $07A0 ; 3   Index of currently playing SFX/non-looping song
 ram_07A1                        = $07A1 ; N/A
 ram_07A2                        = $07A2 ; N/A

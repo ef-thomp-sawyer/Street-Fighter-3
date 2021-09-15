@@ -865,15 +865,58 @@ sub_set_volume_slide:
 	pha
 
 	cpx #$08
-	bcs @MusicVolSlide
+	bcs sub_music_vol_slide
 
-	; TODO SFX volume slide
+; SFX volume slide
+
+	asl	; Variables table: 4 bytes per channel
+	tax
+
+	tya
+	beq @DisableVolSlide	; No slide if value is zero
+
+	and #$0F
+	beq @SetSlideUp
+
+; Slide down
+
+	dey
+	tya
+	asl
+	asl
+	asl
+	sta ram_volslide_val_sfx0,X	; Index
+
+	lda #$01
+	sta ram_volslide_dir_sfx0,X	; Direction
+
+	bne @ResetSlideCounter	; JMP equivalent
+
+@SetSlideUp:
+	tya
+
+	lsr
+	sta ram_volslide_val_sfx0,X	; Index
+	lda #$80
+	sta ram_volslide_dir_sfx0,X	; Direction
+
+@ResetSlideCounter:
+	lda #$00
+	sta ram_volslide_ctr_sfx0,X
+	sta ram_volmute_ctr_sfx0,X
 
 	pla
 	tax
 	rts
 
-@MusicVolSlide:
+@DisableVolSlide:
+	sta ram_volslide_dir_sfx0,X
+	pla
+	tax
+	rts
+
+
+sub_music_vol_slide:
 	asl			; We need channel * 4 because each channel has 4 variables
 	and #$0F
 	tax
@@ -898,7 +941,8 @@ sub_set_volume_slide:
 	lda #$01
 	sta ram_volslide_dir_mus0,X	; Direction
 
-	jmp @ResetSlideCounter
+	;jmp @ResetSlideCounter
+	bne @ResetSlideCounter	; Same as JMP
 
 @SetSlideUp:
 	tya
@@ -938,8 +982,11 @@ sub_calculate_volume:
 	tax
 
 	cpx #$08
-	bcs @MusicVol
-
+	; bcs sub_music_volume
+	bcc @sfx_volume
+	jmp sub_music_volume
+	
+@sfx_volume:
 	lda ram_noteid_sfx0,X
 	bpl @SFXNote
 
@@ -949,16 +996,114 @@ sub_calculate_volume:
 	rts
 
 @SFXNote:
-	
 
-	; TODO SFX mid-note effects
+	; SFX Volume slide
 
+	; This is used to just write the current volume with no change
+	; when volume slide is disabled
+	lda ram_effreg0_sfx0,X
+	tay
 
+	lda ram_volslide_dir_sfx0,X	; Volume slide direction
+	beq @NoVolSlide
+	bmi @VolSlideUp
+
+; Volume slide Down
+	; If the mute counter is active, decrease it and then zero the
+	; effective volume when the counter is zero
+	lda ram_volmute_ctr_sfx0,X
+	beq @DoSlide
+
+	lda #$00
+	dcp ram_volmute_ctr_sfx0,X
+	beq @ApplyVolume
+
+	lda #$01
+	bne @ApplyVolume
+
+	; Otherwise, decrease volume according to slide table
+@DoSlide:
+	lda ram_volslide_val_sfx0,X	; Base index
+	clc
+	adc ram_volslide_ctr_sfx0,X	; Add counter
+	tay
+
+	; Increment counter and clear it if the new value is 8
+	lda #$09
+	isc ram_volslide_ctr_sfx0,X
+	bne @ApplySlideDown
+
+	sta ram_volslide_ctr_sfx0,X
+
+@ApplySlideDown:
+	lda ram_effreg0_sfx0,X	; Effective channel volume
+	and #$0F
+
+	; Nothing to do if volume is already zero
+	beq @ApplyVolume
+
+	sec
+	sbc tbl_volume_slide,Y	; Value to subtract from effective volume
+
+	beq @StartMuteCounter	; Don't instantly mute, start a counter instead
+	bcs @ApplyVolume	; Make sure it doesn't underflow
+
+@StartMuteCounter:
+	lda #$04
+	sta ram_volmute_ctr_sfx0,X
+
+	lda #$01			; Set effective volume to 1
+	bne @ApplyVolume	; Same as JMP, just quicker
+
+@VolSlideUp:
+	lda ram_volslide_val_sfx0,X	; Base index
+	clc
+	adc ram_volslide_ctr_sfx0,X	; Add counter
+	tay
+
+	; Increment counter and clear it if the new value is 8
+	lda #$08
+	isc ram_volslide_ctr_sfx0,X
+	bne @ApplySlideUp
+
+	sta ram_volslide_ctr_sfx0,X
+
+@ApplySlideUp:
+	lda ram_effreg0_sfx0,X	; Effective channel volume
+	and #$0F	; Remove flags / duty cycle value
+
+	clc
+	adc tbl_volume_slide,Y	; Value to add to effective volume
+
+	bcc @ApplyVolume
+	lda #$0F
+
+@ApplyVolume:
+	ora ram_reg0flags_sfx0,X	; Restore duty cycle value / reg 0 flags
+	sta ram_effreg0_sfx0,X
+
+@NoVolSlide:
+	; TODO Note slide if needed
+	sta $4000,X	; Updated volume
+
+	; Write updated period values
+	; TODO jsr sub_apply_vibrato_sfx
+	; sta $4002,X
+
+	; Avoid phase reset click:
+	; Detect if high byte needs updating because of note slide
+	bvc @VolSlideEnd
+	lda ram_reg3_sfx0,X
+	sta $4003,X
+	clv
+
+@VolSlideEnd:
 	pla
 	tax
 	rts
 
-@MusicVol:
+; -----------------
+sub_music_volume:
 	lda ram_noteid_sfx0,X
 	bpl @ActualNote
 
@@ -1062,11 +1207,7 @@ sub_calculate_volume:
 
 @NoVolSlide:
 	; Update period values
-
 	jsr sub_apply_noteslide
-
-	; Apply vibrato to the new pitch after the note slide
-	; jsr sub_apply_vibrato
 	
 @CheckActive:
 	; If this channel is active, also write to its volume register
@@ -1102,6 +1243,7 @@ sub_calculate_volume:
 ; -----------------------------------------------------------------------------
 ; X = Channel index * 4 (0: Pulse0, 4: Pulse1, 8: Triangle, 0C: Noise)
 ; Applies one step of note slide (if needed) to the current note
+; Sets the V flag if high bits of period value need updating
 ; X and Y preserved
 sub_apply_noteslide:
 	lda ram_noteslide_speed_mus0,X	; Check for note slide up
@@ -1246,9 +1388,11 @@ sub_write_apu_period:
 	pha
 
 	cpx #$07
-	bcs @MusicNote
-	
-	; SFX
+	bcc @apu_period_sfx
+	;bcs sub_apu_period_music
+	jmp sub_apu_period_music
+
+@apu_period_sfx:	
 	asl
 	tax
 	lda tbl_note_period_lo,Y
@@ -1258,18 +1402,25 @@ sub_write_apu_period:
 	sta $4002,X		; Timer low
 
 	lda tbl_note_period_hi,Y
-	sta ram_reg3_sf0,X
+	sta ram_reg3_sfx0,X
 	sta $4003,X		; Timer high
 	
 	; TODO SFX Note slide
 	; TODO SFX Pitch slide
-	; TODO SFX Volume slide
+
+	; SFX Volume slide
+	; Advance slide counters since the first value is applied immediately
+	jsr sub_start_volslide_sfx
+	sta ram_effreg0_sfx0,X
+	lda #$01
+	sta ram_volslide_ctr_sfx0,X
 
 	pla
 	tax
 	rts
-	
-@MusicNote:
+
+; -----------------
+sub_apu_period_music:
 	asl
 	and #$0F
 	tax
@@ -1290,18 +1441,9 @@ sub_write_apu_period:
 	lda tbl_note_period_hi,Y
 	sta ram_reg3_mus0,X
 
-	; Copy base volume to effective volume too
-	;lda ram_basereg0_mus0,X
-	;sta ram_effreg0_mus0,X
-
 	jmp @ApplyMusicEffects
 	
 @MusicNote_Enabled:
-	; Copy base volume to effective volume too
-	; lda ram_basereg0_mus0,X
-	; sta ram_effreg0_mus0,X
-	; sta $4000,X not here: will be done in calculate_volume every frame
-
 	; Play and also copy to RAM
 	lda tbl_note_period_lo,Y
 	jsr sub_apply_fine_pitch_music
@@ -1312,9 +1454,7 @@ sub_write_apu_period:
 	sta $4003,X
 	sta ram_reg3_mus0,X
 
-
 @ApplyMusicEffects:
-
 	; Calculate target period for note slide if needed
 	; Y is still the starting note index
 	lda ram_noteslide_speed_mus0,X
@@ -1339,7 +1479,7 @@ sub_write_apu_period:
 
 @StartVolSlide:
 	; Advance slide counters since the first value is applied immediately
-	jsr sub_start_volslide
+	jsr sub_start_volslide_music
 	sta ram_effreg0_mus0,X
 	lda #$01
 	sta ram_volslide_ctr_mus0,X
@@ -1397,8 +1537,64 @@ NoFinePitch:
 ; -----------------------------------------------------------------------------
 ; X = Channel index * 4 (0: Pulse0, 4: Pulse1, 8: Triangle, 0C: Noise)
 ; Returns effective reg 0 value for this channel in A
+; NOTE Sound effect channels only
+sub_start_volslide_sfx:
+	lda ram_basereg0_sfx0,X
+	tay	; Base volume
+
+	lda ram_volslide_dir_sfx0,X
+	bmi @StartSlideUp
+	bne @StartSlideDown
+
+	; Direction = 0 means effect disabled
+	tya
+	rts
+
+@StartSlideUp:
+	lda ram_volslide_val_sfx0,X
+	tay
+
+	lda ram_basereg0_sfx0,X
+	and #$0F	; Strip flags
+
+	clc
+	adc tbl_volume_slide,Y
+
+	; Overflow check
+	bcc @RestoreFlags
+
+	lda #$0F
+	bne @RestoreFlags	; JMP equivalent
+
+@StartSlideDown:
+	lda #$00
+	sta ram_volmute_ctr_sfx0,X
+
+	lda ram_volslide_val_sfx0,X
+	tay
+
+	lda ram_basereg0_sfx0,X
+	and #$0F	; Strip flags
+
+	sec
+	sbc tbl_volume_slide,Y
+
+	; Underflow check
+	bcs @RestoreFlags
+
+	lda #$00
+
+@RestoreFlags:
+	ora ram_reg0flags_sfx0,X
+	rts
+
+
+
+; -----------------------------------------------------------------------------
+; X = Channel index * 4 (0: Pulse0, 4: Pulse1, 8: Triangle, 0C: Noise)
+; Returns effective reg 0 value for this channel in A
 ; NOTE Music channels only
-sub_start_volslide:
+sub_start_volslide_music:
 	lda ram_basereg0_mus0,X
 	tay		; Store base volume in Y
 
@@ -1464,11 +1660,14 @@ sub_musical_rest:
 ; SFX Rest
 	asl
 	tax
-	lda #$80	; TODO Use a table of "mute masks" for each channel in order to
-				;      preserve duty values and flags
-	sta $4000,X
+	lda tbl_apureg_masks,X	; Use a table of "mute masks" for each channel
+	sta $4000,X				; in order to preserve duty values and flags
+	sta ram_effreg0_sfx0,X
 
-	jmp @RestEnd
+	; jmp @RestEnd
+	pla
+	tax
+	rts
 
 @MusicChannels:
 	asl
@@ -1514,11 +1713,23 @@ sub_set_duty_cycle:
 	cpx #$07
 	bcs @MusicDuty
 
-	; TODO Add support for SFX / non-looping music duty
+	; SFX / non-looping music duty
 	asl
 	tax
 	
-	jmp @End
+	tya
+	sta ram_reg0flags_sfx0,X
+
+	lda ram_effreg0_sfx0,X
+	and #$3F
+	ora ram_reg0flags_sfx0,X
+	sta ram_effreg0_sfx0,X
+	sta $4000,X
+
+	;jmp @End
+	pla
+	tax
+	rts
 
 @MusicDuty:
 	asl
@@ -1542,7 +1753,10 @@ sub_set_duty_cycle:
 	ora ram_reg0flags_mus0,X
 	sta ram_effreg0_mus0,X
 
-	jmp @End
+	; jmp @End
+	pla
+	tax
+	rts
 
 @MusicDutyActive:
 	; Channel is enabled: store in RAM and also write to APU register
@@ -1555,7 +1769,7 @@ sub_set_duty_cycle:
 	sta ram_effreg0_mus0,X
 	sta $4000,X
 
-@End:
+; @End:
 	pla
 	tax
 	rts
@@ -1578,7 +1792,13 @@ sub_set_duty_volume:
 	tax
 
 	tya
+	sta ram_basereg0_sfx0,X
+	sta ram_effreg0_sfx0,X
 	sta $4000,X
+	
+	; Save flags separately
+	and tbl_apureg_masks,X
+	sta ram_reg0flags_sfx0,X
 	
 	; Not needed, just leave it as it was initialised
 	; lda #$00
