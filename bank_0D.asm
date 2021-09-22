@@ -5792,7 +5792,7 @@ off_B5BE_3D:
 - D 1 - I - 0x01B5D0 06:B5C0: 00        .byte $00   ; 
 - D 1 - I - 0x01B5D1 06:B5C1: 84        .byte $84   ; 
 - D 1 - I - 0x01B5D2 06:B5C2: FC        .byte $FC   ; 
-- D 1 - I - 0x01B5D3 06:B5C3: 17        .byte $17   ; 
+- D 1 - I - 0x01B5D3 06:B5C3: 17        .byte $19   ; SFX ID for Ryu's Shoryuken
 - D 1 - I - 0x01B5D4 06:B5C4: 58        .byte $58   ; 
 - D 1 - I - 0x01B5D5 06:B5C5: 00        .byte $00   ; 
 - D 1 - I - 0x01B5D6 06:B5C6: E8        .byte $E8   ; 
@@ -5848,7 +5848,7 @@ off_B5E8_3F:
 - D 1 - I - 0x01B604 06:B5F4: FD        .byte $FD   ; 
 - D 1 - I - 0x01B605 06:B5F5: 40        .byte $40   ; 
 - D 1 - I - 0x01B606 06:B5F6: FC        .byte $FC   ; 
-- D 1 - I - 0x01B607 06:B5F7: 14        .byte $14   ; 
+- D 1 - I - 0x01B607 06:B5F7: 14        .byte $18   ; SFX ID for Ryu's Hadouken
 - D 1 - I - 0x01B608 06:B5F8: 55        .byte $55   ; 
 - D 1 - I - 0x01B609 06:B5F9: 00        .byte $00   ; 
 - D 1 - I - 0x01B60A 06:B5FA: 00        .byte $00   ; 

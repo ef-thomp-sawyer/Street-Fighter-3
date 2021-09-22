@@ -8304,12 +8304,12 @@ SndIndicesTbl:
 	.byte $11   ; 11	SFX: Repeated close hit (e.g. Blanka's Wild Fang)
 	.byte $12   ; 12	SFX: Repeated hit (e.g. Chun Li's Lightning Kicks)
 	.byte $13   ; 13	SFX: Hit, even if blocked
-	.byte $14   ; 14	SFX: Hadouken, Tiger Shot
+	.byte $14   ; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot)
 	.byte $15   ; 15	SFX: Guile's Sonic Boom
 	.byte $16   ; 16	SFX: Guile's Flash Kick
-	.byte $17   ; 17	SFX: Uppercut (e.g. Shoryuken, Tiger Uppercut)
-	.byte $18   ; 18	Unused SFX?
-	.byte $19   ; 19	Unused SFX? (Quick/weak hit?)
+	.byte $17   ; 17	SFX: Uppercut (*Tiger Uppercut)
+	.byte $18   ; 18	Unused SFX 1 (*Hadouken)
+	.byte $19   ; 19	Unused SFX 2 (*Shoryuken)
 	.byte $1A   ; 1A	SFX: Start button / Character selected
 	.byte $1B   ; 1B	MUSIC: Victory screen
 	.byte $1C   ; 1C	MUSIC: VS screen
@@ -8318,10 +8318,10 @@ SndIndicesTbl:
 	.byte $1F   ; 1F	SFX: Pause
 	.byte $20   ; 20	MUSIC (bonus): Balrog
 	.byte $1D   ; 21	Unused duplicate?
-	.byte $21   ; 22	Unused SFX? (Hard hit?)
+	.byte $21   ; 22	Unused SFX 3 (*Tatsu)
 	.byte $22   ; 23	SFX: Throw
 	.byte $23   ; 24	SFX: Final hit
-	.byte $24   ; 25	Unused music?
+	.byte $24   ; 25	Unused music 3
 	.byte $25   ; 26	SFX: Punch
 	.byte $26   ; 27	SFX: Kick
 	.byte $27   ; 28	SFX: Score counter tick

@@ -51,9 +51,11 @@ def get_label(line: str) -> str:
 
 
 def get_value(line: str) -> int:
-    text = line.split(',')[1]
+    s = line.split(',')
     
     try:
+        text = [e for e in s if e.startswith("val=")][0]
+        
         i = text.index('=')
         return int(text[i + 1:], 16)
         
@@ -62,26 +64,30 @@ def get_value(line: str) -> int:
 
 
 def get_addrsize(line: str) -> str:
-    text = line.split(',')[2]
+    s = line.split(',')
 
     try:
+        text = [e for e in s if e.startswith("addrsize=")][0]
+
         i = text.index('=')
         return text[i + 1:]
         
-    except ValueError:
-        print(f"!!! No 'addrsize' found in '{text}' !!!")
+    except IndexError:
+        print(f"!!! No 'addrsize' found in '{s}' !!!")
         return ""
 
 
 def get_type(line: str) -> str:
-    text = line.split(',')[3]
-
+    s = line.split(',')
+    
     try:
+        text = [e for e in s if e.startswith("type=")][0]
+    
         i = text.index('=')
         return text[i + 1:]
         
-    except ValueError:
-        print(f"!!! No 'type' found in '{text}' !!!")
+    except IndexError:
+        print(f"!!! No 'type' found in '{s}' !!!")
         return ""
 
 
@@ -172,6 +178,25 @@ def main():
                         file_addr = address
                         output += f"G:{file_addr:04X}:{label}\n"
     
+            elif get_type(line[4:]) == "equ" and get_addrsize(line[4:]) == "absolute":
+                label = get_label(line[4:])
+                address = get_value(line[4:])
+                if label[:3] == "ram":
+                    print(f"\tFound label '{label}' @${address:04X}")
+                    try:
+                        i = label.index('_')
+                        name = label[i + 1:]
+                        # Ignore standard/unknown labels
+                        if not name.isdigit():
+                            
+                            output += f"G:{address:04X}:{label}\n"
+                            
+                    except ValueError:
+                        print(f"\tERROR parsing RAM label!")
+                        pass
+                else:
+                    print(f"\tNon-RAM label '{label}' found.")
+    
     # Output to file
     with open(out_file_name, "w") as fd:
         fd.write(output)
@@ -219,6 +244,10 @@ def new_format(lines, out_file_name):
                 address = int(values[e].split('=')[1], 16)
                 # For now, skip RAM symbols
                 if address < 0x8000:
+                    if name[:4] == "ram_":
+                        # Skip default and unknown labels
+                        if not name[4:5].isdigit():
+                            output += f"G:{address:04X}:{name}\n"
                     continue
                 # Find out which segment this belongs to
                 e = [i for i, val in enumerate(values) if "seg=" in val][0]

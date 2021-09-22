@@ -208,6 +208,10 @@ sub_sfx_load:
 	lda #$00
 	sta ram_sound_duration,X
 	sta ram_noteid_sfx0,X		; Clear currently playing event ID
+	sta ram_volslide_dir_sfx0,X		; Clear volume slide direction
+	sta ram_noteslide_speed_sfx0,X	; Clear note slide
+	sta ram_finepitch_sfx0,X		; Clear fine pitch
+	sta ram_vib_speed_sfx0,X		; Clear vibrato speed
 
 	txa
 	asl
@@ -699,7 +703,7 @@ sub_set_fine_pitch:
 
 	asl
 	tay
-	jsr sub_apply_fine_pitch_music
+	jsr sub_apply_fine_pitch_sfx
 	sta ram_reg2_sfx0,X
 
 	pla
@@ -761,13 +765,23 @@ sub_set_vibrato:
 	lda (ram_snd_ptr_lo),Y
 	tay	; Store it in Y before we split the nibbles
 
-	; TODO Add support for SFX channels
+	cpx #$07
+	bcs @SetMusicVibrato
 
+	txa
+	asl
+	adc #$30
+	tax
+
+	jmp @OffsetReady
+
+@SetMusicVibrato:
 	txa
 	asl
 	and #$0F
 	tax
-	
+
+@OffsetReady:
 	lda #$00
 	;sta ram_vib_dir_mus0,X	; Start with a disabled vibrato
 	sta ram_vib_ctr_mus0,X	; If enabled, this will trigger the first step
@@ -790,7 +804,7 @@ sub_set_vibrato:
 ; -----------------------------------------------------------------------------
 ; X = 0: SFX Sq0,   2: SFX Sq1,   4: SFX Trg,   6: SFX Noise
 ;     8: Music Sq0, A: Music Sq1, C: Music Trg, E: Music Noise
-; TODO Add support for SFX channels
+; TODO Add support for SFX channels if needed
 sub_set_note_slide:
 	txa
 	pha
@@ -996,6 +1010,9 @@ sub_calculate_volume:
 	rts
 
 @SFXNote:
+	txa
+	asl
+	tax
 
 	; SFX Volume slide
 
@@ -1081,14 +1098,25 @@ sub_calculate_volume:
 @ApplyVolume:
 	ora ram_reg0flags_sfx0,X	; Restore duty cycle value / reg 0 flags
 	sta ram_effreg0_sfx0,X
+	tay
 
 @NoVolSlide:
-	; TODO pitch slide
+	; TODO pitch slide if needed
+	tya
 	sta $4000,X	; Updated volume
 
 	; Write updated period values
-	; TODO jsr sub_apply_vibrato_sfx
-	; sta $4002,X
+	txa
+	pha
+	clc
+	adc #$30
+	tax
+	jsr sub_apply_vibrato
+	tay
+	pla
+	tax
+	tya
+	sta $4002,X
 
 	; Avoid phase reset click:
 	; Detect if high byte needs updating because of pitch slide
@@ -1290,7 +1318,6 @@ sub_apply_noteslide:
 ; Applies one step of vibrato (if needed) to the current note
 ; X and Y preserved
 ; Returns new value for low period register in A
-; TODO Add support for SFX channels
 sub_apply_vibrato:
 
 	lda ram_vib_speed_mus0,X
@@ -2042,7 +2069,7 @@ tbl_sound_pointers:
 	.word _sfx_hit				; 13	SFX: Hit, even if blocked
 	.byte $8C, $FF
 
-	.word _sfx_fireball			; 14	SFX: Hadouken, Tiger Shot
+	.word _sfx_fireball			; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot)
 	.byte $8C, $FF
 
 	.word _sfx_sonicboom		; 15	SFX: Guile's Sonic Boom
@@ -2051,20 +2078,20 @@ tbl_sound_pointers:
 	.word _sfx_flashkick		; 16	SFX: Guile's Flash Kick
 	.byte $8C, $FF
 
-	.word _sfx_uppercut			; 17	SFX: Uppercut (e.g. Shoryuken, Tiger Uppercut)
+	.word _sfx_uppercut			; 17	SFX: Uppercut (*Tiger Uppercut)
 	.byte $8C, $FF
 
-	.word _sfx_unused1			; 18	Unused SFX 1
+	.word _sfx_hadouken			; 18	Unused SFX 1 (*Hadouken)
 	.byte $8C, $FF
 
-	.word _sfx_unused2			; 19	Unused SFX 2
+	.word _sfx_shoryuken		; 19	Unused SFX 2 (*Shoryuken)
 	.byte $8C, $FF
 
 	.word _sfx_selection		; 1A	SFX: Start button / Character selected
 	.byte $8C, $FF
 
 	.word _music_victory		; 1B	MUSIC (no loop): Victory screen
-	.byte $8C, $FF
+	.byte $9A, $FF
 
 	.word _music_vs				; 1C	MUSIC (no loop): VS Screen
 	.byte $8C, $FF
@@ -2081,7 +2108,7 @@ tbl_sound_pointers:
 	.word _music_balrog			; 20	MUSIC (bonus): Balrog
 	.byte $99, $FF
 
-	.word _sfx_unused3			; 21	Unused SFX? (Hard hit?)
+	.word _sfx_unused3			; 21	Unused SFX 3 (*Tatsu)
 	.byte $8C, $FF
 
 	.word _sfx_throw			; 22	SFX: Throw
@@ -2163,17 +2190,17 @@ _sfx_uppercut:
 	.word $FFFF					; No Triangle
 	.word _sfx_uppercut_ch3		;	SFX: Uppercut (e.g. Shoryuken, Tiger Uppercut)
 
-_sfx_unused1:
-	.word $FFFF					; No Pulse0
-	.word $FFFF					; No Pulse1
-	.word $FFFF					; No Triangle
-	.word _sfx_unused1_ch3		;	Unused SFX 1
+_sfx_hadouken:
+	.word $FFFF					;
+	.word _sfx_hadouken_ch1		;	Unused SFX 1
+	.word $FFFF					;
+	.word $FFFF					;
 
-_sfx_unused2:
-	.word $FFFF					; No Pulse0
-	.word $FFFF					; No Pulse1
-	.word $FFFF					; No Triangle
-	.word _sfx_unused2_ch3		;	Unused SFX 2
+_sfx_shoryuken:
+	.word $FFFF					;
+	.word _sfx_shoryuken_ch1	;	Unused SFX 2
+	.word $FFFF					;
+	.word $FFFF					;
 
 _sfx_selection:
 	.word $FFFF					;	SFX: Start button / Character selected
@@ -2559,64 +2586,111 @@ _sfx_uppercut_ch3:
 
 
 
-_sfx_unused1_ch3:
-	.byte con_80 
-	.byte $3F   ; 
-	.byte $27   ; 
-	.byte $07   ; 
-	.byte $23   ; 
-	.byte $07   ; 
-	.byte con_81
-	.byte $16   ; 
-	.byte con_83 
-	.byte $34   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $34   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $34   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $34   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte con_86
+_sfx_hadouken_ch1:
+	.byte $80, $3D	; VOLUME, $37
+	.byte $09, $02	; A-1, 2 ticks
+	.byte $0A, $02	; A#1, 2 ticks
+	.byte $0D, $02	; C#2, 2 ticks
+	.byte $80, $B6	; VOLUME, $B3
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $B2	; VOLUME, $B1
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $BE	; VOLUME, $B8
+	.byte $13, $01	; G-2, 1 ticks
+	.byte $80, $BF	; VOLUME, $B9
+	.byte $14, $01	; G#2, 1 ticks
+	.byte $16, $04	; A#2, 4 ticks
+	.byte $17, $04	; B-2, 4 ticks
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $15, $01	; A-2, 1 ticks
+	.byte $8C, $E0	; *FINEPITCH, $E0
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $8C, $C0	; *FINEPITCH, $C0
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $8C, $A0	; *FINEPITCH, $A0
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $80, $BD	; VOLUME, $B7
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $14, $01	; G#2, 1 ticks
+	.byte $80, $BA	; VOLUME, $B5
+	.byte $13, $01	; G-2, 1 ticks
+	.byte $80, $B6	; VOLUME, $B3
+	.byte $11, $01	; F-2, 1 ticks
+	.byte $80, $B2	; VOLUME, $B1
+	.byte $10, $01	; E-2, 1 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $7F	; VOLUME, $78
+	.byte $11, $01	; F-2, 1 ticks
+	.byte $80, $7D	; VOLUME, $77
+	.byte $13, $05	; G-2, 5 ticks
+	.byte $80, $7F	; VOLUME, $78
+	.byte $12, $02	; F#2, 2 ticks
+	.byte $80, $7C	; VOLUME, $76
+	.byte $10, $01	; E-2, 1 ticks
+	.byte $80, $78	; VOLUME, $74
+	.byte $0E, $01	; D-2, 1 ticks
+	.byte $80, $76	; VOLUME, $73
+	.byte $0C, $01	; C-2, 1 ticks
+	.byte $80, $74	; VOLUME, $72
+	.byte $0B, $01	; B-1, 1 ticks
+	.byte $80, $72	; VOLUME, $71
+	.byte $09, $01	; A-1, 1 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $86	; *STOP
 
 
 
-_sfx_unused2_ch3:
-	.byte con_80 
-	.byte $3F   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte $1E   ; 
-	.byte $05   ; 
-	.byte $2F   ; 
-	.byte $05   ; 
-	.byte con_86
+_sfx_shoryuken_ch1:
+	.byte $80, $38	; VOLUME, $34
+	.byte $0C, $02	; C-2, 2 ticks
+	.byte $10, $02	; E-2, 2 ticks
+	.byte $80, $7A	; VOLUME, $75
+	.byte $11, $02	; F-2, 2 ticks
+	.byte $13, $02	; G-2, 2 ticks
+	.byte $80, $7C	; VOLUME, $76
+	.byte $15, $02	; A-2, 2 ticks
+	.byte $80, $7D	; VOLUME, $77
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $8D, $46	; *VIBRATO, $46
+	.byte $84, $04	; *HOLD, 4 ticks
+	.byte $80, $7C	; VOLUME, $76
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $8C, $FF	; *FINEPITCH, $FF
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $7A	; VOLUME, $75
+	.byte $8C, $FE	; *FINEPITCH, $FE
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $38	; VOLUME, $34
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $16, $02	; A#2, 2 ticks
+	.byte $80, $BC	; VOLUME, $B6
+	.byte $8D, $00	; *VIBRATO, $00
+	.byte $14, $08	; G#2, 8 ticks
+	.byte $80, $BD	; VOLUME, $B7
+	.byte $16, $02	; A#2, 2 ticks
+	.byte $8C, $FF	; *FINEPITCH, $FF
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $BA	; VOLUME, $B5
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $15, $02	; A-2, 2 ticks
+	.byte $8C, $FF	; *FINEPITCH, $FF
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $88, $70	; *TIMBRE, $70
+	.byte $8C, $00	; *FINEPITCH, $00
+	.byte $13, $04	; G-2, 4 ticks
+	.byte $80, $74	; VOLUME, $72
+	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $7C	; VOLUME, $76
+	.byte $13, $02	; G-2, 2 ticks
+	.byte $80, $7D	; VOLUME, $77
+	.byte $15, $02	; A-2, 2 ticks
+	.byte $80, $7C	; VOLUME, $76
+	.byte $14, $02	; G#2, 2 ticks
+	.byte $80, $76	; VOLUME, $73
+	.byte $13, $02	; G-2, 2 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $86	; *STOP
 
 
 
@@ -2884,26 +2958,6 @@ _sfx_scoretick_ch1:
 ;
 ;								MUSIC DATA
 ;
-
-; -----------------------------------------------------------------------------
-_music_victory:
-	.word _music_victory_ch0
-	.word _music_victory_ch1
-	.word _music_victory_ch2
-	.word _music_victory_ch3
-
-_music_victory_ch0:
-	.include "music/End_Ch0.asm"
-
-_music_victory_ch1:
-	.include "music/End_Ch1.asm"
-
-_music_victory_ch2:
-	.include "music/End_Ch2.asm"
-
-_music_victory_ch3:
-	.include "music/End_Ch3.asm"
-
 
 ; -----------------------------------------------------------------------------
 _music_vs:
