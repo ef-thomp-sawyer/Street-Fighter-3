@@ -2380,7 +2380,8 @@ off_A8FC_3B:
 - D 1 - I - 0x01A92A 06:A91A: 1A        .byte $1A   ; 
 - - - - - - 0x01A92B 06:A91B: FF        .byte $FF   ; 
 
-off_A91C_3C:
+off_A91C_3C:    ; Chun-Li's Spinning Bird Kick
+    .byte $FC, $25
 - D 1 - I - 0x01A92C 06:A91C: 19        .byte $19   ; 
 - D 1 - I - 0x01A92D 06:A91D: 00        .byte $00   ; 
 - D 1 - I - 0x01A92E 06:A91E: F0        .byte $F0   ; 
@@ -2416,7 +2417,7 @@ off_A91C_3C:
 - D 1 - I - 0x01A94C 06:A93C: 00        .byte $00   ; 
 - D 1 - I - 0x01A94D 06:A93D: 83        .byte $83   ; 
 - D 1 - I - 0x01A94E 06:A93E: FC        .byte $FC   ; 
-- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; SFX ID: Chun-Li's 
+- D 1 - I - 0x01A94F 06:A93F: 12        .byte $12   ; SFX ID: Repeated hits
 - D 1 - I - 0x01A950 06:A940: 57        .byte $57   ; 
 - D 1 - I - 0x01A951 06:A941: 0E        .byte $0E   ; 
 - D 1 - I - 0x01A952 06:A942: 00        .byte $00   ; 
@@ -2480,7 +2481,7 @@ off_A91C_3C:
 - D 1 - I - 0x01A98C 06:A97C: 10        .byte $10   ; 
 - D 1 - I - 0x01A98D 06:A97D: FF        .byte $FF   ; 
 
-off_A97E_3D:
+off_A97E_3D:    ; Chun-Li's Lightning Kick
 - D 1 - I - 0x01A98E 06:A97E: 23        .byte $23   ; 
 - D 1 - I - 0x01A98F 06:A97F: FB        .byte $FB   ; 
 - D 1 - I - 0x01A990 06:A980: FB        .byte $FB   ; 
@@ -2494,7 +2495,7 @@ off_A97E_3D:
 - D 1 - I - 0x01A998 06:A988: 00        .byte $00   ; 
 - D 1 - I - 0x01A999 06:A989: 83        .byte $83   ; 
 - D 1 - I - 0x01A99A 06:A98A: FC        .byte $FC   ; 
-- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID: Chun-Li's Lightning Kick
+- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID: Repeated hits
 - D 1 - I - 0x01A99C 06:A98C: 28        .byte $28   ; 
 - D 1 - I - 0x01A99D 06:A98D: 00        .byte $00   ; 
 - D 1 - I - 0x01A99E 06:A98E: 00        .byte $00   ; 

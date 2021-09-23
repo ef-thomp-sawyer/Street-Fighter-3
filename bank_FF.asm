@@ -8321,7 +8321,7 @@ SndIndicesTbl:
 	.byte $21   ; 22	Unused SFX 3 (*Tatsu)
 	.byte $22   ; 23	SFX: Throw
 	.byte $23   ; 24	SFX: Final hit
-	.byte $24   ; 25	Unused music 3
+	.byte $24   ; 25	Unused music 3 (*Spinning Bird Kick)
 	.byte $25   ; 26	SFX: Punch
 	.byte $26   ; 27	SFX: Kick
 	.byte $27   ; 28	SFX: Score counter tick
