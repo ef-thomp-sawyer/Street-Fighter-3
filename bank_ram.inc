@@ -1980,7 +1980,7 @@ ram_finepitch_sfx3              = $074D ; (Unused)
 
 
 ; -----------------------------------------------------------------------------
-ram_074E                        = $074E ; N/A
+ram_sfx_disable                 = $074E ; Disable all SFX if not zero
 ram_074F                        = $074F ; N/A
 
 

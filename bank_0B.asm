@@ -19,6 +19,7 @@ sub_apu_init:
 	STA ram_snd_ptr_lo
 	STA ram_snd_ptr_hi
 	STA ram_current_sfx
+	sta ram_sfx_disable
 	lda #$08
 	STA $4001	; Sq0 Sweep
 	STA $4005	; Sq1 Sweep
@@ -165,16 +166,20 @@ sub_music_load:
 ; -----------------------------------------------------------------------------
 ; $9B = Index of the song/SFX to load, this will NOT loop
 sub_sfx_load:
+	lda ram_sfx_disable
+	beq @start
+	rts
+
 	;LDA ram_ch_mute_mask
 	;AND #$0F
-	;BEQ @bra_80C0	; Branch if nothing is playing on the SFX channels
+	;BEQ @start	; Branch if nothing is playing on the SFX channels
 
 	;lda ram_snd_index
 	;cmp ram_current_sfx
-	;bne @bra_80C0	; Branch if this sound isn't already playing
+	;bne @start	; Branch if this sound isn't already playing
 	;rts				; Otherwise do nothing
 
-;@bra_80C0:
+@start:
 	LDA #$01
 	STA ram_pause_snd_proc	; Pause processing sound events
 	
@@ -310,8 +315,20 @@ sub_sfx_mute:
 sub_music_resume:
 	; Disable SFX on this channel
 	lda ram_active_ch_mask
-	beq @end	; TODO Secret code for disabling SFX
+	bne @resume
 
+	; Secret code for disabling SFX
+	lda ram_btn_hold
+	cmp #$60	; SELECT + B
+	bne @end
+
+	lda ram_sfx_disable
+	eor #$FF
+	sta ram_sfx_disable
+
+	rts
+
+@resume:
 	eor ram_ch_mute_mask
 	sta ram_ch_mute_mask
 
@@ -2083,7 +2100,7 @@ tbl_sound_pointers:
 	.word _sfx_hit				; 13	SFX: Hit, even if blocked
 	.byte $8C, $FF
 
-	.word _sfx_tigershot			; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot)
+	.word _sfx_tigershot		; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot)
 	.byte $8C, $FF
 
 	.word _sfx_sonicboom		; 15	SFX: Guile's Sonic Boom
@@ -2131,7 +2148,7 @@ tbl_sound_pointers:
 	.word _sfx_finalhit			; 23	SFX: Final hit
 	.byte $8C, $FF
 
-	.word _sfx_spinningbird		; 24	Unused music 3 (*Spinning Bird Kick)
+	.word _sfx_spinningbird		; 24	Unused music 3 (*SFX: Spinning Bird Kick voice)
 	.byte $8C, $FF
 
 	.word _sfx_punch			; 25	SFX: Punch
