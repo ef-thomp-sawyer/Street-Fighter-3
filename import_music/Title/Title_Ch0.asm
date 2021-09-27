@@ -6,11 +6,21 @@
 	.byte $15, $08	; A-2, 8 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $13	; A-2, 19 ticks
-	.byte $82, $14	; *REST, 20 ticks
+	.byte $82, $0A	; *REST, 10 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $15, $09	; A-2, 9 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $08	; A-2, 8 ticks
-	.byte $82, $0B	; *REST, 11 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $07, $03	; G-1, 3 ticks
+	.byte $82, $07	; *REST, 7 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $13, $05	; G-2, 5 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $13, $09	; G-2, 9 ticks
@@ -18,19 +28,35 @@
 	.byte $15, $04	; A-2, 4 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $15, $13	; A-2, 19 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $09, $03	; A-1, 3 ticks
 
-; ---- FRAME 00 END ($0022 bytes) ----
+; ---- FRAME 00 END ($0040 bytes) ----
 
 ; -------- FRAME 01 --------
-	.byte $82, $0B	; *REST, 11 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $15, $08	; A-2, 8 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $13	; A-2, 19 ticks
-	.byte $82, $14	; *REST, 20 ticks
+	.byte $82, $0A	; *REST, 10 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $15, $09	; A-2, 9 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $08	; A-2, 8 ticks
-	.byte $82, $0B	; *REST, 11 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $07, $03	; G-1, 3 ticks
+	.byte $82, $07	; *REST, 7 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $13, $05	; G-2, 5 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $13, $09	; G-2, 9 ticks
@@ -38,15 +64,31 @@
 	.byte $15, $04	; A-2, 4 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $15, $13	; A-2, 19 ticks
-	.byte $82, $0B	; *REST, 11 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $15, $08	; A-2, 8 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $13	; A-2, 19 ticks
-	.byte $82, $14	; *REST, 20 ticks
+	.byte $82, $0A	; *REST, 10 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $09, $03	; A-1, 3 ticks
+	.byte $82, $02	; *REST, 2 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $15, $09	; A-2, 9 ticks
 	.byte $82, $0B	; *REST, 11 ticks
 	.byte $15, $08	; A-2, 8 ticks
-	.byte $82, $0B	; *REST, 11 ticks
+	.byte $82, $01	; *REST, 1 ticks
+	.byte $80, $73	; VOLUME, $73
+	.byte $07, $03	; G-1, 3 ticks
+	.byte $82, $07	; *REST, 7 ticks
+	.byte $80, $76	; VOLUME, $76
 	.byte $13, $05	; G-2, 5 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $13, $09	; G-2, 9 ticks
@@ -54,11 +96,14 @@
 	.byte $15, $04	; A-2, 4 ticks
 	.byte $82, $05	; *REST, 5 ticks
 	.byte $15, $09	; A-2, 9 ticks
+	.byte $82, $0B	; *REST, 11 ticks
+	.byte $80, $74	; VOLUME, $74
+	.byte $05, $03	; F-1, 3 ticks
 
-; ---- FRAME 01 END ($0040 bytes) ----
+; ---- FRAME 01 END ($007C bytes) ----
 
 ; -------- FRAME 02 --------
-	.byte $82, $15	; *REST, 21 ticks
+	.byte $82, $07	; *REST, 7 ticks
 	.byte $80, $78	; VOLUME, $78
 	.byte $11, $08	; F-2, 8 ticks
 	.byte $82, $0B	; *REST, 11 ticks

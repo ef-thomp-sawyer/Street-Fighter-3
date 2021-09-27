@@ -9,4 +9,4 @@
 	.byte $14, $01	; G#2, 1 ticks
 	.byte $12, $01	; F#2, 1 ticks
 	.byte $82, $05	; *REST, 5 ticks
-	.byte $86	; *STOP
+	.byte $8F	; *STOP

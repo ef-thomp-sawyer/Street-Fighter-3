@@ -19,7 +19,7 @@ M. Bison
 Bank $0D
 
 Chun-Li
-- Spinning BIrd Kick:	off_A91C_3C, $23
+- Spinning Bird Kick:	off_A91C_3C, $23
 - Lightning Kicks:	off_A97E_3D, $0D
 
 Guile

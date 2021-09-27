@@ -9,9 +9,9 @@
 	.byte $80, $33	; VOLUME, $33
 	.byte $84, $01	; *HOLD, 1 ticks
 	.byte $80, $34	; VOLUME, $34
-	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $84, $02	; *HOLD, 2 ticks
 	.byte $80, $35	; VOLUME, $35
-	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $84, $02	; *HOLD, 2 ticks
 	.byte $80, $36	; VOLUME, $36
 	.byte $4F, $05	; 09-#, 5 ticks
 	.byte $80, $35	; VOLUME, $35
@@ -25,11 +25,11 @@
 	.byte $84, $0A	; *HOLD, 10 ticks
 	.byte $4C, $0A	; 05-#, 10 ticks
 	.byte $80, $32	; VOLUME, $32
-	.byte $84, $0A	; *HOLD, 10 ticks
-	.byte $47, $0A	; 04-#, 10 ticks
+	.byte $84, $0C	; *HOLD, 12 ticks
+	.byte $47, $0C	; 04-#, 12 ticks
 	.byte $80, $31	; VOLUME, $31
-	.byte $84, $0A	; *HOLD, 10 ticks
-	.byte $53, $0A	; 03-#, 10 ticks
+	.byte $84, $0E	; *HOLD, 14 ticks
+	.byte $53, $10	; 03-#, 16 ticks
 	.byte $80, $30	; VOLUME, $30
-	.byte $84, $05	; *HOLD, 5 ticks
+	.byte $84, $08	; *HOLD, 8 ticks
 	.byte $8F	; *STOP

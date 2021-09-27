@@ -2495,7 +2495,7 @@ off_A97E_3D:    ; Chun-Li's Lightning Kick
 - D 1 - I - 0x01A998 06:A988: 00        .byte $00   ; 
 - D 1 - I - 0x01A999 06:A989: 83        .byte $83   ; 
 - D 1 - I - 0x01A99A 06:A98A: FC        .byte $FC   ; 
-- D 1 - I - 0x01A99B 06:A98B: 12        .byte $12   ;  SFX ID: Repeated hits
+- D 1 - I - 0x01A99B 06:A98B: 12        .byte $2A   ;  SFX ID (repeated)
 - D 1 - I - 0x01A99C 06:A98C: 28        .byte $28   ; 
 - D 1 - I - 0x01A99D 06:A98D: 00        .byte $00   ; 
 - D 1 - I - 0x01A99E 06:A98E: 00        .byte $00   ; 
@@ -5719,7 +5719,8 @@ off_B56D_3B:
 - D 1 - I - 0x01B58A 06:B57A: 09        .byte $09   ; 
 - - - - - - 0x01B58B 06:B57B: FF        .byte $FF   ; 
 
-off_B57C_3C:
+off_B57C_3C:    ; Ryu's and Ken's Hurricane Kick
+    .byte $FC, $22
 - D 1 - I - 0x01B58C 06:B57C: F5        .byte $F5   ; 
 - D 1 - I - 0x01B58D 06:B57D: FD        .byte $FD   ; 
 - D 1 - I - 0x01B58E 06:B57E: 0C        .byte $0C   ; 
@@ -5744,8 +5745,8 @@ off_B57C_3C:
 - D 1 - I - 0x01B5A1 06:B591: 00        .byte $00   ; 
 - D 1 - I - 0x01B5A2 06:B592: 00        .byte $00   ; 
 - D 1 - I - 0x01B5A3 06:B593: 84        .byte $84   ; 
-- D 1 - I - 0x01B5A4 06:B594: FC        .byte $FC   ; 
-- D 1 - I - 0x01B5A5 06:B595: 12        .byte $12   ; SFX ID for Ryu's Tatsu
+- D 1 - I - 0x01B5A4 06:B594: FC        .byte $FC   ; <- Loop point ($18)
+- D 1 - I - 0x01B5A5 06:B595: 12        .byte $12   ; SFX ID
 - D 1 - I - 0x01B5A6 06:B596: 4F        .byte $4F   ; 
 - D 1 - I - 0x01B5A7 06:B597: 00        .byte $00   ; 
 - D 1 - I - 0x01B5A8 06:B598: 00        .byte $00   ; 
@@ -5763,7 +5764,8 @@ off_B57C_3C:
 - D 1 - I - 0x01B5B4 06:B5A4: FF        .byte $FF   ; 
 - D 1 - I - 0x01B5B5 06:B5A5: 82        .byte $82   ; 
 - D 1 - I - 0x01B5B6 06:B5A6: C6        .byte $C6   ; 
-- D 1 - I - 0x01B5B7 06:B5A7: 18        .byte $18   ; 
+;- D 1 - I - 0x01B5B7 06:B5A7: 18        .byte $18   ; Loop point index
+    .byte $1A
 - D 1 - I - 0x01B5B8 06:B5A8: F5        .byte $F5   ; 
 - D 1 - I - 0x01B5B9 06:B5A9: 02        .byte $02   ; 
 - D 1 - I - 0x01B5BA 06:B5AA: FD        .byte $FD   ; 
@@ -5780,11 +5782,12 @@ off_B57C_3C:
 - D 1 - I - 0x01B5C5 06:B5B5: 00        .byte $00   ; 
 - D 1 - I - 0x01B5C6 06:B5B6: 00        .byte $00   ; 
 - D 1 - I - 0x01B5C7 06:B5B7: 84        .byte $84   ; 
-- D 1 - I - 0x01B5C8 06:B5B8: 2D        .byte $2D   ; 
+- D 1 - I - 0x01B5C8 06:B5B8: 2D        .byte $2D   ; Second loop point ($3C)
 - D 1 - I - 0x01B5C9 06:B5B9: 00        .byte $00   ; 
 - D 1 - I - 0x01B5CA 06:B5BA: 00        .byte $00   ; 
 - D 1 - I - 0x01B5CB 06:B5BB: FE        .byte $FE   ; 
-- D 1 - I - 0x01B5CC 06:B5BC: 3C        .byte $3C   ; 
+;- D 1 - I - 0x01B5CC 06:B5BC: 3C        .byte $3C   ; <- Second loop point index
+    .byte $3E
 - - - - - - 0x01B5CD 06:B5BD: FF        .byte $FF   ; 
 
 off_B5BE_3D:

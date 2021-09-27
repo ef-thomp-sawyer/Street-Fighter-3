@@ -1,16 +1,18 @@
 ; Channel 3
 
 ; -------- FRAME 00 --------
-	.byte $80, $3E	; VOLUME, $3E
+	.byte $80, $39	; VOLUME, $39
 	.byte $47, $03	; 04-#, 3 ticks
-	.byte $80, $3A	; VOLUME, $3A
+	.byte $80, $37	; VOLUME, $37
 	.byte $84, $02	; *HOLD, 2 ticks
-	.byte $80, $38	; VOLUME, $38
-	.byte $51, $02	; 07-#, 2 ticks
 	.byte $80, $36	; VOLUME, $36
-	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $51, $02	; 07-#, 2 ticks
+	.byte $80, $35	; VOLUME, $35
+	.byte $84, $01	; *HOLD, 1 ticks
 	.byte $80, $34	; VOLUME, $34
 	.byte $84, $01	; *HOLD, 1 ticks
-	.byte $80, $30	; VOLUME, $30
+	.byte $80, $33	; VOLUME, $33
 	.byte $84, $01	; *HOLD, 1 ticks
-	.byte $86	; *STOP
+	.byte $80, $31	; VOLUME, $31
+	.byte $84, $01	; *HOLD, 1 ticks
+	.byte $8F	; *STOP

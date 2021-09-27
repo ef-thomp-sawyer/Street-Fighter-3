@@ -8302,9 +8302,9 @@ SndIndicesTbl:
 	.byte $0F   ; 0F	SFX: Electricity (e.g. Blanka)
 	.byte $10   ; 10	SFX: Roll (e.g. Blanka)
 	.byte $11   ; 11	SFX: Repeated close hit (e.g. Blanka's Wild Fang)
-	.byte $12   ; 12	SFX: Repeated hit (e.g. Chun Li's Lightning Kicks)
+	.byte $12   ; 12	SFX: Repeated hit (e.g. Hurricane Kick hits)
 	.byte $13   ; 13	SFX: Hit, even if blocked
-	.byte $14   ; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot)
+	.byte $14   ; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot High)
 	.byte $15   ; 15	SFX: Guile's Sonic Boom
 	.byte $16   ; 16	SFX: Guile's Flash Kick
 	.byte $17   ; 17	SFX: Uppercut (*Tiger Uppercut)
@@ -8317,7 +8317,7 @@ SndIndicesTbl:
 	.byte $1E   ; 1E	SFX: Aeroplane before match
 	.byte $1F   ; 1F	SFX: Pause
 	.byte $20   ; 20	MUSIC (bonus): Balrog
-	.byte $1D   ; 21	Unused duplicate?
+	.byte $28   ; 21	Unused duplicate? (*Tiger Shot Low)
 	.byte $21   ; 22	Unused SFX 3 (*Tatsu)
 	.byte $22   ; 23	SFX: Throw
 	.byte $23   ; 24	SFX: Final hit
@@ -8325,7 +8325,8 @@ SndIndicesTbl:
 	.byte $25   ; 26	SFX: Punch
 	.byte $26   ; 27	SFX: Kick
 	.byte $27   ; 28	SFX: Score counter tick
-
+	.byte $29	; 29	*SFX: Psycho Crusher
+	.byte $2A	; 2A	*SFX: Lightning Kicks
 
 
 sub_F83B:

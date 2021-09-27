@@ -4180,7 +4180,8 @@ off_AF3A_3E:
 - D 1 - I - 0x00EF65 03:AF55: 17        .byte $17   ; 
 - - - - - - 0x00EF66 03:AF56: FF        .byte $FF   ; 
 
-off_AF57_3F:
+off_AF57_3F:    ; Bison's Psycho Crusher
+    .byte $FC, $29
 - D 1 - I - 0x00EF67 03:AF57: 1A        .byte $1A   ; 
 - D 1 - I - 0x00EF68 03:AF58: 00        .byte $00   ; 
 - D 1 - I - 0x00EF69 03:AF59: 00        .byte $00   ; 
@@ -4195,8 +4196,8 @@ off_AF57_3F:
 - D 1 - I - 0x00EF72 03:AF62: 00        .byte $00   ; 
 - D 1 - I - 0x00EF73 03:AF63: FC        .byte $FC   ; 
 - D 1 - I - 0x00EF74 03:AF64: 81        .byte $81   ; 
-- D 1 - I - 0x00EF75 03:AF65: FC        .byte $FC   ; 
-- D 1 - I - 0x00EF76 03:AF66: 12        .byte $12   ; SFX ID: Bison's Psycho Crusher
+;- D 1 - I - 0x00EF75 03:AF65: FC        .byte $FC   ; 
+;- D 1 - I - 0x00EF76 03:AF66: 12        .byte $12   ; SFX ID
 - D 1 - I - 0x00EF77 03:AF67: 2C        .byte $2C   ; 
 - D 1 - I - 0x00EF78 03:AF68: 00        .byte $00   ; 
 - D 1 - I - 0x00EF79 03:AF69: 04        .byte $04   ; 
@@ -7433,7 +7434,7 @@ off_BB37_3D:
 - D 1 - I - 0x00FB72 03:BB62: 27        .byte $27   ; 
 - - - - - - 0x00FB73 03:BB63: FF        .byte $FF   ; 
 
-off_BB64_3E:    ; Sagat's Tiger Shot (high?)
+off_BB64_3E:    ; Sagat's Tiger Shot (high)
     .byte $FC, $14
 - D 1 - I - 0x00FB74 03:BB64: 0F        .byte $0F   ; 
 - D 1 - I - 0x00FB75 03:BB65: 00        .byte $00   ; 
@@ -7450,7 +7451,7 @@ off_BB64_3E:    ; Sagat's Tiger Shot (high?)
 - D 1 - I - 0x00FB80 03:BB70: FD        .byte $FD   ; 
 - D 1 - I - 0x00FB81 03:BB71: 40        .byte $40   ; 
 ;- D 1 - I - 0x00FB82 03:BB72: FC        .byte $FC   ; 
-;- D 1 - I - 0x00FB83 03:BB73: 14        .byte $14   ; ; SFX ID
+;- D 1 - I - 0x00FB83 03:BB73: 14        .byte $14   ; SFX ID
 - D 1 - I - 0x00FB84 03:BB74: 24        .byte $24   ; 
 - D 1 - I - 0x00FB85 03:BB75: 00        .byte $00   ; 
 - D 1 - I - 0x00FB86 03:BB76: 00        .byte $00   ; 
@@ -7468,8 +7469,8 @@ off_BB64_3E:    ; Sagat's Tiger Shot (high?)
 - D 1 - I - 0x00FB92 03:BB82: F0        .byte $F0   ; 
 - D 1 - I - 0x00FB93 03:BB83: FF        .byte $FF   ; 
 
-off_BB84_3F:    ; Sagat's Tiger Shot (low?)
-    .byte $FC, $14
+off_BB84_3F:    ; Sagat's Tiger Shot (low)
+    .byte $FC, $21
 - D 1 - I - 0x00FB94 03:BB84: 1C        .byte $1C   ; 
 - D 1 - I - 0x00FB95 03:BB85: 00        .byte $00   ; 
 - D 1 - I - 0x00FB96 03:BB86: 00        .byte $00   ; 
