@@ -1,6 +1,8 @@
 # Street Fighter 3
 
-Street Fighter III (9 Fighter) (Unl) [NES] disassembly.
+"Street Fighter 2 Deluxe" for NES.
+
+Initial code: Street Fighter III (9 Fighter) (Unl) [NES] disassembly.
 
 Use **syntax_6502.xml** to highlight code in [Notepad++](https://notepad-plus-plus.org/).
 
