@@ -2527,7 +2527,7 @@ _sfx_hit_ch2:
 	.byte $15, $01	; A-2, 1 ticks
 	.byte $13, $01	; G-2, 1 ticks
 	.byte $12, $01	; F#2, 1 ticks
-	.byte $82, $03	; *REST, 3 ticks
+	.byte $82, $01
 	.byte $86	; *STOP
 
 _sfx_hit_ch3:
@@ -3065,7 +3065,7 @@ _sfx_finalhit_ch2:
 	.byte $14, $01	; G#2, 1 ticks
 	.byte $0C, $01	; C-2, 1 ticks
 	.byte $07, $01	; G-1, 1 ticks
-	.byte $82, $71	; *REST, 113 ticks
+	.byte $82, $1
 	.byte $86	; *STOP
 
 _sfx_finalhit_ch3:
@@ -3145,7 +3145,7 @@ _sfx_punch_ch2:
 	.byte $18, $01	; C-3, 1 ticks
 	.byte $17, $01	; B-2, 1 ticks
 	.byte $15, $01	; A-2, 1 ticks
-	.byte $82, $03	; *REST, 3 ticks
+	.byte $82, $01
 	.byte $86		; *STOP
 
 
@@ -3176,7 +3176,7 @@ _sfx_kick_ch2:
 	.byte $15, $01	; A-2, 1 ticks
 	.byte $14, $01	; G#2, 1 ticks
 	.byte $12, $01	; F#2, 1 ticks
-	.byte $82, $05	; *REST, 5 ticks
+	.byte $82, $01
 	.byte $86		; *STOP
 
 
