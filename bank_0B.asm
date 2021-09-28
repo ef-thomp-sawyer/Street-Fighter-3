@@ -312,6 +312,7 @@ sub_sfx_mute:
 ; -----------------------------------------------------------------------------
 ; Restore volume registers and channel control register from RAM
 ; This is used to resume music after a sound effect has finished using the APU
+.export sub_music_resume
 sub_music_resume:
 	; Disable SFX on this channel
 	lda ram_active_ch_mask
@@ -408,8 +409,8 @@ sub_sound_proc:
 	;				 X = 4, 5, 6, 7 for the looping music channels
 	txa
 	pha
-	lda ram_active_ch_mask	; Check if this channel is enabled, e.g. there are no
-	and ram_ch_mute_mask	; sound effects taking precedence over music
+	lda ram_active_ch_mask	; Check if this channel is enabled
+	and ram_ch_mute_mask
 	bne @ProcessChannel
 
 	; Channel disabled: jump to next
@@ -2926,7 +2927,7 @@ _sfx_countdown_ch1:
 	.byte $2A, $24	; F#4, 36 ticks
 	.byte $87, $00	; *VOLSLIDE, $00
 	.byte $82, $0C	; *REST, 12 ticks
-	.byte $86	; *STOP
+	.byte $8F	; *STOP
 
 
 
@@ -2961,8 +2962,8 @@ _sfx_plane_ch3:
 	.byte $84, $0E	; *HOLD, 14 ticks
 	.byte $53, $10	; 03-#, 16 ticks
 	.byte $80, $30	; VOLUME, $30
-	.byte $84, $08	; *HOLD, 8 ticks
-	.byte $86		; *STOP
+	.byte $84, $01
+	.byte $8F		; *STOP
 
 
 

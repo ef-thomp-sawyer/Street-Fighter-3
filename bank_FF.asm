@@ -1,4 +1,4 @@
-.setcpu "6502X"	; +FOX Allow undocumented opcodes
+.setcpu "6502X"	;+FOX: Allow undocumented opcodes
 
 .segment "BANK_FF"
 .include "copy_bank_ram.inc"
@@ -87,7 +87,7 @@ bra_C0C0:
 	LDA #$1A
 	STA ram_timer_before_demo
 
-; +FOX Check if Select+Up or Select+Down is pressed
+;+FOX: Check if Select+Up or Select+Down is pressed
 	lda ram_btn_hold
 	cmp #$28
 	bne @CheckSelectDown
@@ -906,7 +906,7 @@ bra_C955_RTS:
 	RTS
 bra_C956:
 	JSR sub_F4AB
-	LDA #$03	; +FOX Originally 2
+	LDA #$04	;+FOX: Correct duration for victory screen
 	JSR sub_FCF2_artificial_delay
 	JSR sub_FAF4
 	LDA ram_051E
@@ -1024,7 +1024,7 @@ loc_C9F4:
 	JSR sub_E7E9_draw_screen
 	LDA #$0D	; Ending
 	; JSR sub_sndload_noloop
-	jsr sub_sndload_loop ; +FOX This is now proper music
+	jsr sub_sndload_loop ;+FOX: This is now proper music
 	JSR sub_FCD0
 	LDA #$19
 	JSR sub_FCF2_artificial_delay
@@ -1040,7 +1040,7 @@ sub_CA0B:
 	JSR sub_F4AB
 	LDA #$05
 	JSR sub_FF17
-	JSR sub_F80B
+	JSR sub_stop_sfx
 	JSR sub_FAF4
 bra_CA21:
 	JSR sub_CA69
@@ -1983,7 +1983,7 @@ sub_D02B:
 	BEQ bra_D041
 	LDA #$02
 	STA ram_0072
-	JSR sub_F83B
+	JSR sub_stop_music
 bra_D041:
 	PLA
 	TAY
@@ -3083,13 +3083,22 @@ bra_D7C6:
 	LDA ram_btn_press
 	CMP #con_btn___Start
 	BNE bra_D7E2
+
+	;+FOX: Don't reset background music on pause
 	LDA #$01
 	STA ram_pause_flag
-	JSR sub_F83B
-	JSR sub_F80B
-	LDA #$1F	; Pause button sfx
+	lda #$00
+	sta $4000
+	sta $4004
+	sta $4008
+	sta $400C
+	JSR sub_stop_sfx
+	lda #$00	;Stop music
+	sta ram_ch_mute_mask
+	LDA #$1F	;Pause button sfx
 	JSR sub_sndload_noloop
 	JMP loc_D835
+
 bra_D7E2:
 	LDA ram_051E
 	BEQ bra_D7ED
@@ -3177,14 +3186,15 @@ sub_D839:
 	LDA ram_0016
 	STA $2001
 
-	lda #$00				; Fix for noise channel not resuming after pause
-	sta ram_ch_mute_mask	; -FOX
+	;+FOX: Resume music after pause instead of re-starting it
+	lda #$F0
+	sta ram_ch_mute_mask
+	lda #$00
+	sta ram_pause_flag
+	lda #$0F
+	sta $4015
+	rts
 
-	LDA ram_screen
-	JSR sub_sndload_loop
-	LDA #$00
-	STA ram_pause_flag
-	RTS
 bra_D899:
 	LDA ram_0010
 	AND #$3F
@@ -6224,7 +6234,7 @@ bra_EBA0:
 	BEQ bra_EBB1
 	LDA #$02
 	STA ram_0072
-	JSR sub_F83B
+	JSR sub_stop_music
 bra_EBB1:
 	LDA #$03
 	STA ram_007C
@@ -7546,7 +7556,7 @@ bra_F36F:
 	DEC ram_0072
 	RTS
 bra_F37B:
-	JSR sub_F80B
+	JSR sub_stop_sfx
 	LDA #$FA
 	STA ram_0072
 	RTS
@@ -7806,7 +7816,7 @@ bra_F523:
 	LDA #$1C	; Vs. Screen
 bra_F525:
 	; JSR sub_sndload_noloop
-	jsr sub_sndload_loop	; +FOX This is now proper music
+	jsr sub_sndload_loop	;+FOX: This is now proper music
 	JSR sub_FCD0
 	RTS
 
@@ -8276,7 +8286,7 @@ sub_sndload_loop:
 
 
 
-sub_F80B:
+sub_stop_sfx:
 	JSR sub_F842_bankswitch_to_music
 	jmp sub_sfx_mute
 	; RTS
@@ -8329,7 +8339,7 @@ SndIndicesTbl:
 	.byte $2A	; 2A	*SFX: Lightning Kicks
 
 
-sub_F83B:
+sub_stop_music:
 	JSR sub_F842_bankswitch_to_music
 	jmp sub_apu_reset
 	; RTS
@@ -8349,8 +8359,8 @@ sub_F84D:
 	LDA #$00
 	STA $2000
 	STA $2001
-	JSR sub_F83B
-	JSR sub_F80B
+	JSR sub_stop_music
+	JSR sub_stop_sfx
 	RTS
 
 
@@ -9523,7 +9533,7 @@ bra_FF1D:
 	LDA ram_0011
 	BEQ bra_FF35_RTS
 	DEC ram_0011
-	LDA #$3C
+	lda #$1F	;+FOX: Correct duration for VS screen
 	STA ram_0010
 	BNE bra_FF1D
 bra_FF33:
