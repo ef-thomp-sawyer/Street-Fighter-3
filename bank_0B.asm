@@ -2924,7 +2924,8 @@ _sfx_countdown_ch1:
 	.byte $84, $02	; *HOLD, 2 ticks
 	.byte $80, $B9	; VOLUME, $B9
 	.byte $87, $02	; *VOLSLIDE, $02
-	.byte $2A, $24	; F#4, 36 ticks
+	;.byte $2A, $24	; F#4, 36 ticks
+	.byte $84, $24
 	.byte $87, $00	; *VOLSLIDE, $00
 	.byte $82, $0C	; *REST, 12 ticks
 	.byte $8F	; *STOP
