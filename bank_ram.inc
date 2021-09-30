@@ -1541,17 +1541,17 @@ ram_05BF                        = $05BF ; (Unused) Target period HI SFX ch 3
 ram_basereg0_mus0               = $05C0 ; Duty/Volume for SFX ch 0
 ram_effreg0_mus0                = $05C1 ; Effective volume for SFX ch 0
 ram_reg2_mus0                   = $05C2 ; Current period (LO) for SFX ch 0
-ram_reg3_mus0                    = $05C3 ; Current period (HI) for SFX ch 0
+ram_reg3_mus0                   = $05C3 ; Current period (HI) for SFX ch 0
 
 ram_basereg0_mus1               = $05C4 ; Duty/Volume for SFX ch 1
 ram_effreg0_mus1                = $05C5 ; Effective volume for SFX ch 1
 ram_reg2_mus1                   = $05C6 ; Current period (LO) for SFX ch 1
-ram_reg3_mus1                    = $05C7 ; Current period (HI) for SFX ch 1
+ram_reg3_mus1                   = $05C7 ; Current period (HI) for SFX ch 1
 
 ram_basereg0_mus2               = $05C8 ; Volume for SFX ch 2
 ram_effreg0_mus2                = $05C9 ; Effective volume for SFX ch 2
 ram_reg2_mus2                   = $05CA ; Current period (LO) for SFX ch 2
-ram_reg3_mus2                    = $05CB ; Current period (HI) for SFX ch 2
+ram_reg3_mus2                   = $05CB ; Current period (HI) for SFX ch 2
 
 ram_basereg0_mus3               = $05CC ; Volume for SFX ch 3
 ram_effreg0_mus3                = $05CD ; Effective volume for SFX ch 3
