@@ -635,8 +635,8 @@ bra_C722_clear_ram_loop:
 	JSR sub_F842_bankswitch_to_music
 	JSR sub_apu_init
 	LDA #$00
-	STA ram_0078
-	STA ram_0079
+	STA ram_high_score
+	STA ram_high_score + 1
 	LDA #$03
 	STA ram_cursor_difficulty
 	JSR sub_C759
@@ -695,7 +695,7 @@ loc_C7C1:
 	STA ram_credits
 	JSR sub_FAF4
 	JSR sub_F84D
-	JSR sub_C84C
+	JSR sub_C84C_clear_player_scores
 	LDA ram_00C6
 	BEQ bra_C81D
 	LDA #$00
@@ -773,12 +773,12 @@ tbl_C83A:
 
 
 
-sub_C84C:
+sub_C84C_clear_player_scores:
 	LDA #$00
-	STA ram_0074
-	STA ram_0075
-	STA ram_0076
-	STA ram_0077
+	STA ram_player_score		; p1 lo
+	STA ram_player_score + 1	; p1 hi
+	STA ram_player_score + 2	; p2 lo
+	STA ram_player_score + 3	; p2 hi
 	RTS
 
 
@@ -900,7 +900,7 @@ bra_C93C:
 	LDA ram_007E
 	BEQ bra_C955_RTS
 	DEC ram_credits
-	JSR sub_C84C
+	JSR sub_C84C_clear_player_scores
 	JMP loc_C935
 bra_C955_RTS:
 	RTS
@@ -1067,22 +1067,22 @@ bra_CA4B_RTS:
 	RTS
 
 
-
-sub_CA4C:
-	LDA ram_0075,Y
-	CMP ram_0079
-	BEQ bra_CA57
-	BCS bra_CA5E
-	BCC bra_CA68_RTS
-bra_CA57:
-	LDA ram_0074,Y
-	CMP ram_0078
-	BCC bra_CA68_RTS
-bra_CA5E:
-	LDA ram_0074,Y
-	STA ram_0078
-	LDA ram_0075,Y
-	STA ram_0079
+; Yreg = 0:p1, 2:p2
+sub_CA4C_update_high_score: ; Test hi bytes
+	LDA ram_player_score + 1,Y	; player, hi
+	CMP ram_high_score + 1		; high score, hi
+	BEQ bra_CA57		; =
+	BCS bra_CA5E		; >
+	BCC bra_CA68_RTS	; <
+bra_CA57:					; Test lo bytes
+	LDA ram_player_score,Y		; player, lo
+	CMP ram_high_score			; high score, lo
+	BCC bra_CA68_RTS	; <
+bra_CA5E:					; Copy player to high score
+	LDA ram_player_score,Y		; player, lo
+	STA ram_high_score			; high score, lo
+	LDA ram_player_score + 1,Y	; player, hi
+	STA ram_high_score + 1		; high score, hi
 bra_CA68_RTS:
 	RTS
 
@@ -1102,9 +1102,9 @@ sub_CA69:
 	ADC tbl_CAEC,Y
 	STA ram_00C0
 	LDY #$00
-	JSR sub_CA4C
+	JSR sub_CA4C_update_high_score
 	LDY #$02
-	JSR sub_CA4C
+	JSR sub_CA4C_update_high_score
 	LDA #$30
 	STA ram_00AC
 	STA ram_00AD
@@ -7216,9 +7216,9 @@ sub_F131_print_points:
 	LDA ram_0073
 	ASL
 	TAY
-	LDA ram_0074,Y
+	LDA ram_player_score,Y
 	STA ram_00A5
-	LDA ram_0075,Y
+	LDA ram_player_score + 1,Y
 	STA ram_00A6
 	JSR sub_FF53
 	LDA #$01
@@ -7339,7 +7339,7 @@ bra_F20D:
 	LDX ram_002E
 	LDA ram_0500,X
 	ASL
-	STA ram_007A
+	STA ram_bonus_score
 	CMP #$B0
 	BNE bra_F23A
 	LDA #$05
@@ -7354,7 +7354,7 @@ bra_F20D:
 	STA ram_00AF
 	JSR sub_FF9D_write_to_ppu
 	LDA #$C8
-	STA ram_007A
+	STA ram_bonus_score
 	BNE bra_F251
 bra_F23A:
 	LDA #$05
@@ -7369,7 +7369,7 @@ bra_F23A:
 	STA ram_00AF
 	JSR sub_FF9D_write_to_ppu
 bra_F251:
-	LDA ram_007A
+	LDA ram_bonus_score
 	STA ram_00A5
 	LDA #$00
 	STA ram_00A6
@@ -7385,13 +7385,13 @@ bra_F251:
 	LDA #$00
 	STA ram_00AF
 	JSR sub_FF9D_write_to_ppu
-	LDA ram_007A
+	LDA ram_bonus_score
 	CLC
 	ADC ram_game_time
-	STA ram_007A
+	STA ram_bonus_score
 	LDA #$00
 	ADC #$00
-	STA ram_007B
+	STA ram_bonus_score + 1
 	JMP loc_F2E0
 bra_F283:
 	CMP #$07
@@ -7407,9 +7407,9 @@ bra_F283:
 	LDA #> tbl_F2FC
 	STA ram_00AF
 	JSR sub_FF9D_write_to_ppu
-	LDA ram_007A
+	LDA ram_bonus_score
 	STA ram_00A5
-	LDA ram_007B
+	LDA ram_bonus_score + 1
 	STA ram_00A6
 	JSR sub_FF53
 	LDA #$07
@@ -7497,40 +7497,40 @@ bra_F30B:
 	LDA ram_0072
 	CMP #$09
 	BEQ bra_F36F
-	LDA ram_007B
+	LDA ram_bonus_score + 1
 	BNE bra_F319
-	LDA ram_007A
+	LDA ram_bonus_score
 	BEQ bra_F37B
 bra_F319:
 	LDA ram_btn_hold
 	AND #con_btn_Start
 	BEQ bra_F334
-	LDA ram_0074,X
+	LDA ram_player_score,X
 	CLC
-	ADC ram_007A
-	STA ram_0074,X
-	LDA ram_0075,X
-	ADC ram_007B
-	STA ram_0075,X
+	ADC ram_bonus_score
+	STA ram_player_score,X
+	LDA ram_player_score + 1,X
+	ADC ram_bonus_score + 1
+	STA ram_player_score + 1,X
 	LDA #$00
-	STA ram_007A
-	STA ram_007B
+	STA ram_bonus_score
+	STA ram_bonus_score + 1
 	BEQ bra_F347
 bra_F334:
-	LDA ram_007A
+	LDA ram_bonus_score
 	SEC
 	SBC #$01
-	STA ram_007A
-	LDA ram_007B
+	STA ram_bonus_score
+	LDA ram_bonus_score + 1
 	SBC #$00
-	STA ram_007B
-	INC ram_0074,X
+	STA ram_bonus_score + 1
+	INC ram_player_score,X
 	BNE bra_F347
-	INC ram_0075,X
+	INC ram_player_score + 1,X
 bra_F347:
-	LDA ram_007A
+	LDA ram_bonus_score
 	STA ram_00A5
-	LDA ram_007B
+	LDA ram_bonus_score + 1
 	STA ram_00A6
 	JSR sub_FF53
 	LDA #$07
@@ -8876,11 +8876,11 @@ bra_FB27:
 	LDA ram_damage,X
 	LSR
 	CLC
-	ADC ram_0074,Y
-	STA ram_0074,Y
-	LDA ram_0075,Y
+	ADC ram_player_score,Y
+	STA ram_player_score,Y
+	LDA ram_player_score + 1,Y
 	ADC #$00
-	STA ram_0075,Y
+	STA ram_player_score + 1,Y
 	TYA
 	LSR
 	STA ram_0073
@@ -9040,19 +9040,19 @@ bra_FCF7_infinite_loop:
 ; -----------------------------------------------------------------------------
 ; A = Player# index (0 or 1)
 sub_FD02_read_joysticks_regs:
-	LDX #$01
-	STX $4016
-	DEX
-	STX $4016
+	LDX #$01		; 1: parallel mode
+	STX $4016		; fill parallel inputs
+	DEX				; 0: serial mode
+	STX $4016		; latch buttons to data lines
 	TAX				; X = Player# index
-	LDY #$08
+	LDY #$08		; Shift in 8 bits
 bra_FD0E:
-	LDA $4016,X
-	AND #$03
-	CMP #$01
+	LDA $4016,X		; Load all input data lines
+	AND #$03		; Keep only lines D0 & D1
+	CMP #$01		; Any presses? C=0:No/1:Yes
 	ROL ram_btn_rol
 	DEY
-	BNE bra_FD0E
+	BNE bra_FD0E	; Loop until Y = 0
 	LDA ram_btn_rol
 	CMP #$18			; Was Up+Start pressed?
 	BNE bra_FD24_RTS	; Skip cheat if not
@@ -9064,9 +9064,9 @@ bra_FD24_RTS:
 
 
 sub_FD25:
-	CMP #$01
+	CMP #$01		; If A=1, keep it!
 	BEQ bra_FD2B
-	LDA #$00
+	LDA #$00		;  else clear to 0
 bra_FD2B:
 	PHA
 	JSR sub_FD02_read_joysticks_regs
