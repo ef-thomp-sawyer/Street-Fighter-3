@@ -72,11 +72,17 @@ if "%1"=="" (
 	call :Import Psychocrusher, "Psycho Crusher"
 	del /Q SFX\Psychocrusher_Ch0.* SFX\Psychocrusher_Ch1.* SFX\Psychocrusher_Ch2.*
 	
-	call :Import Spinningbirdkick, "Spinning Bird Kick (Voice)"
+	call :Import Spinningbirdkick, "Spinning Bird Kick"
 	del /Q SFX\Spinningbirdkick_Ch0.* SFX\Spinningbirdkick_Ch2.* SFX\Spinningbirdkick_Ch3.*
 	
 	call :Import Lightningkicks, "Lightning Kicks"
 	del /Q SFX\Lightningkicks_Ch0.* SFX\Lightningkicks_Ch1.*
+
+	call :Import Kikoken, Kikoken
+	del /Q SFX\Kikoken_Ch0.* SFX\Kikoken_Ch2.* SFX\Kikoken_Ch3.*
+
+	call :Import Barcelona, "Flying Barcelona (YOOO)"
+	del /Q SFX\Barcelona_Ch0.* SFX\Barcelona_Ch2.* SFX\Barcelona_Ch3.*
 ) else (
 	if not exist %1\ mkdir %1
 	python import_music.py SF3.txt %1\%1 %2 %3

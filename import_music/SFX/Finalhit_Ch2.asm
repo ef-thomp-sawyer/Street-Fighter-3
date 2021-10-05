@@ -8,8 +8,8 @@
 	.byte $19, $01	; C#3, 1 ticks
 	.byte $17, $01	; B-2, 1 ticks
 	.byte $16, $01	; A#2, 1 ticks
-	.byte $14, $01	; G#2, 1 ticks
-	.byte $0C, $01	; C-2, 1 ticks
-	.byte $07, $01	; G-1, 1 ticks
-	.byte $82, $71	; *REST, 113 ticks
+	.byte $14, $02	; G#2, 2 ticks
+	.byte $0C, $03	; C-2, 3 ticks
+	.byte $07, $04	; G-1, 4 ticks
+	.byte $82, $AE	; *REST, 174 ticks
 	.byte $8F	; *STOP

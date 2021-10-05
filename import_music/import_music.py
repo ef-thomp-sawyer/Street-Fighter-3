@@ -19,7 +19,7 @@ NOISE = [
 
 # noinspection SpellCheckingInspection
 EVENTS = ["VOLUME", "MUTE", "*REST", "UNMUTE", "*HOLD", "*DELTA", "END/LOOP", "*VOLSLIDE", "*TIMBRE", "*JUMP",
-          "*NOTESLIDEUP", "(RESERVED)", "*FINEPITCH", "*VIBRATO", "(RESERVED)", "*STOP"]
+          "*NOTESLIDEUP", "*NOTESLIDEDOWN", "*FINEPITCH", "*VIBRATO", "(RESERVED)", "*STOP"]
 
 
 class FmtRow:
@@ -81,7 +81,8 @@ class Channel:
     EVENT_JUMP = 0x89  # *NEW DRIVER: set loop point
 
     # noinspection SpellCheckingInspection
-    EVENT_NOTESLIDE_UP = 0x8A  # *NEW DRIVER: note slide up
+    EVENT_NOTESLIDE_UP = 0x8A       # *NEW DRIVER: note slide up
+    EVENT_NOTESLIDE_DOWN = 0x8B     # *NEW DRIVER: note slide down
 
     # noinspection SpellCheckingInspection
     EVENT_FINEPITCH = 0x8C
@@ -478,6 +479,9 @@ def main():
 
                     elif fx[0] == 'Q':  # NOTE SLIDE UP
                         fx_list.append(fx)
+                       
+                    elif fx[0] == 'R':  # NOTE SLIDE DOWN
+                        fx_list.append(fx)
 
                     elif fx[0] == 'S':  # DELAYED CUT
                         if fx[1:] == "00":
@@ -564,6 +568,10 @@ def main():
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)
                             channels[c].instant_event(Channel.EVENT_NOTESLIDE_UP, value)
+                        
+                        elif fx[0] == 'R':
+                            value = int(fx[1:], 16)
+                            channels[c].instant_event(Channel.EVENT_NOTESLIDE_DOWN, value)
 
                         elif fx[0] == 'P':
                             value = int(fx[1:], 16) - 0x80
@@ -672,6 +680,10 @@ def main():
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)
                             channels[c].instant_event(Channel.EVENT_NOTESLIDE_UP, value)
+                        
+                        elif fx[0] == 'R':
+                            value = int(fx[1:], 16)
+                            channels[c].instant_event(Channel.EVENT_NOTESLIDE_DOWN, value)
 
                         elif fx[0] == 'P':
                             value = int(fx[1:], 16) - 0x80
@@ -755,6 +767,10 @@ def main():
                         elif fx[0] == 'Q':
                             value = int(fx[1:], 16)
                             channels[c].instant_event(Channel.EVENT_NOTESLIDE_UP, value)
+                        
+                        elif fx[0] == 'R':
+                            value = int(fx[1:], 16)
+                            channels[c].instant_event(Channel.EVENT_NOTESLIDE_DOWN, value)
 
                         elif fx[0] == 'P':
                             value = int(fx[1:], 16) - 0x80

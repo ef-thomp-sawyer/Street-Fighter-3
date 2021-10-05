@@ -17,6 +17,8 @@
 	.byte $84, $04	; *HOLD, 4 ticks
 	.byte $80, $33	; VOLUME, $33
 	.byte $84, $02	; *HOLD, 2 ticks
+	.byte $80, $31	; VOLUME, $31
+	.byte $84, $02	; *HOLD, 2 ticks
 	.byte $80, $30	; VOLUME, $30
 	.byte $84, $02	; *HOLD, 2 ticks
 	.byte $8F	; *STOP
