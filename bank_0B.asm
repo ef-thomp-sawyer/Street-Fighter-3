@@ -131,6 +131,9 @@ sub_music_load:
 	sta ram_finepitch_mus0,X		; Clear fine pitch
 	sta ram_vib_speed_mus0,X		; Clear vibrato speed
 
+	lda #$FF
+	sta ram_last_period_hi_ch0,X
+
 	txa
 	lsr
 	lsr
@@ -251,6 +254,9 @@ sub_sfx_load:
 	sta ram_finepitch_sfx0,X		; Clear fine pitch
 	sta ram_vib_speed_sfx0,X		; Clear vibrato speed
 
+	lda #$FF
+	sta ram_last_period_hi_ch0,X
+
 	txa
 	lsr
 	lsr
@@ -343,7 +349,13 @@ sub_music_resume:
 	lda ram_reg2_mus0,X
 	sta $4002,X
 	lda ram_reg3_mus0,X
+	cmp ram_last_period_hi_ch0,X
+	beq @SkipHi
+	
+	sta ram_last_period_hi_ch0,X
 	sta $4003,X
+
+@SkipHi:
 
 	; Restore X register
 	txa
@@ -860,6 +872,9 @@ sub_set_note_slide_down:
 	bcs @MusicNoteSlideDown
 
 ; SFX channels note slide down
+	txa
+	asl
+	tax
 
 	; Target note difference
 	tya
@@ -869,6 +884,7 @@ sub_set_note_slide_down:
 	sta ram_noteslide_lo_sfx0,X
 
 	; Speed
+	tya
 	lsr
 	lsr
 	lsr
@@ -876,6 +892,7 @@ sub_set_note_slide_down:
 	sta ram_noteslide_speed_sfx0,X
 
 	pla
+	tax
 	rts
 
 ; Music channels, NOT USED for now
@@ -901,7 +918,10 @@ sub_set_note_slide_up:
 	bcs @MusicNoteSlide
 
 ; SFX channels
-	
+	txa
+	asl
+	tax
+
 	; Slide Up
 	;lda #$01
 	;sta ram_noteslide_dir_sfx0,X
@@ -913,6 +933,7 @@ sub_set_note_slide_up:
 	sta ram_noteslide_lo_sfx0,X
 
 	; Speed
+	tya
 	lsr
 	lsr
 	lsr
@@ -920,7 +941,7 @@ sub_set_note_slide_up:
 	sta ram_noteslide_speed_sfx0,X
 
 	pla
-	; tax not needed: X is unchanged for sfx
+	tax
 	rts
 
 ; Music channels
@@ -1208,6 +1229,7 @@ sub_calculate_volume:
 	; Detect if high byte needs updating because of pitch slide
 	bvc @VolSlideEnd
 	lda ram_reg3_sfx0,X
+	sta ram_last_period_hi_ch0,X
 	sta $4003,X
 	clv
 
@@ -1345,6 +1367,7 @@ sub_music_volume:
 	; Detect if high byte needs updating
 	bvc @VolSlideEnd
 	lda ram_reg3_mus0,X
+	sta ram_last_period_hi_ch0,X
 	sta $4003,X
 	clv
 	
@@ -1588,8 +1611,13 @@ sub_write_apu_period:
 
 	lda tbl_note_period_hi,Y
 	sta ram_reg3_sfx0,X
+	cmp ram_last_period_hi_ch0,X
+	beq @StartNoteSlide
+
+	sta ram_last_period_hi_ch0,X
 	sta $4003,X		; Timer high
 	
+@StartNoteSlide:
 	; SFX Note slide
 
 	; Calculate target period for note slide if needed
@@ -1660,8 +1688,12 @@ sub_apu_period_music:
 	sta ram_reg2_mus0,X
 
 	lda tbl_note_period_hi,Y
-	sta $4003,X
 	sta ram_reg3_mus0,X
+	cmp ram_last_period_hi_ch0,X
+	beq @ApplyMusicEffects	; Only update high bits of period if needed
+							; to avoid the pulse reset bug
+	sta ram_last_period_hi_ch0,X
+	sta $4003,X
 
 @ApplyMusicEffects:
 	; Calculate target period for note slide if needed
@@ -2319,6 +2351,13 @@ tbl_sound_pointers:
 
 	.word _sfx_lightningkicks	; 2A	SFX: Lightning Kicks
 	.byte $8C, $FF
+
+	.word _sfx_barcelona		; 2B	SFX: Flying Barcelona
+	.byte $8C, $FF
+
+	.word _sfx_kikoken			; 2C	SFX: Kikoken
+	.byte $8C, $FF
+
 
 _sfx_yoga_fire:
 	.word $FFFF					; *SFX: Yoga Fire

@@ -1580,17 +1580,17 @@ ram_vib_speed_sfx3              = $05DE ; (Unused) Vibrato counter reload Mus Ch
 ram_vib_value_sfx3              = $05DF ; (Unused) Vibrato depth Mus Ch 3
 
 ; -----------------------------------------------------------------------------
-ram_05E0                        = $05E0 ; (Unused) can be used for note slide direction if needed
+ram_last_period_hi_ch0          = $05E0 ; Last value for high period byte ch 0
 ram_noteslide_speed_mus0        = $05E1 ; Note slide speed music ch 0
 ram_noteslide_lo_mus0           = $05E2 ; Target period LO music ch 0
 ram_noteslide_hi_mus0           = $05E3 ; Target period HI music ch 0
 
-ram_05E4                        = $05E4 ; N/A
+ram_last_period_hi_ch1          = $05E4 ; Last value for high period byte ch 1
 ram_noteslide_speed_mus1        = $05E5 ; Note slide speed music ch 1
 ram_noteslide_lo_mus1           = $05E6 ; Target period LO music ch 1
 ram_noteslide_hi_mus1           = $05E7 ; Target period HI music ch 1
 
-ram_05E8                        = $05E8 ; N/A
+ram_last_period_hi_ch2          = $05E8 ; Last value for high period byte ch 2
 ram_noteslide_speed_mus2        = $05E9 ; Note slide speed music ch 2
 ram_noteslide_lo_mus2           = $05EA ; Target period LO music ch 2
 ram_noteslide_hi_mus2           = $05EB ; Target period HI music ch 2

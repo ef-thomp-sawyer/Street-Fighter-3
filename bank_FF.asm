@@ -8337,6 +8337,8 @@ SndIndicesTbl:
 	.byte $27   ; 28	SFX: Score counter tick
 	.byte $29	; 29	*SFX: Psycho Crusher
 	.byte $2A	; 2A	*SFX: Lightning Kicks
+	.byte $2B	; 2B	*SFX: Vega's Barcelona
+	.byte $2C	; 2C	*SFX: Chun-Li's Kikoken
 
 
 sub_stop_music:

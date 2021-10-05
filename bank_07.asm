@@ -4589,7 +4589,7 @@ _player_B08B_06_Balrog:
 - D 1 - I - 0x00F10F 03:B0FF: CA B4     .word off_B4CA_3A
 - D 1 - I - 0x00F111 03:B101: D4 B4     .word off_B4D4_3B
 - D 1 - I - 0x00F113 03:B103: E5 B4     .word off_B4E5_3C
-- D 1 - I - 0x00F115 03:B105: 0A B5     .word off_B50A_3D
+- D 1 - I - 0x00F115 03:B105: 0A B5     .word off_B50A_3D   ; Flying Barcelona
 - D 1 - I - 0x00F117 03:B107: 32 B5     .word off_B532_3E
 - D 1 - I - 0x00F119 03:B109: 45 B5     .word off_B545_3F
 - - - - - - 0x00F11B 03:B10B: 73 B5     .word off_B573_40
@@ -5721,7 +5721,8 @@ off_B4E5_3C:
 - D 1 - I - 0x00F518 03:B508: 1E        .byte $1E   ; 
 - - - - - - 0x00F519 03:B509: FF        .byte $FF   ; 
 
-off_B50A_3D:
+off_B50A_3D:    ; Flying Barcelona
+    .byte $FC, $2B
 - D 1 - I - 0x00F51A 03:B50A: 0F        .byte $0F   ; 
 - D 1 - I - 0x00F51B 03:B50B: 00        .byte $00   ; 
 - D 1 - I - 0x00F51C 03:B50C: 00        .byte $00   ; 
