@@ -5722,7 +5722,6 @@ off_B4E5_3C:
 - - - - - - 0x00F519 03:B509: FF        .byte $FF   ; 
 
 off_B50A_3D:    ; Flying Barcelona
-    .byte $FC, $2B
 - D 1 - I - 0x00F51A 03:B50A: 0F        .byte $0F   ; 
 - D 1 - I - 0x00F51B 03:B50B: 00        .byte $00   ; 
 - D 1 - I - 0x00F51C 03:B50C: 00        .byte $00   ; 
@@ -5737,6 +5736,7 @@ off_B50A_3D:    ; Flying Barcelona
 - D 1 - I - 0x00F525 03:B515: F8        .byte $F8   ; 
 - D 1 - I - 0x00F526 03:B516: E7        .byte $E7   ; 
 - D 1 - I - 0x00F527 03:B517: 84        .byte $84   ; 
+    .byte $FC, $2B
 - D 1 - I - 0x00F528 03:B518: 09        .byte $09   ; 
 - D 1 - I - 0x00F529 03:B519: 00        .byte $00   ; 
 - D 1 - I - 0x00F52A 03:B51A: 00        .byte $00   ; 
@@ -5757,11 +5757,12 @@ off_B50A_3D:    ; Flying Barcelona
 - D 1 - I - 0x00F539 03:B529: 00        .byte $00   ; 
 - D 1 - I - 0x00F53A 03:B52A: 00        .byte $00   ; 
 - D 1 - I - 0x00F53B 03:B52B: 84        .byte $84   ; 
-- D 1 - I - 0x00F53C 03:B52C: 06        .byte $06   ; 
+- D 1 - I - 0x00F53C 03:B52C: 06        .byte $06   ; <-- Loop point
 - D 1 - I - 0x00F53D 03:B52D: 00        .byte $00   ; 
 - D 1 - I - 0x00F53E 03:B52E: 00        .byte $00   ; 
 - D 1 - I - 0x00F53F 03:B52F: FE        .byte $FE   ; 
-- D 1 - I - 0x00F540 03:B530: 22        .byte $22   ; 
+;- D 1 - I - 0x00F540 03:B530: 22        .byte $22   ; Loop index
+    .byte $24
 - - - - - - 0x00F541 03:B531: FF        .byte $FF   ; 
 
 off_B532_3E:

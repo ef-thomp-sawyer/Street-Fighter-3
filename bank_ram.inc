@@ -1517,20 +1517,20 @@ ram_05AE                        = $05AE ; (Unused)
 ram_05AF                        = $05AF ; (Unused)
 
 ; -----------------------------------------------------------------------------
-ram_noteslide_dir_sfx0          = $05B0 ; Note slide direction SFX ch 0
+ram_noteslide_dir_sfx0          = $05B0 ; (Unused) Note slide direction SFX ch 0
 ram_noteslide_speed_sfx0        = $05B1 ; Note slide speed SFX ch 0
 ram_noteslide_lo_sfx0           = $05B2 ; Target period LO SFX ch 0
 ram_noteslide_hi_sfx0           = $05B3 ; Target period HI SFX ch 0
 
-ram_05B4                        = $05B4 ; Note slide direction SFX ch 1
-ram_05B5                        = $05B5 ; Note slide speed SFX ch 1
-ram_05B6                        = $05B6 ; Target period LO SFX ch 1
-ram_05B7                        = $05B7 ; Target period HI SFX ch 1
+ram_05B4                        = $05B4 ; (Unused) Note slide direction SFX ch 1
+ram_noteslide_speed_sfx1        = $05B5 ; Note slide speed SFX ch 1
+ram_noteslide_lo_sfx1           = $05B6 ; Target period LO SFX ch 1
+ram_noteslide_hi_sfx1           = $05B7 ; Target period HI SFX ch 1
 
-ram_05B8                        = $05B8 ; Note slide direction SFX ch 2
-ram_05B9                        = $05B9 ; Note slide speed SFX ch 2
-ram_05BA                        = $05BA ; Target period LO SFX ch 2
-ram_05BB                        = $05BB ; Target period HI SFX ch 2
+ram_05B8                        = $05B8 ; (Unused) Note slide direction SFX ch 2
+ram_noteslide_speed_sfx2        = $05B9 ; Note slide speed SFX ch 2
+ram_noteslide_lo_sfx2           = $05BA ; Target period LO SFX ch 2
+ram_noteslide_hi_sfx2           = $05BB ; Target period HI SFX ch 2
 
 ram_05BC                        = $05BC ; (Unused) Note slide direction SFX ch 3
 ram_05BD                        = $05BD ; (Unused) Note slide speed SFX ch 3

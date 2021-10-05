@@ -2559,11 +2559,15 @@ _sfx_yoga_fire_ch1:
 	.byte $84, $03	; *HOLD, 3 ticks
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $84, $02	; *HOLD, 2 ticks
+
 	.byte $80, $36	; VOLUME, $36
 	.byte $0C, $02	; C-2, 2 ticks
+
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $8B, $F1	; *NOTESLIDEDOWN, $F1
 	.byte $0D, $02	; C#2, 2 ticks
+
+	.byte $8A, $00
 	.byte $80, $3C	; VOLUME, $3C
 	.byte $0C, $03	; C-2, 3 ticks
 	.byte $80, $3D	; VOLUME, $3D
@@ -2573,25 +2577,32 @@ _sfx_yoga_fire_ch1:
 	.byte $80, $78	; VOLUME, $78
 	.byte $0C, $02	; C-2, 2 ticks
 	.byte $82, $0B	; *REST, 11 ticks
+
 	.byte $80, $36	; VOLUME, $36
 	.byte $8A, $F3	; *NOTESLIDEUP, $F3
 	.byte $07, $02	; G-1, 2 ticks
+
 	.byte $80, $79	; VOLUME, $79
 	.byte $8A, $F2	; *NOTESLIDEUP, $F2
 	.byte $0A, $01	; A#1, 1 ticks
+
 	.byte $80, $7A	; VOLUME, $7A
 	.byte $8A, $F2	; *NOTESLIDEUP, $F2
 	.byte $0C, $01	; C-2, 1 ticks
+
+	.byte $8A, $00
 	.byte $80, $7E	; VOLUME, $7E
 	.byte $0E, $01	; D-2, 1 ticks
 	.byte $80, $7D	; VOLUME, $7D
 	.byte $8B, $42	; *NOTESLIDEDOWN, $42
 	.byte $84, $07	; *HOLD, 7 ticks
+
 	.byte $80, $7C	; VOLUME, $7C
 	.byte $8B, $31	; *NOTESLIDEDOWN, $31
 	.byte $0C, $02	; C-2, 2 ticks
 	.byte $88, $30	; *TIMBRE, $30
 	.byte $84, $02	; *HOLD, 2 ticks
+
 	.byte $80, $3A	; VOLUME, $3A
 	.byte $8B, $85	; *NOTESLIDEDOWN, $85
 	.byte $0B, $03	; B-1, 3 ticks
@@ -2599,6 +2610,7 @@ _sfx_yoga_fire_ch1:
 	.byte $84, $04	; *HOLD, 4 ticks
 	.byte $80, $37	; VOLUME, $37
 	.byte $84, $03	; *HOLD, 3 ticks
+
 	.byte $80, $35	; VOLUME, $35
 	.byte $8B, $62	; *NOTESLIDEDOWN, $62
 	.byte $08, $03	; G#1, 3 ticks
@@ -2795,6 +2807,7 @@ _sfx_tigershot_ch1:
 	.byte $8A, $F3	; *NOTESLIDEUP, $F3
 	.byte $0E, $01	; D-2, 1 ticks
 	.byte $80, $3C	; VOLUME, $3C
+	.byte $8A, $00
 	.byte $12, $02	; F#2, 2 ticks
 	.byte $80, $3A	; VOLUME, $3A
 	.byte $84, $07	; *HOLD, 7 ticks
@@ -2835,6 +2848,7 @@ _sfx_tigershot_low_ch1:
 	.byte $8A, $F3	; *NOTESLIDEUP, $F3
 	.byte $0C, $01	; C-2, 1 ticks
 	.byte $80, $3D	; VOLUME, $3D
+	.byte $8A, $00
 	.byte $10, $02	; E-2, 2 ticks
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $84, $07	; *HOLD, 7 ticks
@@ -2969,10 +2983,13 @@ _sfx_uppercut_ch1:
 	.byte $80, $78	; VOLUME, $78
 	.byte $8A, $F7	; *NOTESLIDEUP, $F7
 	.byte $06, $01	; F#1, 1 ticks
+
 	.byte $80, $79	; VOLUME, $79
 	.byte $8A, $F3	; *NOTESLIDEUP, $F3
 	.byte $0C, $01	; C-2, 1 ticks
+
 	.byte $80, $3D	; VOLUME, $3D
+	.byte $8A, $00
 	.byte $10, $02	; E-2, 2 ticks
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $84, $07	; *HOLD, 7 ticks
@@ -3011,6 +3028,8 @@ _sfx_uppercut_ch1:
 	.byte $84, $01	; *HOLD, 1 ticks
 	.byte $80, $37	; VOLUME, $37
 	.byte $82, $03	; *REST, 3 ticks
+
+	.byte $8A, $00
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $10, $01	; E-2, 1 ticks
 	.byte $80, $3C	; VOLUME, $3C
@@ -3022,6 +3041,8 @@ _sfx_uppercut_ch1:
 	.byte $8B, $F2	; *NOTESLIDEDOWN, $F2
 	.byte $84, $01	; *HOLD, 1 ticks
 	.byte $82, $03	; *REST, 3 ticks
+
+	.byte $8A, $00
 	.byte $80, $78	; VOLUME, $78
 	.byte $0D, $01	; C#2, 1 ticks
 	.byte $80, $7C	; VOLUME, $7C
@@ -3062,6 +3083,7 @@ _sfx_hadouken_ch1:
 	.byte $8A, $81	; *NOTESLIDEUP, $81
 	.byte $15, $01	; A-2, 1 ticks
 	.byte $8D, $16	; *VIBRATO, $16
+	.byte $8A, $00
 	.byte $16, $04	; A#2, 4 ticks
 	.byte $80, $BC	; VOLUME, $BC
 	.byte $17, $04	; B-2, 4 ticks
@@ -3069,6 +3091,7 @@ _sfx_hadouken_ch1:
 	.byte $8B, $11	; *NOTESLIDEDOWN, $11
 	.byte $15, $04	; A-2, 4 ticks
 	.byte $80, $BB	; VOLUME, $BB
+	.byte $8A, $00
 	.byte $14, $01	; G#2, 1 ticks
 	.byte $80, $B9	; VOLUME, $B9
 	.byte $13, $01	; G-2, 1 ticks
@@ -3108,6 +3131,7 @@ _sfx_shoryuken_ch1:
 	.byte $80, $7B	; VOLUME, $7B
 	.byte $8A, $F2	; *NOTESLIDEUP, $F2
 	.byte $11, $01	; F-2, 1 ticks
+	.byte $8A, $00
 	.byte $13, $02	; G-2, 2 ticks
 	.byte $80, $7C	; VOLUME, $7C
 	.byte $14, $02	; G#2, 2 ticks
@@ -3485,6 +3509,7 @@ _sfx_spinningbird_ch1:
 	.byte $8A, $F3	; *NOTESLIDEUP, $F3
 	.byte $1F, $01	; G-3, 1 ticks
 	.byte $80, $7A	; VOLUME, $7A
+	.byte $8A, $00
 	.byte $22, $01	; A#3, 1 ticks
 	.byte $80, $78	; VOLUME, $78
 	.byte $8B, $A2	; *NOTESLIDEDOWN, $A2
@@ -3493,6 +3518,7 @@ _sfx_spinningbird_ch1:
 	.byte $8A, $F2	; *NOTESLIDEUP, $F2
 	.byte $21, $02	; A-3, 2 ticks
 	.byte $80, $3A	; VOLUME, $3A
+	.byte $8A, $00
 	.byte $23, $02	; B-3, 2 ticks
 	.byte $80, $3B	; VOLUME, $3B
 	.byte $84, $01	; *HOLD, 1 ticks
@@ -3528,6 +3554,7 @@ _sfx_spinningbird_ch1:
 	.byte $8A, $81	; *NOTESLIDEUP, $81
 	.byte $22, $01	; A#3, 1 ticks
 	.byte $80, $3D	; VOLUME, $3D
+	.byte $8A, $00
 	.byte $23, $03	; B-3, 3 ticks
 	.byte $80, $3C	; VOLUME, $3C
 	.byte $8C, $FE	; *FINEPITCH, $FE
@@ -3555,6 +3582,7 @@ _sfx_spinningbird_ch1:
 	.byte $8A, $21	; *NOTESLIDEUP, $21
 	.byte $27, $01	; D#4, 1 ticks
 	.byte $80, $7A	; VOLUME, $7A
+	.byte $8A, $00
 	.byte $28, $02	; E-4, 2 ticks
 	.byte $80, $79	; VOLUME, $79
 	.byte $8B, $11	; *NOTESLIDEDOWN, $11
