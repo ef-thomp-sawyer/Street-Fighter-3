@@ -766,7 +766,9 @@ sub_set_fine_pitch:
 
 @SetFinePitch_Music:
 	txa
+	asl
 	and #$0F
+	tax
 
 	ldy #$01
 	lda (ram_snd_ptr_lo),Y
