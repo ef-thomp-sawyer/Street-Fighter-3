@@ -765,8 +765,6 @@ sub_set_fine_pitch:
 	rts
 
 @SetFinePitch_Music:
-	txa
-	asl
 	and #$0F
 	tax
 
