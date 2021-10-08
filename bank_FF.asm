@@ -8314,7 +8314,7 @@ SndIndicesTbl:
 	.byte $11   ; 11	SFX: Repeated close hit (e.g. Blanka's Wild Fang)
 	.byte $12   ; 12	SFX: Repeated hit (e.g. Hurricane Kick hits)
 	.byte $13   ; 13	SFX: Hit, even if blocked
-	.byte $14   ; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot High)
+	.byte $14   ; 14	SFX: Hadouken, Tiger Shot (*Tiger Shot Low)
 	.byte $15   ; 15	SFX: Guile's Sonic Boom
 	.byte $16   ; 16	SFX: Guile's Flash Kick
 	.byte $17   ; 17	SFX: Uppercut (*Tiger Uppercut)
@@ -8327,7 +8327,7 @@ SndIndicesTbl:
 	.byte $1E   ; 1E	SFX: Aeroplane before match
 	.byte $1F   ; 1F	SFX: Pause
 	.byte $20   ; 20	MUSIC (bonus): Balrog
-	.byte $28   ; 21	Unused duplicate? (*Tiger Shot Low)
+	.byte $28   ; 21	Unused duplicate? (*Tiger Shot High)
 	.byte $21   ; 22	Unused SFX 3 (*Tatsu)
 	.byte $22   ; 23	SFX: Throw
 	.byte $23   ; 24	SFX: Final hit

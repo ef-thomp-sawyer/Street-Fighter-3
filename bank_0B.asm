@@ -2343,7 +2343,7 @@ tbl_sound_pointers:
 	.word _sfx_scoretick		; 27	SFX: Score counter tick
 	.byte $8C, $FF
 
-	.word _sfx_tigershot_low	; 28	SFX: Tiger Shot (low)
+	.word _sfx_tigershot_high	; 28	SFX: Tiger Shot (high)
 	.byte $8C, $FF
 
 	.word _sfx_psychocrusher	; 29	SFX: Psycho Crusher
@@ -2504,9 +2504,9 @@ _sfx_scoretick:
 	.word $FFFF					; No Noise
 
 
-_sfx_tigershot_low:
+_sfx_tigershot_high:
 	.word $FFFF
-	.word _sfx_tigershot_low_ch1	; SFX: Tiger Shot (Low)
+	.word _sfx_tigershot_high_ch1	; SFX: Tiger Shot (Low)
 	.word $FFFF
 	.word $FFFF
 
@@ -2551,7 +2551,7 @@ con_86 = $86    ; end token
 ;								SFX DATA
 ;
 	.include "sfx/sfx.inc"
-
+	
 
 ; -----------------------------------------------------------------------------
 ;
