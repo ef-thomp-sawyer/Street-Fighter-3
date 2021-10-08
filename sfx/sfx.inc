@@ -287,7 +287,7 @@ _sfx_tigershot_ch1:
 	.byte $86	; *STOP
 
 
-_sfx_tigershot_low_ch1:
+_sfx_tigershot_high_ch1:
 	.byte $80, $78	; VOLUME, $78
 	.byte $8A, $F7	; *NOTESLIDEUP, $F7
 	.byte $06, $01	; F#1, 1 ticks
