@@ -615,7 +615,7 @@ off_821A_03:
 
 - D 0 - I - 0x004258 01:8248: 08        .byte con_spr_X + $08   ; 
 - D 0 - I - 0x004259 01:8249: 80        .byte con_spr_Y + $80   ; 
-- D 0 - I - 0x00425A 01:824A: 19        .byte con_spr_T + $19   ; 
+- D 0 - I - 0x00425A 01:824A: 19        .byte con_spr_T + $19   ; Ken's hair, left tile
 
 - D 0 - I - 0x00425B 01:824B: 01        .byte con_spr_X + $01   ; 
 - D 0 - I - 0x00425C 01:824C: 10        .byte con_spr_Y + $10   ; 
@@ -643,7 +643,7 @@ off_821A_03:
 
 - D 0 - I - 0x00426D 01:825D: 10        .byte con_spr_X + $10   ; 
 - D 0 - I - 0x00426E 01:825E: 80        .byte con_spr_Y + $80   ; 
-- D 0 - I - 0x00426F 01:825F: 1B        .byte con_spr_T + $1B   ; 
+- D 0 - I - 0x00426F 01:825F: 1B        .byte con_spr_T + $1B   ; Ken's hair, right tile
 
 - D 0 - I - 0x004270 01:8260: 10        .byte con_spr_X + $10   ; 
 - D 0 - I - 0x004271 01:8261: 0B        .byte con_spr_Y + $0B   ; 

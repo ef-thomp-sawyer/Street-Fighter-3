@@ -1500,17 +1500,17 @@ sub_apply_noteslide:
 ; X and Y preserved
 ; Returns new value for low period register in A
 sub_apply_vibrato:
+	tya
+	pha
 
 	lda ram_vib_speed_mus0,X
 	bne @VibratoStart
 
+	pla
 	lda ram_reg2_mus0,X
 	rts
 
 @VibratoStart:
-	tya
-	pha
-
 	; Advance counter
 	clc
 	adc ram_vib_ctr_mus0,X
