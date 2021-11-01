@@ -47,6 +47,103 @@ sub_C076:
 	RTS
 
 
+;+FOX Simplified GLFSR random number generator with 8-bit seed.
+;Returns a random 8-bit number in A.
+sub_rng:
+	lda ram_rng_seed
+	lsr
+	bcc @store_random
+
+		eor #$B4
+
+	@store_random:
+	sta ram_rng_seed
+	
+	rts
+
+
+;+FOX Generates a random list of opponents for single-player matches.
+;Last 3 opponents are fixed (Vega, Sagat, Bison).
+sub_gen_opponents_list:
+	txa	;Preserve X and Y
+	pha
+	tya
+	pha
+
+	jsr sub_rng
+
+	;We want a number between 0 and 5
+	and #$07
+	cmp #$06
+	bcc @store_first_opponent
+
+	sec
+	sbc #$05
+
+	@store_first_opponent:
+	sta ram_match_order
+
+	;Generate five more in a loop
+	ldx #$01
+	@gen_random_opponent:
+	jsr sub_rng
+	and #$07
+	cmp #$06
+	bcc @check_repeats
+		sec
+		sbc #$05
+
+	@check_repeats:
+	sta ram_match_order,X
+
+	txa
+	tay
+	dey
+
+	@check_loop:
+	lda ram_match_order,X
+	cmp ram_match_order,Y
+	bne @check_prev
+
+		;If the chosen value was already present, increase it by one
+		;and try again
+		clc
+		adc #$01
+		cmp #$06
+		bcc @check_repeats
+			lda #$00	; If over 5, wrap to zero
+			beq @check_repeats
+
+	@check_prev:
+	dey
+	;After we check index 0, this becomes #$FF
+	;so we can just check if it's "negative" (bit 7 set)
+	;to terminate the loop
+	bpl @check_loop
+
+
+	;@next_opponent:
+	inx
+	cpx #$06
+	bne @gen_random_opponent
+
+
+	;Add non-random opponents
+	lda #$06
+	sta ram_match_order+6
+	lda #$07
+	sta ram_match_order+7
+	lda #$08
+	sta ram_match_order+8
+	
+	;Restore X and Y
+	pla
+	tay
+	pla
+	tax
+
+	rts
+
 
 sub_start_menu:
 	JSR sub_F85C_set_scroll_to_0
@@ -57,7 +154,7 @@ sub_start_menu:
 	lda ram_disable_demo
 	bne @DemoDisabled
 	DEC ram_timer_before_demo
-@DemoDisabled:
+	@DemoDisabled:
 	LDA #$3C
 	STA ram_0010
 bra_C0A4:
@@ -68,15 +165,23 @@ bra_C0A4:
 	beq @Check
 	jmp bra_C0F5
 
-@Check:
+	@Check:
 	LDA ram_btn_press
 	CMP #con_btn___Start
 	BNE bra_C0C0
 
-; Start button
+;Start button
+	
+	lda ram_0010	;Init random seed
+	sta ram_rng_seed
+	jsr sub_rng
+
+	;Generate a random list of opponents when START is pressed
+	jsr sub_gen_opponents_list
+
 	LDA #$01
 	STA ram_050D,X
-	LDA #$1A	; Start button / selection SFX
+	LDA #$1A	;Start button / selection SFX
 	JSR sub_sndload_noloop
 
 bra_C0C0:
@@ -233,7 +338,8 @@ loc_C11C:
 	CLC
 	ADC ram_00DE
 	LDY ram_level
-	ADC tbl_C9B3,Y
+	;ADC tbl_match_order,Y
+	adc ram_match_order,Y	;+FOX random match order
 	JSR sub_ECE0
 	LDA #$1E	; Aeroplane sound
 	JSR sub_sndload_noloop
@@ -712,13 +818,13 @@ bra_C7EC_loop:
 ; !!! demo eventually stucks here in an infinite loop
 	ASL
 	TAY
-	LDA tbl_C839,Y
+	LDA tbl_demo_fighters_p1,Y
 	STA ram_p1_fighter
-	LDA tbl_C83A,Y
+	LDA tbl_demo_fighters_p2,Y
 	STA ram_p2_fighter
-	LDA tbl_C83A,Y  ; bzk optimize
+	LDA tbl_demo_fighters_p2,Y  ; bzk optimize
 	TAY
-	LDA tbl_C9AA,Y
+	LDA tbl_fighter_bg_ids,Y
 	CMP ram_screen
 	BNE bra_C807
 	LDA #$01
@@ -750,9 +856,9 @@ bra_C81D:
 
 
 
-tbl_C839:
+tbl_demo_fighters_p1:
 	.byte $03   ; 
-tbl_C83A:
+tbl_demo_fighters_p2:
 	.byte $00   ; 
 	.byte $02   ; 
 	.byte $01   ; 
@@ -857,22 +963,23 @@ loc_C8ED:
 	LDA #$01
 	JSR sub_FCF2_artificial_delay
 	LDX ram_level
-	LDA tbl_C9B3,X
+	;LDA tbl_match_order,X
+	lda ram_match_order,X	;+FOX Random match order
 	STA ram_p1_fighter
 	STA ram_p2_fighter
 	TAX
-	LDA tbl_C9AA,X
+	LDA tbl_fighter_bg_ids,X
 	STA ram_screen
 	LDA ram_051E
 	BNE bra_C90D
 	LDX ram_cursor_fighter
-	LDA tbl_C9A1,X
+	LDA tbl_fighter_ids,X
 	STA ram_p1_fighter
 bra_C90D:
 	LDA ram_054E
 	BNE bra_C919
 	LDX ram_cursor_fighter + 1
-	LDA tbl_C9A1,X
+	LDA tbl_fighter_ids,X
 	STA ram_p2_fighter
 bra_C919:
 	LDA #$03
@@ -945,7 +1052,7 @@ bra_C98D_game_not_finished_yet:
 
 
 
-tbl_C9A1:
+tbl_fighter_ids:
 	.byte $01   ; 00
 	.byte $03   ; 01
 	.byte $02   ; 02
@@ -957,30 +1064,31 @@ tbl_C9A1:
 	.byte $08   ; 08
 
 
+;This assigns a background graphics and stage music to each opponent
+tbl_fighter_bg_ids:
+	.byte $08   ; 00	Chun-Li
+	.byte $05   ; 01	Ryu
+	.byte $03   ; 02	Guile
+	.byte $07   ; 03	Blanka
+	.byte $00   ; 04	Dhalsim
+	.byte $04   ; 05	Ken
+	.byte $06   ; 06	Vega
+	.byte $01   ; 07	Sagat
+	.byte $02   ; 08	M.Bison
 
-tbl_C9AA:
-	.byte $08   ; 00
-	.byte $05   ; 01
-	.byte $03   ; 02
-	.byte $07   ; 03
-	.byte $00   ; 04
-	.byte $04   ; 05
-	.byte $06   ; 06
-	.byte $01   ; 07
-	.byte $02   ; 08
 
-
-
-tbl_C9B3:
-	.byte $00   ; 00
-	.byte $01   ; 01
-	.byte $02   ; 02
-	.byte $04   ; 03
-	.byte $03   ; 04
-	.byte $05   ; 05
-	.byte $06   ; 06
-	.byte $07   ; 07
-	.byte $08   ; 08
+;This is used to decide in which order 1-player matches happen
+;+FOX Replaced by random table generated in RAM
+;tbl_match_order:
+;	.byte $00   ; 00
+;	.byte $01   ; 01
+;	.byte $02   ; 02
+;	.byte $04   ; 03
+;	.byte $03   ; 04
+;	.byte $05   ; 05
+;	.byte $06   ; 06
+;	.byte $07   ; 07
+;	.byte $08   ; 08
 
 
 
@@ -8265,7 +8373,7 @@ sub_F7E2:
 sub_sndload_noloop:
 	STX ram_0040
 	TAX
-	LDA SndIndicesTbl,X
+	LDA tbl_sound_indices,X
 	STA ram_snd_index
 	JSR sub_F842_bankswitch_to_music
 	JSR sub_sfx_load
@@ -8277,7 +8385,7 @@ sub_sndload_noloop:
 sub_sndload_loop:
 	STX ram_0040
 	TAX
-	LDA SndIndicesTbl,X
+	LDA tbl_sound_indices,X
 	STA ram_snd_index
 	JSR sub_F842_bankswitch_to_music
 	JSR sub_music_load
@@ -8293,7 +8401,7 @@ sub_stop_sfx:
 
 
 
-SndIndicesTbl:
+tbl_sound_indices:
 	.byte $07   ; 00	MUSIC: Dhalsim
 	.byte $05   ; 01	MUSIC: Sagat
 	.byte $08   ; 02	MUSIC: M. Bison

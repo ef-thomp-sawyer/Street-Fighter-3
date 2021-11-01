@@ -1748,7 +1748,7 @@ sub_apply_fine_pitch_music:
 	beq NoFinePitch
 	bmi SubtractPitch
 
-AddPitch:
+	AddPitch:
 	clc
 	adc tbl_note_period_lo,Y
 	bcc FinePitchDone
@@ -1757,7 +1757,7 @@ AddPitch:
 	lda #$FF
 	rts
 
-SubtractPitch:
+	SubtractPitch:
 	clc
 	adc tbl_note_period_lo,Y
 	bcs FinePitchDone
@@ -1765,10 +1765,10 @@ SubtractPitch:
 	; Avoid underflow
 	lda #$00
 
-FinePitchDone:
+	FinePitchDone:
 	rts
 	
-NoFinePitch:
+	NoFinePitch:
 	; No fine pitch, return base value
 	lda tbl_note_period_lo,Y
 	rts
