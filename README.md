@@ -19,3 +19,8 @@ Then open **!sf3.nes** to play the game.
 ## Forum topic
 
 https://www.romhacking.net/forum/index.php?topic=31550.0
+
+## See also
+ Cyneprepou4uk
+ https://github.com/cyneprepou4uk/Street-Fighter-3
+ Street Fighter III.
