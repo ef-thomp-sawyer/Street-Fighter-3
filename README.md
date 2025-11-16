@@ -19,6 +19,8 @@ Then open **!sf3.nes** to play the game.
 
 ## Forum topic
 
+See the discussion onromhacking.org.
+
 https://www.romhacking.net/forum/index.php?topic=31550.0
 
 ## See also
